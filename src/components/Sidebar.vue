@@ -7,81 +7,147 @@
       width="200"
     >
       <v-list>
-        <v-list-item>
-          <v-list-item-icon @click.stop="mini = !mini">
-                <v-img 
-                src="../assets/icon/logo-qlts.svg" 
-                width="24"
-                height="24"
-                />
-            </v-list-item-icon>
-            <v-list-item-content>
-                <v-list-item-title>
-                  QLTS.VN
-                </v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-icon @click.stop="mini = !mini">
-                <v-img 
-                src="../assets/icon/hamburger-menu.svg" 
-                width="20"
-                height="20"
-                />
-            </v-list-item-icon>
+        <v-list-item style="padding-left:17px;">
+          
+          <v-img 
+          @click.stop="mini = !mini"
+          src="../assets/icon/logo-qlts.svg" 
+          max-height="25"
+          max-width="25"
+          />
+          <v-list-item-title style="color: #ffffff; font-size: 20px; padding-left: 4px">QLTS.VN</v-list-item-title>
+          <v-list-item-icon @click.stop="mini = !mini" style="padding-left: 10px">
+              <v-img 
+              src="../assets/icon/hamburger-menu.svg" 
+              max-height="16"
+              max-width="16"
+              />
+          </v-list-item-icon>
         </v-list-item>
         <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          :to="item.view"
-          link
+          to="/tongquan"
+          class="main-navbar"
         >
-            <v-list-item-icon>
-                <v-img 
-                :src="item.src"
-                width="20"
-                height="20"
-                />
-            </v-list-item-icon>
-            <v-list-item-content>
-                <v-list-item-title class="text-subtitle-2 font-weight-bold" >{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
+          <v-img 
+          src="../assets/icon/computer-line.svg"
+          max-height="18"
+          max-width="18"
+          style="margin: 0 4px;"
+          />
+          <v-list-item-title style="padding-left:8px; color: #ffffff;">Tổng quan</v-list-item-title>
+        </v-list-item>
+        
+        <v-list-item
+          to="/taisan"
+          class="multilevel-menu main-navbar"
+        >
+          <v-img 
+            src="../assets/icon/community-line.svg"
+            max-height="18"
+            max-width="18"
+            style="margin: 0 4px;"
+            />
+            <v-list-item-title style="padding-left:8px; color: #ffffff;">Tài sản</v-list-item-title>
+            <svg id="i_arrow_up_small" xmlns="http://www.w3.org/2000/svg" width="8" height="4" viewBox="0 0 8 4" class="open-menu-arrow" transparent  
+            >
+              <defs></defs>  
+              <path id="Rectangle_54_copy_4" class="cls-1" d="M8,0H0L4,4Z"/>
+            </svg>
+          
+        </v-list-item>
+        <v-list-item
+          to="/congcu"
+          class="main-navbar"
+        >
+        
+          <v-img 
+          src="../assets/icon/paint-brush-line.svg"
+          max-height="18"
+          max-width="18"
+          style="margin: 0 4px;"
+          />
+          <v-list-item-title style="padding-left:8px; color: #ffffff;">Công cụ dụng cụ</v-list-item-title>
+          <svg id="i_arrow_up_small" xmlns="http://www.w3.org/2000/svg" width="8" height="4" viewBox="0 0 8 4" class="open-menu-arrow" transparent >
+            <defs></defs>  
+            <path id="Rectangle_54_copy_4" class="cls-1" d="M8,0H0L4,4Z"/>
+          </svg>
+      
+        </v-list-item>
+        <v-list-item
+          to="danhmuc"
+          class="main-navbar"
+        >
+          <v-img 
+          src="../assets/icon/common.svg"
+          max-height="18"
+          max-width="18"
+          style="margin: 0 4px;"
+          />
+          <v-list-item-title style="padding-left:8px; color: #ffffff;">Danh mục</v-list-item-title>
+          <svg id="i_arrow_up_small" xmlns="http://www.w3.org/2000/svg" width="8" height="4" viewBox="0 0 8 4" class="open-menu-arrow" transparent >
+            <defs></defs>  
+            <path id="Rectangle_54_copy_4" class="cls-1" d="M8,0H0L4,4Z"/>
+          </svg>
+
+        </v-list-item>
+        <v-list-item
+        to="/tracuu"
+        class="main-navbar"
+        >
+          <v-img 
+          src="../assets/icon/search-eye-line.svg"
+          max-height="18"
+          max-width="18"
+          style="margin: 0 4px;"
+          />
+          <v-list-item-title style="padding-left:8px; color: #ffffff;">Tra cứu</v-list-item-title>
+        </v-list-item>
+        <v-list-item
+        to="/hethong"
+        class="main-navbar"
+        >
+          <v-img 
+          src="../assets/icon/settings.svg"
+          max-height="18"
+          max-width="18"
+          style="margin: 0 4px;"
+          />
+          <v-list-item-title style="padding-left:8px; color: #ffffff;">Hệ thống</v-list-item-title>
+        </v-list-item>
+        <v-list-item
+        to="/baocao"
+        class="main-navbar"
+        >
+          <v-img 
+          src="../assets/icon/pie-chart-line.svg"
+          max-height="18"
+          max-width="18"
+          style="margin: 0 4px;"
+          />
+          <v-list-item-title style="padding-left:8px; color: #ffffff;">Báo cáo</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        drawer: true,
-        items: [
-          { title: 'Tổng quan', src: require('../assets/icon/computer-line.svg'), view:'/tongquan'},
-          { title: 'Tài sản', src: require('../assets/icon/community-line.svg'), view:'/taisan' },
-          { title: 'Công cụ dụng cụ', src: require('../assets/icon/paint-brush-line.svg'), view:'/congcu' },
-          { title: 'Danh mục', src: require('../assets/icon/common.svg'), view:'/danhmuc'},
-          { title: 'Tra cứu', src: require('../assets/icon/search-eye-line.svg'), view:'/tracuu' },
-          { title: 'Hệ thống', src: require('../assets/icon/settings.svg'), view:'/hethong' },
-          { title: 'Báo cáo', src: require('../assets/icon/pie-chart-line.svg'), view:'/baocao' },
-        ],
-        mini: true,
-      }
-    },
-  }
+import "../assets/css/sidebar.css";
+export default {
+  data() {
+    return {
+      drawer: true,
+      mini: true,
+      active: true,
+      multiitems: [
+        { title: "Click Me 1" },
+        { title: "Click Me 3" },
+        { title: "Click Me 4" },
+        { title: "Click Me 2" },
+      ],
+    };
+  },
+};
 </script>
 
-<style lang="scss">
-.v-list-item--active{
-  background-color: #d6d2d2
-}
-.v-navigation-drawer__content{
-  background-color: #011239;
-}
-.v-list-item:hover{
-  cursor: pointer;
-}
-
-.v-list-item__title{
-  color: #ffffff;
-}
-
+<style>
 </style>

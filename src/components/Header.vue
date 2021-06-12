@@ -1,10 +1,18 @@
 <template>
     <div class="d-flex">
+        
         <div>
-            <v-breadcrumbs :items="items"></v-breadcrumbs>
+            <v-breadcrumbs :items="links"></v-breadcrumbs>
         </div>
         <v-spacer></v-spacer>
-        <div>
+        <div class="d-flex align-center">
+            <v-toolbar-title>Sở tài chính</v-toolbar-title>
+            <v-select
+            :items="years"
+            label="Outlined style"
+            dense
+            outlined
+            ></v-select>
             <v-avatar size="24">
                 <!--
                 <img
@@ -25,20 +33,23 @@
 <script>
 export default {
     name: "Header",
-    data: () => ({
-      items: [
-        {
-          text: 'Tài sản',
-          disabled: false,
-          href: '/taisan',
-        },
-        {
-          text: 'Ghi tăng',
-          disabled: true,
-          href: 'breadcrumbs_link_2',
-        },
-      ],
-    }),
+    data(){
+        return{
+            links: [
+                {
+                text: 'Tài sản',
+                disabled: false,
+                href: '/taisan',
+                },
+                {
+                text: 'Ghi tăng',
+                disabled: true,
+                href: 'breadcrumbs_link_2',
+                },
+            ],
+            years: ['2019', '2020', '2021'],
+        }
+    }
 }
 </script>
 <style scoped>

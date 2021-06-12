@@ -1,0 +1,31 @@
+.v-navigation-drawer__content{
+    background-color: #011239;
+  }
+  .v-list-item:hover{
+    cursor: pointer;
+  }
+  
+  .v-list-item--link:hover{
+    cursor: pointer;
+    background-color: #273557;
+  }
+  svg{
+      width: 10px;
+    height: 10px;
+  }
+
+
+.main-navbar:hover{
+   border-left: 3px solid #00abfe;
+}
+
+
+ .open-menu-arrow{
+    transform: rotate(-90deg);
+ }
+ .cls-1 {
+    fill: #ffffff;
+  }
+  .main-navbar:hover + .cls-1{
+    fill: #00abfe;
+ }

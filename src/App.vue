@@ -23,5 +23,7 @@ export default {
 
 <style>
   @import './styles/fonts.css';
- 
+.v-application {
+    font-family: "GoogleSans-Regular", sans-serif;
+}
 </style>
