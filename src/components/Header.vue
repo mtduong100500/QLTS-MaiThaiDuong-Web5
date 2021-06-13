@@ -1,12 +1,18 @@
 <template>
   <div class="d-flex header">
+
+    <!--
+      Phần Header của trang, sẽ không thay đổi theo router-view
+      CreatedBy MTDUONG (13/06/2021)    
+    -->
+
+
+    <!--Đường dẫn -->
     <v-breadcrumbs :items="links"></v-breadcrumbs>
     <v-spacer></v-spacer>
+    <!--Thông tin -->
     <div class="d-flex align-center px-3">
       <p class="sotaichinh">Sở tài chính</p>
-      <div class="select-year">
-        <v-select :items="years" outlined></v-select>
-      </div>
       <v-tooltip bottom>
           <template v-slot:activator="{on , attrs}">
       <div class="help-ico icon-hover" v-bind="attrs" v-on="on">
@@ -33,7 +39,6 @@
         </template>
         <span>Thông báo</span>
       </v-tooltip>
-
       <v-img
         src="../assets/icon/Divider.svg"
         max-height="20"
@@ -47,7 +52,7 @@
       <v-img
         width="6"
         src="../assets/icon/i_arrow_up_small.svg"
-        class="icon-hover"
+        class="icon-hover down-icon"
       ></v-img>
     </div>
   </div>
@@ -65,17 +70,20 @@ export default {
           href: "/taisan",
         },
         {
-          text: "Ghi tăng",
+          text: "Danh sách tài sản",
           disabled: true,
-          href: "/taisan/ghitang",
+          href: "/taisan/danhsachtaisan",
         },
       ],
-      years: ["Năm 2019", "Năm 2020", "Năm 2021"],
+      years: ["2019", "2020", "2021"],
     };
   },
 };
 </script>
 <style scoped>
+.down-icon{
+  margin-right: 12px;
+}
 .avatar {
   margin-right: 8px;
 }
