@@ -170,6 +170,42 @@ let data=[
         Department: "Phòng hành chính tổng hợp",
         Price: "754900000",
       },
+      {
+        STT: "1",
+        Date: "10/5/2000",
+        PropertyCode: "TS00001",
+        PropertyName: "Xe ô tô HONDA CIVIC",
+        PropertyType: "Ô tô",
+        Department: "Phòng hành chính tổng hợp",
+        Price: "754900000",
+      },
+      {
+        STT: "1",
+        Date: "10/5/2000",
+        PropertyCode: "TS00001",
+        PropertyName: "Xe ô tô HONDA CIVIC",
+        PropertyType: "Ô tô",
+        Department: "Phòng hành chính tổng hợp",
+        Price: "754900000",
+      },
+      {
+        STT: "1",
+        Date: "10/5/2000",
+        PropertyCode: "TS00001",
+        PropertyName: "Xe ô tô HONDA CIVIC",
+        PropertyType: "Ô tô",
+        Department: "Phòng hành chính tổng hợp",
+        Price: "754900000",
+      },
+      {
+        STT: "1",
+        Date: "10/5/2000",
+        PropertyCode: "TS00001",
+        PropertyName: "Xe ô tô HONDA CIVIC",
+        PropertyType: "Ô tô",
+        Department: "Phòng hành chính tổng hợp",
+        Price: "754900000",
+      },
       
 ]
 

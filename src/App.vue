@@ -21,14 +21,13 @@
       <div class="header-wrapper">
         <Header/>
       </div>
+
+
       <!--
         Phần router-view, nội dung sẽ được thanh đổi khi ấn vào thanh sidebar
         CreatedBy MTDUONG(13/06/2021)
       --> 
-
         <router-view></router-view>
-
-        
     </v-main>
   </v-app>
 </template>

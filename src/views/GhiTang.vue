@@ -2,6 +2,10 @@
   <div class="main-content">
     <div class="toolbar">
       <div>
+        <!--
+          Ô input tìm kiếm
+          CreatedBy MTDUONG (14/06/2021)
+        -->
         <v-text-field
           placeholder="Tìm kiếm"
           outlined
@@ -19,6 +23,11 @@
           </template>
         </v-text-field>
       </div>
+
+      <!--
+        3 nút bấm: Thêm, load lại bảng và xóa
+        CreatedBy MTDUONG (14/06/2021)
+      -->
       <div class="btn-group d-flex align-center">
         <v-btn color="#00abfe" small class="white--text px-7 py-4">Thêm</v-btn>
         <v-tooltip bottom>
@@ -47,12 +56,17 @@
         </v-tooltip>
       </div>
     </div>
+
+    <!--
+      Bảng dữ liệu
+      CreatedBy MTDUONg (14/06/2021)
+    -->
     <div class="table">
       <v-data-table
         :items="items"
         :headers="headers"
         fixed-header
-        height="700"
+        height="770"
         :custom-filter="filter"
         hide-default-footer
         disable-pagination
@@ -84,6 +98,15 @@
         </template>
       </v-data-table>
     </div>
+
+    <!--
+      Thông tin về tổng số tài sản và tổng nguyên giá
+      CreatedBy MTDUONg (14/06/2021)
+    -->
+    <div class="d-flex table-footer py-8 justify-space-between align-center">
+      <div class="px-6 font-weight-bold">Tổng số tài sản: {{propertySum}}</div>
+      <div class="px-6 font-weight-bold">Tổng nguyên giá: {{priceSumFunc()}}</div>
+    </div>
   </div>
 </template>
 
@@ -93,6 +116,9 @@ export default {
   name: "taisan",
   data() {
     return {
+
+      // Chứa các thông tin của table headers
+      // CreatedBy MTDUONG (14/06/2021)
       headers: [
         { text: "STT", value: "STT", sortable: false },
         { text: "NGÀY GHI TĂNG", value: "Date", sortable: false },
@@ -103,25 +129,54 @@ export default {
         { text: "NGUYÊN GIÁ", value: "Price", sortable: false },
         { text: "CHỨC NĂNG", value: "actions", sortable: false },
       ],
+
+      // Dùng để lưu trữ dữ liệu để truyền lên table
+      // CreatedBy MTDUONG (14/06/2021)
       items: data,
+
+      // model dùng cho chức năng tìm kiếm
       search: "",
+
+      // Tính tổng số tài sản
+      // CreatedBy MTDUONG (14/06/2021)
+      propertySum: data.length,
+
+      // Tính tổng nguyên giá
+      // CreatedBy MTDUONG (14/06/2021)
+      priceSum: ''
     };
   },
-  computed: {},
+  computed:{
+    
+  },
+  
   methods: {
     // Filter theo tên và mã nhân viên
+    // CreatedBy MTDUONG(13/06/2021)
     filter(value, search, item) {
       let inName = RegExp(search, "i").test(item.PropertyName);
       let inCode = false;
       return inName || inCode;
     },
+    
+    // Tính tổng nguyên giá 
+    // CreatedBY MTDUONG (14/06/2021)
+    priceSumFunc(items){
+      for(item in items){
+        this.priceSum += parseInt(item.Price);
+      }
+      return this.priceSum;
+    }
   },
 };
 </script>
 
 <style lang="scss">
+.table-footer{
+}
 .btn-hover:hover {
   cursor: pointer;
+  background-color: #dddddd;
 }
 .btn-reload {
   margin: 0 10px;
@@ -134,6 +189,7 @@ export default {
 }
 .v-data-table {
   padding: 0 24px 0 24px;
+  border-bottom: 1px solid #dddddd;
 }
 table td + td {
   border-left: 1px solid #dddddd;
@@ -155,4 +211,5 @@ tr:hover {
   justify-content: space-between;
   padding: 0 24px 0 24px;
 }
+
 </style>
