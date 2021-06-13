@@ -1,14 +1,20 @@
 <template>
+    <!--
+      Thanh sidebar có thể phóng to thu nhỏ
+      CreatedBy MTDUONG (13/06/2021)
+    -->
     <v-navigation-drawer
       v-model="drawer"
-      :mini-variant="mini"
+      :mini-variant="mini" 
       permanent
       app
       width="200"
     >
       <v-list>
+        <!--Mỗi 1 list item là một dòng trong thanh sidebar
+        CreatedBy MTDUONG (13/06/2021)
+        -->
         <v-list-item style="padding-left:17px;">
-          
           <v-img 
           @click.stop="mini = !mini"
           src="../assets/icon/logo-qlts.svg" 
@@ -59,7 +65,6 @@
           to="/congcu"
           class="main-navbar"
         >
-        
           <v-img 
           src="../assets/icon/paint-brush-line.svg"
           max-height="18"
@@ -135,15 +140,12 @@ import "../assets/css/sidebar.css";
 export default {
   data() {
     return {
+      // Dùng để phóng to thu nhỏ thanh sidebar
+      // CreatedBy MTDUONG(13/06/2021)
       drawer: true,
       mini: true,
-      active: true,
-      multiitems: [
-        { title: "Click Me 1" },
-        { title: "Click Me 3" },
-        { title: "Click Me 4" },
-        { title: "Click Me 2" },
-      ],
+
+     
     };
   },
 };

@@ -4,11 +4,11 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path: '/danhmuckhachhang',
-  //   name: 'danhmuckhachhang',
-  //   component: () => import('../views/danh-muc-khach-hang')
-  // },
+  {
+    path: '/taisan',
+    name: 'ghitang',
+    component: () => import('../views/GhiTang.vue')
+  },
 
 ]
 
