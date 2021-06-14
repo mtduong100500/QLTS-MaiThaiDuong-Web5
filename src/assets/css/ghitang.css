@@ -1,0 +1,93 @@
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .v-data-table__wrapper {
+      height: 590px;
+    }
+  }
+  @media only screen and (min-device-width: 1025px) and (max-device-width: 1920px) {
+    .v-data-table__wrapper {
+      height: 785px;
+    }
+  }
+  .btn-group{
+    border-radius: 4px;
+  }
+  table > thead > tr > th{
+    position: sticky !important;
+    position: -webkit-sticky !important;
+    top: 0;
+    background-color: #ffffff;
+  }
+
+   table > thead > tr > th:last-child,
+   table > tbody > tr > td:last-child {
+    position: sticky !important;
+    position: -webkit-sticky !important;
+    right: 0;
+    background-color: #ffffff;
+  }
+
+  .tonggia {
+    margin-right: 200px;
+  }
+  .search-icon {
+    background-image: url("../icon/search-eye-line.svg");
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+  }
+  .search-bar {
+    min-width: 300px;
+    height: 34px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    text-indent: 8px;
+  }
+ 
+  .btn-hover:hover {
+    cursor: pointer;
+  }
+  .btn-delete:hover,
+  .btn-reload:hover {
+    background-color: #dddddd;
+    transform: scale(1.1);
+  }
+  .btn-reload {
+    margin: 0 10px;
+  }
+  .btn-delete,
+  .btn-reload {
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 8px;
+  }
+  .v-data-table {
+    padding: 0 24px 0 24px;
+    border-bottom: 1px solid #dddddd;
+  }
+
+  .v-data-table__wrapper table > tbody > tr > td {
+    height: 38px !important;
+    font-size: 13px !important;
+    border-left: 1px solid #dddddd;
+  }
+  .v-data-table__wrapper > table > thead > tr > th {
+    font-size: 11px !important;
+    font-size: 15px;
+  }
+  .v-data-table__wrapper > table > thead > tr:hover {
+  }
+  tr:hover {
+    background-color: #f0f8ff;
+  }
+  .ghitang {
+    background-color: aquamarine;
+  }
+  .v-input {
+    font-size: 13px !important;
+  }
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 24px 0 24px;
+    margin: 16px 0;
+  }

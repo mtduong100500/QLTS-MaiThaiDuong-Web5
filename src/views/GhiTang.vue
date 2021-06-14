@@ -19,7 +19,13 @@
         CreatedBy MTDUONG (14/06/2021)
       -->
       <div class="btn-group d-flex align-center">
-        <v-btn color="#00abfe" small class="white--text px-7 py-4" @click="$store.commit('changeFormState')">Thêm</v-btn>
+        <v-btn
+          color="#00abfe"
+          small
+          class="white--text px-7 py-4"
+          @click="$store.commit('changeFormState')"
+          >Thêm</v-btn
+        >
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
             <div class="btn-reload btn-hover" v-bind="attrs" v-on="on">
@@ -49,7 +55,7 @@
 
     <!--
       Bảng dữ liệu
-      CreatedBy MTDUONg (14/06/2021)
+      CreatedBy MTDUONG (14/06/2021)
     -->
     <div class="table">
       <v-data-table
@@ -61,7 +67,7 @@
         disable-pagination
       >
         <template #items="{ item }">
-          <tr>
+          <tr class="table-content">
             <td>{{ item.STT }}</td>
             <td>{{ item.PropertyCode }}</td>
             <td>{{ item.PropertyName }}</td>
@@ -70,6 +76,11 @@
             <td>{{ item.Price }}</td>
           </tr>
         </template>
+
+        <!-- 
+          3 nút sửa xóa nhân bản trong mỗi dòng của table
+          CreatedBy MTDUONG (14/06/2021)
+        -->
         <template #item.actions="{ item }">
           <div class="d-flex align-center">
             <v-tooltip bottom>
@@ -119,16 +130,15 @@
         Tổng nguyên giá: {{ priceSumFunc() }}
       </div>
     </div>
-    
   </div>
 </template>
 
 <script>
 import data from "./data";
+import '../assets/css/ghitang.css'
 export default {
   name: "taisan",
-  components:{
-  },
+  components: {},
   data() {
     return {
       // Chứa các thông tin của table headers
@@ -188,14 +198,13 @@ export default {
 
       // Tính tổng nguyên giá
       // CreatedBy MTDUONG (14/06/2021)
-      priceSum: "",
+      priceSum: 0,
 
       // Chọn nhiều dòng
-
     };
   },
   computed: {},
-  
+
   methods: {
     // Filter theo tên và mã nhân viên
     // CreatedBy MTDUONG(13/06/2021)
@@ -213,100 +222,10 @@ export default {
       }
       return this.priceSum;
     },
-
-    
   },
 };
 </script>
 
-<style lang="scss">
+<style>
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-  .v-data-table__wrapper {
-    height: 590px;
-  }
-}
-@media only screen and (min-device-width: 1025px) and (max-device-width: 1920px) {
-  .v-data-table__wrapper {
-    height: 785px;
-  }
-}
-
-table > tbody > tr > td:last-child,
-table > thead > tr > th:last-child {
-  position: sticky !important;
-  position: -webkit-sticky !important;
-  right: 0;
-  background-color: #ffffff;
-}
-table > thead > tr > th:nth-child(1) {
-  z-index: 9999;
-}
-.tonggia {
-  margin-right: 200px;
-}
-.search-icon {
-  background-image: url("../assets/icon/search-eye-line.svg");
-  width: 20px;
-  height: 20px;
-  background-repeat: no-repeat;
-}
-.search-bar {
-  min-width: 300px;
-  height: 34px;
-  border: 1px solid #dddddd;
-  border-radius: 4px;
-  text-indent: 8px;
-}
-.btn-hover:hover {
-  cursor: pointer;
-  
-}
-.btn-delete:hover, .btn-reload:hover{
-  background-color: #dddddd;
-  transform: scale(1.1);
-}
-.btn-reload {
-  margin: 0 10px;
-}
-.btn-delete,
-.btn-reload {
-  border: 1px solid #dddddd;
-  border-radius: 4px;
-  padding: 8px;
-}
-.v-data-table {
-  padding: 0 24px 0 24px;
-  border-bottom: 1px solid #dddddd;
-}
-table th + th {
-  font-size: 15px;
-}
-table td + td {
-  font-size: 13px !important;
-  border-left: 1px solid #dddddd;
-}
-.v-data-table__wrapper table > tbody > tr > td {
-  height: 38px !important;
-}
-.v-data-table__wrapper > table > thead > tr > th {
-  font-size: 11px !important;
-}
-.v-data-table__wrapper > table > thead > tr:hover {
-}
-tr:hover {
-  background-color: #f0f8ff;
-}
-.ghitang {
-  background-color: aquamarine;
-}
-.v-input {
-  font-size: 13px !important;
-}
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 24px 0 24px;
-  margin: 16px 0;
-}
 </style>

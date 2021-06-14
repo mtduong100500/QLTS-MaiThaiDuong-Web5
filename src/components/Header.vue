@@ -11,6 +11,7 @@
     <!--Thông tin -->
     <div class="d-flex align-center px-3">
       <p class="sotaichinh">Sở tài chính</p>
+      <!-- Trợ giúp -->
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <div class="help-ico icon-hover" v-bind="attrs" v-on="on">
@@ -19,7 +20,7 @@
         </template>
         <span>Trợ giúp</span>
       </v-tooltip>
-
+      <!-- Thông báo -->
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <div class="badge icon-hover" v-bind="attrs" v-on="on">
@@ -42,6 +43,8 @@
         max-height="20"
         class="divider"
       ></v-img>
+
+      <!-- Avatar -->
       <div class="avatar icon-hover">
         <v-avatar size="30">
           <v-img src="https://cdn.vuetifyjs.com/images/lists/2.jpg"></v-img>
@@ -57,10 +60,13 @@
 </template>
 
 <script>
+import '../assets/css/header.css'
 export default {
+  
   name: "Header",
   data() {
     return {
+      // Breadcrums link
       links: [
         {
           text: "Tài sản",
@@ -79,57 +85,18 @@ export default {
 };
 </script>
 <style scoped>
-.down-icon {
-  margin-right: 12px;
-}
-.avatar {
-  margin-right: 8px;
-}
-.icon-hover:hover {
-  cursor: pointer;
-}
-.divider {
-  margin-right: 18px;
-}
-.help-ico {
-  margin: 0 25px;
-}
-.badge {
-  margin-right: 28px;
-}
-
-.sotaichinh {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  flex: 0 1 auto;
-  list-style-type: none;
-  margin: 0;
-  padding: 18px 12px;
-  font-weight: 500;
-}
 .v-responsive__content:hover {
-  background-color: #ffffff;
-}
-.header {
-  height: 50px;
-}
-.v-input__slot {
-  min-height: 10px;
-}
+    background-color: #ffffff;
+  }
 
-.select-year {
-  width: 100px;
-}
-
-.select-year .v-input {
-  font-size: 13px;
-}
-.v-application .primary--text {
-  color: #e4e4e4 !important;
-  caret-color: #e4e4e4 !important;
-}
-.v-input__slot {
-  margin-bottom: 0;
-}
+  .sotaichinh {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 0 1 auto;
+    list-style-type: none;
+    margin: 0;
+    padding: 18px 12px;
+    font-weight: 500;
+  }
 </style>

@@ -1,0 +1,41 @@
+.down-icon {
+    margin-right: 12px;
+  }
+  .avatar {
+    margin-right: 8px;
+  }
+  .icon-hover:hover {
+    cursor: pointer;
+  }
+  .divider {
+    margin-right: 18px;
+  }
+  .help-ico {
+    margin: 0 25px;
+  }
+  .badge {
+    margin-right: 28px;
+  }
+  
+  
+  
+  .header {
+    height: 50px;
+  }
+  .v-input__slot {
+    min-height: 10px;
+  }
+  
+  .select-year {
+    width: 100px;
+  }
+  
+  .select-year .v-input {
+    font-size: 13px;
+  }
+  .v-application .primary--text {
+    color: #e4e4e4 !important;
+  }
+  .v-input__slot {
+    margin-bottom: 0;
+  }
