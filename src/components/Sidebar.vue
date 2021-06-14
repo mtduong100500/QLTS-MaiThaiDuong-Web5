@@ -144,8 +144,6 @@ export default {
       // CreatedBy MTDUONG(13/06/2021)
       drawer: true,
       mini: true,
-
-     
     };
   },
 };

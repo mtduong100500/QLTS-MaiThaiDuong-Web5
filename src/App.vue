@@ -29,12 +29,14 @@
       --> 
         <router-view></router-view>
     </v-main>
+    <Form-Details v-if="$store.state.isOpen"/>
   </v-app>
 </template>
 
 <script>
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
+import FormDetails from './components/FormDetails.vue'
 export default {
   data() { 
     return{
@@ -44,6 +46,7 @@ export default {
   components:{
     Sidebar,
     Header,
+    FormDetails
   }
 }
 </script>
@@ -63,6 +66,7 @@ export default {
 .v-main___wrap{
   display:flex;
 }
+
 .sidebar .v-list-item--link:hover{
   cursor: pointer;
   background-color: #273557;

@@ -5,8 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    isOpen: false
   },
   mutations: {
+    changeFormState(state){
+      state.isOpen = !state.isOpen
+    }
   },
   actions: {
   },

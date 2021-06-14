@@ -15,6 +15,7 @@ svg{
 .main-navbar:hover{
   border-left: 3px solid #00abfe;
 }
+.main-navbar:hover{}
 
 
 .open-menu-arrow{
@@ -24,5 +25,5 @@ svg{
   fill: #ffffff;
 }
 .main-navbar:hover + .cls-1{
-  fill: #00abfe;
+  fill: #00abfe !important;
 }

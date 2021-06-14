@@ -1,11 +1,9 @@
 <template>
   <div class="d-flex header">
-
     <!--
       Phần Header của trang, sẽ không thay đổi theo router-view
       CreatedBy MTDUONG (13/06/2021)    
     -->
-
 
     <!--Đường dẫn -->
     <v-breadcrumbs :items="links"></v-breadcrumbs>
@@ -14,12 +12,12 @@
     <div class="d-flex align-center px-3">
       <p class="sotaichinh">Sở tài chính</p>
       <v-tooltip bottom>
-          <template v-slot:activator="{on , attrs}">
-      <div class="help-ico icon-hover" v-bind="attrs" v-on="on">
-        <v-img src="../assets/icon/help.svg"> </v-img>
-      </div>
-      </template>
-      <span>Trợ giúp</span>
+        <template v-slot:activator="{ on, attrs }">
+          <div class="help-ico icon-hover" v-bind="attrs" v-on="on">
+            <v-img src="../assets/icon/help.svg"> </v-img>
+          </div>
+        </template>
+        <span>Trợ giúp</span>
       </v-tooltip>
 
       <v-tooltip bottom>
@@ -81,7 +79,7 @@ export default {
 };
 </script>
 <style scoped>
-.down-icon{
+.down-icon {
   margin-right: 12px;
 }
 .avatar {
