@@ -9,8 +9,8 @@
           <v-col class="grow">
             Tính năng này đang được phát triển
           </v-col>
-          <v-col class="shrink">
-            <v-btn @click="$store.commit('changeDevelopingState')"
+          <v-col class="shrink mt-4">
+            <v-btn @click="$store.commit('changeDevelopingState')" class="ml-12"
               >Quay trở lại</v-btn
             >
           </v-col>

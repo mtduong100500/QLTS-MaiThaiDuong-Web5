@@ -60,6 +60,10 @@ export default {
   .v-application {
     font-family: "GoogleSans-Regular", sans-serif;
     line-height: 0;
+    user-select: none;
+-webkit-user-select: none;
+-moz-user-select: none;
+
 }
 .v-list{
   padding: 0

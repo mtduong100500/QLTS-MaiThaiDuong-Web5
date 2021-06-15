@@ -9,7 +9,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "2",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -18,7 +18,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "3",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -27,7 +27,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "4",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -36,7 +36,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "5",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -45,7 +45,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "6",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -54,7 +54,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "7",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -63,7 +63,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "8",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -72,7 +72,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "9",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -81,7 +81,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "10",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -90,7 +90,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "11",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -99,7 +99,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "12",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -108,7 +108,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "13",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -117,7 +117,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "14",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -126,7 +126,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "15",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -135,7 +135,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "16",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -144,7 +144,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "17",
         Date: "10/5/2000",
         PropertyCode: "TS00002",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -153,7 +153,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "18",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -162,7 +162,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "19",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -171,7 +171,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "20",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -180,7 +180,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "21",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -189,7 +189,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "22",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",
@@ -198,7 +198,7 @@ let data=[
         Price: "754900000",
       },
       {
-        STT: "1",
+        STT: "23",
         Date: "10/5/2000",
         PropertyCode: "TS00001",
         PropertyName: "Xe ô tô HONDA CIVIC",

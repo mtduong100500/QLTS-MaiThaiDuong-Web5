@@ -28,26 +28,21 @@
   .btn-group{
     border-radius: 4px;
   }
-  table > thead > tr > th{
-    position: sticky !important;
-    position: -webkit-sticky !important;
-    top: 0;
+  
+  table > tbody > tr > td:last-child{
     background-color: #ffffff;
+  }
+  table > thead > tr > th:last-child,
+  table > tbody > tr > td:last-child {
+   position: sticky !important;
+   position: -webkit-sticky !important;
+   right: 0;
   }
 
-   table > thead > tr > th:last-child,
-   table > tbody > tr > td:last-child {
-    position: sticky !important;
-    position: -webkit-sticky !important;
-    right: 0;
-    background-color: #ffffff;
-  }
   table > thead > tr > th:last-child:hover,
    table > tbody > tr > td:last-child:hover {
-    background-color: #f0f8ff;
     cursor: pointer;
   }
-
   .tonggia {
     margin-right: 200px;
   }
@@ -98,7 +93,14 @@
     font-size: 11px !important;
     font-size: 15px;
   }
+  
   .table .v-data-table tr:hover:not(.v-table__expanded__content) {
+    background-color: #f0f8ff !important;
+    cursor: pointer;
+  }
+  
+
+  .table .v-data-table tr:focus {
     background-color: #f0f8ff !important;
     cursor: pointer;
   }

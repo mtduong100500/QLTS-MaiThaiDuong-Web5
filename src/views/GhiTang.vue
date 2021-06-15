@@ -69,7 +69,7 @@
         <v-list-item
           v-for="(item, index) in items"
           :key="index"
-            @click="handleClick(index)"
+          @click="handleClick(index)"
         >
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
@@ -83,62 +83,68 @@
         :custom-filter="filter"
         hide-default-footer
         disable-pagination
-        @contextmenu:row.prevent="show"
+        v-model="selectedRows"
       >
-        <template #items="{ item }">
-          <tr class="table-content">
+        <template #item="{ item }" > 
+          <tr @contextmenu.prevent="show" :class="[selectedRows.indexOf(item.STT)>-1?'cyan':'' ]" @click.ctrl.prevent="rowClicked(item)" >
             <td>{{ item.STT }}</td>
+            <td class="text-center">{{ item.Date }}</td>
             <td>{{ item.PropertyCode }}</td>
             <td>{{ item.PropertyName }}</td>
             <td>{{ item.PropertyType }}</td>
             <td>{{ item.Department }}</td>
-            <td>{{ item.Price }}</td>
-          </tr>
-        </template>
+            <td>{{ formatMoney(item.Price) }}</td>
 
-        <!-- 
-          3 nút sửa xóa nhân bản trong mỗi dòng của table
-          CreatedBy MTDUONG (14/06/2021)
-        -->
-        <template #item.actions="{ item }">
-          <div class="d-flex align-center">
-            <v-tooltip bottom>
-              <template #activator="{ on, attrs }">
-                <v-icon
-                  small
-                  class="mr-2 btn-hover"
-                  v-bind="attrs"
-                  v-on="on"
-                  @click="editItem(item), $store.commit('changeFormState')"
-                >
-                  mdi-pencil
-                </v-icon>
-              </template>
-              <span>Sửa</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template #activator="{ on, attrs }">
-                <v-img
-                  small
-                  src="../assets/icon/trash.svg"
-                  max-height="15"
-                  max-width="15"
-                  class="btn-hover"
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-img>
-              </template>
-              <span>Xóa</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template #activator="{ on, attrs }">
-                <v-icon small class="ml-2 btn-hover" v-bind="attrs" v-on="on">
-                  mdi-history
-                </v-icon>
-              </template>
-              <span>Nhân bản dữ liệu</span>
-            </v-tooltip>
-          </div>
+            <!-- 
+              3 nút sửa xóa nhân bản trong mỗi dòng của table
+              CreatedBy MTDUONG (14/06/2021)
+            -->
+            <td :class="selectedRows.indexOf(item.STT)>-1?'cyan':''">
+              <div class="d-flex align-center">
+                <v-tooltip bottom>
+                  <template #activator="{ on, attrs }">
+                    <v-icon
+                      small
+                      class="mr-2 btn-hover"
+                      v-bind="attrs"
+                      v-on="on"
+                      @click="editItem(item), $store.commit('changeFormState')"
+                    >
+                      mdi-pencil
+                    </v-icon>
+                  </template>
+                  <span>Sửa</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                  <template #activator="{ on, attrs }">
+                    <v-img
+                      small
+                      src="../assets/icon/trash.svg"
+                      max-height="15"
+                      max-width="15"
+                      class="btn-hover"
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-img>
+                  </template>
+                  <span>Xóa</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                  <template #activator="{ on, attrs }">
+                    <v-icon
+                      small
+                      class="ml-2 btn-hover"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      mdi-history
+                    </v-icon>
+                  </template>
+                  <span>Nhân bản dữ liệu</span>
+                </v-tooltip>
+              </div>
+            </td>
+          </tr>
         </template>
       </v-data-table>
     </div>
@@ -242,6 +248,8 @@ export default {
         Price: "",
       },
 
+      // Context Menu
+      // CreatedBy MTDUONG (15/06/2021)
       items: [
         {
           title: "Sửa",
@@ -250,19 +258,31 @@ export default {
           },
         },
         { title: "Xóa" },
-        { title: "Nhân bản" },
+        {
+          title: "Nhân bản",
+          click() {
+            this.$store.commit("changeFormState");
+          },
+        },
       ],
 
+      // Tọa độ chuột và trajgn thái của context menu
       showMenu: false,
       x: 0,
       y: 0,
+
+      // Di chuyển bằng phím mũi tên
+      selectedRows: [],
+
+      // Dòng hiện tại
+      
     };
   },
-
-  mounted() {},
+  // Di chuyển bằng phím mũi tên
+  
 
   methods: {
-    // Filter theo tên và mã nhân viên
+    // Filter theo tên và mã nhân viên (Chưa hoạt động)
     // CreatedBy MTDUONG(13/06/2021)
     filter(value, search, item) {
       let inName = RegExp(search, "i").test(item.PropertyName);
@@ -270,7 +290,7 @@ export default {
       return inName || inCode;
     },
 
-    // Tính tổng nguyên giá
+    // Tính tổng nguyên giá (chưa hoạt động)
     // CreatedBY MTDUONG (14/06/2021)
     priceSumFunc(data) {
       for (item in data) {
@@ -279,12 +299,15 @@ export default {
       return this.priceSum;
     },
 
-    // Đổ data lên form khi sửa
+    // Đổ data lên form khi sửa (Chưa xong )
     // CreatedBy MTDUONG (15/06/2021)
     editItem(item) {
       this.editedIndex = data.indexOf(item);
       this.editedItem = Object.assign({}, item);
     },
+
+    // Chuột phải sẽ hiện context menu
+    // CreatedBy MTDUONG (15/06/2021)
     show(e) {
       e.preventDefault();
       this.showMenu = false;
@@ -295,14 +318,50 @@ export default {
       });
     },
 
-   handleClick(index) {
-      this.items[index].click.call(this)
-    }
+    // Sự kiện khi click vào dòng trong context menu
+    // CreatedBy MTDUONG (15/06/2021)
+    handleClick(index) {
+      this.items[index].click.call(this);
+    },
+
+    //Format data
+    // CreatedBy MTDUONG (15/06/2021)
+     formatMoney(money) {
+      return money === null
+        ? "0"
+        : !isNaN(money)
+        ? money.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.")
+        : money;
+    },
+    formatDate(date) {
+      return moment(String(date)).format("DD/MM/YYYY");
+    },
+
+    // Chọn nhiều dòng
+    // CreatedBy MTDUONG (15/06/2021)
+    rowClicked(row) {
+      this.toggleSelection(row.STT);
+    },
+    toggleSelection(keyID) {
+      if (this.selectedRows.includes(keyID)) {
+        this.selectedRows = this.selectedRows.filter(
+          selectedKeyID => selectedKeyID !== keyID
+        );
+      } else {
+        this.selectedRows.push(keyID);
+      }
+    },
+
+    // Di chuyển lên xuống bằng phím mũi tên
+   
   },
 };
 </script>
 
 <style scoped>
+.active-item {
+  background-color: red;
+}
 .portrait.v-card {
   margin: 0 auto;
   max-width: 300px;

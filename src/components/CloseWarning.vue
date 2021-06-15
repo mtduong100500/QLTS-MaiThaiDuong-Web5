@@ -4,12 +4,12 @@
             Tiêu đề và nút bấm
             CreatedBy MTDUONG (15/06/2021)
         -->
-      <v-alert prominent type="warning" class="close-feature">
-        <v-row align="center" class="d-flex flex-column align-center justify pt-7">
+      <v-alert prominent type="info" class="close-feature">
+        <v-row align="center" class="d-flex flex-column align-center justify pt-7 pl-3">
           <v-col class="grow">
             Bạn có chắc muốn đóng cửa sổ này?
           </v-col>
-          <v-col class="shrink">
+          <v-col class="shrink mt-4">
             <v-btn @click="$store.commit('changeFormState'), $store.commit('changeCloseConfirmState')" class="mr-10">
                 Xác nhận
             </v-btn>
