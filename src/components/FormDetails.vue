@@ -1,9 +1,17 @@
 <template>
+  <!-- 
+    Overlay để hiện Form
+    CreatedBy MTDUONG (14/06/2021)
+  -->
   <div class="overlay" @keyup.esc="$store.commit('changeFormState')">
-    <div class="form d-flex flex-column">
-      <div class="form-header d-flex justify-space-between">
-        <h2 class="mt-8 mx-4">Ghi tăng tài sản</h2>
-        <div class="btn-group d-flex my-6 mx-2">
+    <!--
+      Nội dung chính của Form
+      CreatedBy MTDUONG (14/06/2021)
+    -->
+    <v-container class="form d-flex flex-column">
+      <div class="form-header d-flex justify-space-between px-6">
+        <h2 class="mt-8 my-12">Ghi tăng tài sản</h2>
+        <div class="btn-group d-flex mt-6">
           <v-tooltip bottom>
             <template #activator="{ on, attrs }">
               <v-img
@@ -34,11 +42,11 @@
           </v-tooltip>
         </div>
       </div>
-      <div class="main-form">
+      <div class="main-form px-6 mb-4">
         <!--Dòng 1-->
-        <div class="row1 d-flex justify-space-between" >
-          <div class="col1 mx-6">
-            <div class="fields d-flex flex-column">
+        <v-row justify="space-around">
+          <v-col md="4">
+            <div class="d-flex flex-column">
               <label class="mb-5">Mã tài sản (*)</label>
               <v-autocomplete
                 dense
@@ -52,19 +60,24 @@
                 item-value="assetName"
               ></v-autocomplete>
             </div>
-          </div>
-          <div class="col2 mx-6">
-            <div class="fields d-flex flex-column">
+          </v-col>
+          <v-col md="8">
+            <div class="d-flex flex-column">
               <label class="mb-5">Tên tài sản (*)</label>
-              <input type="text" class="input-disabled" disabled v-model="assets"/>
+              <input
+                type="text"
+                class="input-disabled"
+                disabled
+                v-model="assets"
+              />
             </div>
-          </div>
-        </div>
+          </v-col>
+        </v-row>
 
         <!-- Dòng 2 -->
-        <div class="row2 d-flex justify-space-between">
-          <div class="col1 mx-6">
-            <div class="fields d-flex flex-column">
+        <v-row justify="space-around">
+          <v-col md="4">
+            <div class="d-flex flex-column">
               <label class="mb-3">Mã phòng ban (*)</label>
               <v-autocomplete
                 dense
@@ -76,19 +89,24 @@
                 item-value="departmentName"
               ></v-autocomplete>
             </div>
-          </div>
-          <div class="col2 mx-6">
-            <div class="fields d-flex flex-column">
+          </v-col>
+          <v-col md="8">
+            <div class="d-flex flex-column">
               <label class="mb-3">Tên phòng ban (*)</label>
-              <input type="text" class="input-disabled" disabled v-model="departments"/>
+              <input
+                type="text"
+                class="input-disabled"
+                disabled
+                v-model="departments"
+              />
             </div>
-          </div>
-        </div>
+          </v-col>
+        </v-row>
 
         <!-- Dòng 3 -->
-        <div class="row3 d-flex justify-space-between">
-          <div class="col1 mx-6">
-            <div class="fields d-flex flex-column">
+        <v-row justify="space-around">
+          <v-col md="4">
+            <div class="d-flex flex-column">
               <label class="mb-3">Mã loại tài sản (*)</label>
               <v-autocomplete
                 dense
@@ -100,26 +118,30 @@
                 item-value="assetTypeName"
               ></v-autocomplete>
             </div>
-          </div>
-          <div class="col2 mx-6">
-            <div class="fields d-flex flex-column">
+          </v-col>
+          <v-col md="8">
+            <div class="d-flex flex-column">
               <label class="mb-3">Tên loại tài sản (*)</label>
-              <input type="text" class="input-disabled" disabled v-model="assetsType"/>
+              <input
+                type="text"
+                class="input-disabled"
+                disabled
+                v-model="assetsType"
+              />
             </div>
-          </div>
-        </div>
+          </v-col>
+        </v-row>
 
         <!--Dòng 4-->
-        <div class="row4 d-flex justify-space-between">
-          <div class="col1 mx-6">
-            <div class="fields d-flex flex-column">
+        <v-row justify="space-around">
+          <v-col md="4">
+            <div class="d-flex flex-column">
               <label class="mb-3">Ngày ghi tăng</label>
               <v-menu
                 v-model="menu2"
                 :close-on-content-click="false"
                 transition="scale-transition"
                 offset-y
-                
                 min-width="auto"
               >
                 <template v-slot:activator="{ on, attrs }">
@@ -129,7 +151,15 @@
                     v-bind="attrs"
                     v-on="on"
                     outlined
-                  ></v-text-field>
+                  >
+                    <template v-slot:append>
+                      <img
+                        max-width="24"
+                        max-height="24"
+                        src="../assets/icon/calendar-60.svg"
+                      />
+                    </template>
+                  </v-text-field>
                 </template>
                 <v-date-picker
                   v-model="date"
@@ -138,182 +168,101 @@
                 ></v-date-picker>
               </v-menu>
             </div>
-          </div>
-          <div class="col2 mx-6 d-flex justify-space-between">
-            <div class="fields d-flex flex-column mr-4">
+          </v-col>
+          <v-col class="d-flex" md="8">
+            <div class="d-flex flex-column">
               <label class="mb-3">Thời gian sử dụng (năm)</label>
-              <v-text-field
-              outlined
-              ></v-text-field>
+              <v-text-field outlined></v-text-field>
             </div>
-            <div class="fields d-flex flex-column">
+            <div class="d-flex flex-column ml-6">
               <label class="mb-3">Tỉ lệ hao mòn (%)</label>
-              <v-text-field
-              outlined
-              ></v-text-field>
+              <v-text-field outlined></v-text-field>
             </div>
-          </div>
-        </div>
+          </v-col>
+        </v-row>
 
         <!--Dòng 5-->
-        <div class="row5 d-flex justify-space-between">
-          <div class="col1 mx-6">
-            <div class="fields d-flex flex-column">
+        <v-row>
+          <v-col md="4">
+            <div class="d-flex flex-column">
               <label class="mb-3">Nguyên giá</label>
-              <v-text-field
-              outlined
-              ></v-text-field>
+              <v-text-field outlined></v-text-field>
             </div>
-          </div>
-          <div class="col2 mx-6">
-            <div class="fields d-flex flex-column">
+          </v-col>
+          <v-col md="4">
+            <div class="d-flex flex-column">
               <label class="mb-3">Giá trị hao mòn năm</label>
-              <v-text-field
-              outlined
-              ></v-text-field>
+              <v-text-field outlined></v-text-field>
             </div>
-          </div>
+          </v-col>
+        </v-row>
+      </div>
+      <!---->
+      <div class="btn d-flex justify-space-between py-2" style="background-color: #dddddd; height:100%">
+        <div class="d-flex align-center">
+            <v-btn class="mx-6 px-9 elevation-0 text-capitalize ">Hủy</v-btn>
+        </div>
+        <div class="d-flex align-center">
+          <v-btn color="#00abfe" class="white--text px-9 py-4 mx-6 elevation-0 text-capitalize">Lưu</v-btn>
         </div>
       </div>
-      <div class="btn d-flex justify-space-between">
-        <v-btn
-        class="mx-6"
-        >Hủy</v-btn>
-        <v-btn
-        color="#00abfe"
-        class="white--text px-5 py-4 mx-6"
-        >Lưu</v-btn>
-      </div>
-    </div>
+    </v-container>
   </div>
 </template>
 
 <script>
+import '../assets/css/formdetails.css'
 export default {
   name: "FormDetails",
   data() {
     return {
+      assets: null,
+      departments: null,
+      assetsType: null,
       assetsCodes: [
         {
           assetCode: "TS00001",
-          assetName: "Laptop DEll"
+          assetName: "Laptop DEll",
         },
         {
           assetCode: "TS00002",
-          assetName: "Laptop HP"
+          assetName: "Laptop HP",
         },
         {
           assetCode: "TS00003",
-          assetName: "Laptop ASUS"
+          assetName: "Laptop ASUS",
         },
       ],
       departmentCodes: [
         {
           departmentCode: "DP0001",
-          departmentName: "Phòng Đào tạo"
+          departmentName: "Phòng Đào tạo",
         },
         {
           departmentCode: "DP0002",
-          departmentName: "Phòng hành chính"
+          departmentName: "Phòng hành chính",
         },
       ],
       assetTypeCodes: [
         {
           assetTypeCode: "DP0001",
-          assetTypeName: "Laptop"
+          assetTypeName: "Laptop",
         },
         {
           assetTypeCode: "DP0002",
-          assetTypeName: "PC"
+          assetTypeName: "PC",
         },
       ],
       menu2: false,
-      date: '',
-      assets: {
-        assetCode: "",
-        assetName: ""
-      },
-      departments: {
-        departmentCode: "",
-        departmentName: ""
-      },
-      assetsType: {
-        assetTypeCode: "",
-        assetTypeName: ""
-      },
+      date: "",
     };
   },
-  methods:{
-    test(){
-      console.log(this.assets)
-    }
-  }
+  methods: {
+    test() {},
+  },
 };
 </script>
 
 <style>
 
-.v-text-field--outlined fieldset {
-  border-radius: 0 !important;
-  border-color: #dddddd !important;
-}
-
-.v-text-field--full-width.v-input--dense:not(.v-text-field--solo).v-text-field--outlined .v-input__prepend-outer, .v-text-field--full-width.v-input--dense:not(.v-text-field--solo).v-text-field--outlined .v-input__prepend-inner, .v-text-field--full-width.v-input--dense:not(.v-text-field--solo).v-text-field--outlined .v-input__append-inner, .v-text-field--full-width.v-input--dense:not(.v-text-field--solo).v-text-field--outlined .v-input__append-outer, .v-text-field--enclosed.v-input--dense:not(.v-text-field--solo).v-text-field--outlined .v-input__prepend-outer, .v-text-field--enclosed.v-input--dense:not(.v-text-field--solo).v-text-field--outlined .v-input__prepend-inner, .v-text-field--enclosed.v-input--dense:not(.v-text-field--solo).v-text-field--outlined .v-input__append-inner, .v-text-field--enclosed.v-input--dense:not(.v-text-field--solo).v-text-field--outlined .v-input__append-outer {
-    margin-top: 4px !important;
-}
-.v-input__control{
-  min-height: 30px !important;
-}
-.v-text-field .v-input__control .v-input__slot {
-    min-height: auto !important;
-    display: flex !important;
-    align-items: center !important;
-  }
-
-.form {
-  background-color: #ffffff;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  height: 700px;
-  width: 800px;
-  z-index: 2;
-  font-family: "GoogleSans-Regular";
-  color: #000000;
-}
-
-.input-disabled {
-  border: 1px solid #dddddd;
-  height: 32px;
-  width: 400px;
-  background-color: #f5f5f5;
-  text-indent: 10px;
-}
-
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-  .form {
-    height: 500px;
-    width: 650px;
-  }
-}
-@media only screen and (min-device-width: 1025px) and (max-device-width: 1920px) {
-  .form {
-    height: 500px;
-    width: 700px;
-  }
-}
-
-.overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 2;
-}
 </style>

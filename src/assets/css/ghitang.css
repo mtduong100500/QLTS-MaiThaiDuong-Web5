@@ -1,11 +1,11 @@
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
     .v-data-table__wrapper {
-      height: 590px;
+      height: 77vh;
     }
   }
   @media only screen and (min-device-width: 1025px) and (max-device-width: 1920px) {
     .v-data-table__wrapper {
-      height: 785px;
+      height: 81vh
     }
   }
   .btn-group{
@@ -25,6 +25,10 @@
     right: 0;
     background-color: #ffffff;
   }
+  table > thead > tr > th:last-child:hover,
+   table > tbody > tr > td:last-child:hover {
+    background-color: #f0f8ff;
+  }
 
   .tonggia {
     margin-right: 200px;
@@ -34,6 +38,8 @@
     width: 20px;
     height: 20px;
     background-repeat: no-repeat;
+    background-position: right;
+    background-attachment: fixed;
   }
   .search-bar {
     min-width: 300px;
@@ -74,14 +80,11 @@
     font-size: 11px !important;
     font-size: 15px;
   }
-  .v-data-table__wrapper > table > thead > tr:hover {
+  .table .v-data-table tr:hover:not(.v-table__expanded__content) {
+    background-color: #f0f8ff !important;
   }
-  tr:hover {
-    background-color: #f0f8ff;
-  }
-  .ghitang {
-    background-color: aquamarine;
-  }
+  
+
   .v-input {
     font-size: 13px !important;
   }

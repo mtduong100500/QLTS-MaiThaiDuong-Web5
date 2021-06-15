@@ -1,7 +1,7 @@
 <template>
   <div class="main-content">
     <div class="toolbar">
-      <div class="search-icon">
+      <div >
         <!--
           Ô input tìm kiếm
           CreatedBy MTDUONG (14/06/2021)
@@ -10,7 +10,7 @@
           type="text"
           v-model="search"
           placeholder="Tìm kiếm"
-          class="search-bar"
+          class="search-bar search-icon"
         />
       </div>
 
@@ -22,7 +22,7 @@
         <v-btn
           color="#00abfe"
           small
-          class="white--text px-7 py-4"
+          class="white--text px-7 py-4 elevation-0"
           @click="$store.commit('changeFormState')"
           >Thêm</v-btn
         >
