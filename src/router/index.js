@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/taisan',
+    path: '/',
     name: 'ghitang',
     component: () => import('../views/GhiTang.vue')
   },

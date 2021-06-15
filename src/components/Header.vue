@@ -14,7 +14,7 @@
       <!-- Trợ giúp -->
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <div class="help-ico icon-hover" v-bind="attrs" v-on="on">
+          <div class="help-ico icon-hover" v-bind="attrs" v-on="on" @click="$store.commit('changeDevelopingState')">
             <v-img src="../assets/icon/help.svg"> </v-img>
           </div>
         </template>
@@ -23,7 +23,7 @@
       <!-- Thông báo -->
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <div class="badge icon-hover" v-bind="attrs" v-on="on">
+          <div class="badge icon-hover" v-bind="attrs" v-on="on" @click="$store.commit('changeDevelopingState')">
             <v-badge
               bordered
               bottom
@@ -45,7 +45,7 @@
       ></v-img>
 
       <!-- Avatar -->
-      <div class="avatar icon-hover">
+      <div class="avatar icon-hover" @click="$store.commit('changeDevelopingState')">
         <v-avatar size="30">
           <v-img src="https://cdn.vuetifyjs.com/images/lists/2.jpg"></v-img>
         </v-avatar>

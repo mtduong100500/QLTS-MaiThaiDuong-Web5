@@ -1,7 +1,7 @@
 <template>
   <div class="main-content">
     <div class="toolbar">
-      <div >
+      <div>
         <!--
           Ô input tìm kiếm
           CreatedBy MTDUONG (14/06/2021)
@@ -65,6 +65,7 @@
         :custom-filter="filter"
         hide-default-footer
         disable-pagination
+         @contextmenu:row="rightClickHandler"
       >
         <template #items="{ item }">
           <tr class="table-content">
@@ -85,7 +86,7 @@
           <div class="d-flex align-center">
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
-                <v-icon small class="mr-2 btn-hover" v-bind="attrs" v-on="on">
+                <v-icon small class="mr-2 btn-hover" v-bind="attrs" v-on="on" @click="editItem(item), $store.commit('changeFormState')">
                   mdi-pencil
                 </v-icon>
               </template>
@@ -107,7 +108,7 @@
             </v-tooltip>
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
-                <v-icon small class="ml-2 btn-hover" v-bind="attrs" v-on="on">
+                <v-icon small class="ml-2 btn-hover" v-bind="attrs" v-on="on" >
                   mdi-history
                 </v-icon>
               </template>
@@ -116,6 +117,7 @@
           </div>
         </template>
       </v-data-table>
+      
     </div>
 
     <!--
@@ -130,15 +132,20 @@
         Tổng nguyên giá: {{ priceSumFunc() }}
       </div>
     </div>
+    <FormDetails v-if="$store.state.isOpen"/>
   </div>
 </template>
 
 <script>
 import data from "./data";
-import '../assets/css/ghitang.css'
+import "../assets/css/ghitang.css";
+import FormDetails from '../components/FormDetails.vue'
+
 export default {
   name: "taisan",
-  components: {},
+  components: {
+    FormDetails,
+  },
   data() {
     return {
       // Chứa các thông tin của table headers
@@ -200,10 +207,22 @@ export default {
       // CreatedBy MTDUONG (14/06/2021)
       priceSum: 0,
 
-      // Chọn nhiều dòng
+      // đổ dữ liệu lên form khi sửa
+      // CreatedBy MTDUONG (15/06/2021)
+      editedIndex: -1,
+      editedItem: {
+        STT: "",
+        PropertyCode: "",
+        PropertyName: "",
+        PropertyType: "",
+        Department: "",
+        Price: "",
+      },
     };
   },
-  computed: {},
+ 
+  mounted() {
+  },
 
   methods: {
     // Filter theo tên và mã nhân viên
@@ -222,10 +241,21 @@ export default {
       }
       return this.priceSum;
     },
+
+    // Đổ data lên form khi sửa
+    // CreatedBy MTDUONG (15/06/2021)
+    editItem(item){
+      this.editedIndex = data.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+    },
+    rightClickHandler(event, item) {
+    // do something with event and/or item
+    console.log(event, item)
+    event.preventDefault()
+  }
   },
 };
 </script>
 
 <style>
-
 </style>

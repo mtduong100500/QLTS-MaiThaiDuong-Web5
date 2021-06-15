@@ -29,14 +29,17 @@
       --> 
         <router-view></router-view>
     </v-main>
-    <Form-Details v-if="$store.state.isOpen"/>
+    
+    <DevelopingFeatures v-if="$store.state.isDeveloping"/>
+    <CloseWarning v-if="$store.state.isClose"/>
   </v-app>
 </template>
 
 <script>
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
-import FormDetails from './components/FormDetails.vue'
+import DevelopingFeatures from './components/DevelopingFeatures.vue'
+import CloseWarning from './components/CloseWarning.vue'
 export default {
   data() { 
     return{
@@ -46,7 +49,8 @@ export default {
   components:{
     Sidebar,
     Header,
-    FormDetails
+    DevelopingFeatures,
+    CloseWarning
   }
 }
 </script>
