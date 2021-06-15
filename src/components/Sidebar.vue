@@ -34,6 +34,11 @@
         </v-list-item-icon>
       </v-list-item>
 
+
+      <!--
+        Tông Quan
+        CreatedBy MTDUONG (13/06/2021)
+        -->
       <v-list-item
         class="main-navbar"
         @click="$store.commit('changeDevelopingState')"
@@ -48,6 +53,11 @@
           >Tổng quan</v-list-item-title
         >
       </v-list-item>
+
+      <!--
+        Tài chính
+        CreatedBy MTDUONG (13/06/2021)
+        -->
       <v-menu
         open-on-hover
         right
@@ -69,9 +79,7 @@
               max-width="18"
               style="margin: 0 4px"
             />
-            <v-list-item-title style="padding-left: 8px; color: #ffffff"
-              >Tài sản</v-list-item-title
-            >
+            <v-list-item-title style="padding-left: 8px; color: #ffffff">Tài sản</v-list-item-title>
             <svg
               id="i_arrow_up_small"
               xmlns="http://www.w3.org/2000/svg"
@@ -86,12 +94,21 @@
             </svg>
           </v-list-item>
         </template>
+        <!--
+        Menu con của tài chính
+        CreatedBy MTDUONG (13/06/2021)
+        -->
         <v-list>
           <v-list-item v-for="link in links" :key="link.text">
-            <v-list-title>{{ link.text }}</v-list-title>
+            <v-list-item-title>{{ link.text }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
+
+      <!--
+        Công cụ dụng cụ
+        CreatedBy MTDUONG (13/06/2021)
+        -->
       <v-list-item
         class="main-navbar"
         @click="$store.commit('changeDevelopingState')"
@@ -118,6 +135,11 @@
           <path id="Rectangle_54_copy_4" class="cls-1" d="M8,0H0L4,4Z" />
         </svg>
       </v-list-item>
+
+      <!--
+        Danh mục
+        CreatedBy MTDUONG (13/06/2021)
+        -->
       <v-list-item
         class="main-navbar"
         @click="$store.commit('changeDevelopingState')"
@@ -144,6 +166,11 @@
           <path id="Rectangle_54_copy_4" class="cls-1" d="M8,0H0L4,4Z" />
         </svg>
       </v-list-item>
+
+      <!--
+        Tra cứu
+        CreatedBy MTDUONG (13/06/2021)
+        -->
       <v-list-item class="main-navbar">
         <v-img
           src="../assets/icon/search-eye-line.svg"
@@ -155,6 +182,11 @@
           >Tra cứu</v-list-item-title
         >
       </v-list-item>
+
+      <!--
+        Hệ thống
+        CreatedBy MTDUONG (13/06/2021)
+        -->
       <v-list-item
         class="main-navbar"
         @click="$store.commit('changeDevelopingState')"
@@ -169,6 +201,12 @@
           >Hệ thống</v-list-item-title
         >
       </v-list-item>
+
+      <!--
+        Báo cáo
+        CreatedBy MTDUONG (13/06/2021)
+        -->
+        
       <v-list-item
         class="main-navbar"
         @click="$store.commit('changeDevelopingState')"
@@ -204,8 +242,18 @@ export default {
       ],
     };
   },
+  methods:{
+    
+  }
 };
 </script>
 
 <style>
+.v-menu__content > .v-list >.v-list-item:hover{
+  background-color: #dddddd;
+}
+
+.v-menu__content > .v-list >.v-list-item{
+  min-height: 35px !important;
+}
 </style>

@@ -26,6 +26,7 @@
           @click="$store.commit('changeFormState')"
           >Thêm</v-btn
         >
+
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
             <div class="btn-reload btn-hover" v-bind="attrs" v-on="on">
@@ -57,6 +58,23 @@
       Bảng dữ liệu
       CreatedBy MTDUONG (14/06/2021)
     -->
+    <v-menu
+      v-model="showMenu"
+      :position-x="x"
+      :position-y="y"
+      absolute
+      offset-y
+    >
+      <v-list>
+        <v-list-item
+          v-for="(item, index) in items"
+          :key="index"
+            @click="handleClick(index)"
+        >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
     <div class="table">
       <v-data-table
         :items="assets"
@@ -65,7 +83,7 @@
         :custom-filter="filter"
         hide-default-footer
         disable-pagination
-         @contextmenu:row="rightClickHandler"
+        @contextmenu:row.prevent="show"
       >
         <template #items="{ item }">
           <tr class="table-content">
@@ -86,7 +104,13 @@
           <div class="d-flex align-center">
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
-                <v-icon small class="mr-2 btn-hover" v-bind="attrs" v-on="on" @click="editItem(item), $store.commit('changeFormState')">
+                <v-icon
+                  small
+                  class="mr-2 btn-hover"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="editItem(item), $store.commit('changeFormState')"
+                >
                   mdi-pencil
                 </v-icon>
               </template>
@@ -108,7 +132,7 @@
             </v-tooltip>
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
-                <v-icon small class="ml-2 btn-hover" v-bind="attrs" v-on="on" >
+                <v-icon small class="ml-2 btn-hover" v-bind="attrs" v-on="on">
                   mdi-history
                 </v-icon>
               </template>
@@ -117,7 +141,6 @@
           </div>
         </template>
       </v-data-table>
-      
     </div>
 
     <!--
@@ -132,14 +155,14 @@
         Tổng nguyên giá: {{ priceSumFunc() }}
       </div>
     </div>
-    <FormDetails v-if="$store.state.isOpen"/>
+    <FormDetails v-if="$store.state.isOpen" />
   </div>
 </template>
 
 <script>
 import data from "./data";
 import "../assets/css/ghitang.css";
-import FormDetails from '../components/FormDetails.vue'
+import FormDetails from "../components/FormDetails.vue";
 
 export default {
   name: "taisan",
@@ -218,11 +241,25 @@ export default {
         Department: "",
         Price: "",
       },
+
+      items: [
+        {
+          title: "Sửa",
+          click() {
+            this.$store.commit("changeFormState");
+          },
+        },
+        { title: "Xóa" },
+        { title: "Nhân bản" },
+      ],
+
+      showMenu: false,
+      x: 0,
+      y: 0,
     };
   },
- 
-  mounted() {
-  },
+
+  mounted() {},
 
   methods: {
     // Filter theo tên và mã nhân viên
@@ -244,18 +281,38 @@ export default {
 
     // Đổ data lên form khi sửa
     // CreatedBy MTDUONG (15/06/2021)
-    editItem(item){
-      this.editedIndex = data.indexOf(item)
-      this.editedItem = Object.assign({}, item)
+    editItem(item) {
+      this.editedIndex = data.indexOf(item);
+      this.editedItem = Object.assign({}, item);
     },
-    rightClickHandler(event, item) {
-    // do something with event and/or item
-    console.log(event, item)
-    event.preventDefault()
-  }
+    show(e) {
+      e.preventDefault();
+      this.showMenu = false;
+      this.x = e.clientX;
+      this.y = e.clientY;
+      this.$nextTick(() => {
+        this.showMenu = true;
+      });
+    },
+
+   handleClick(index) {
+      this.items[index].click.call(this)
+    }
   },
 };
 </script>
 
-<style>
+<style scoped>
+.portrait.v-card {
+  margin: 0 auto;
+  max-width: 300px;
+  width: 100%;
+}
+
+.v-menu__content > .v-list > .v-list-item {
+  min-height: 30px !important;
+}
+.v-menu__content > .v-list > .v-list-item:hover {
+  background-color: #dddddd;
+}
 </style>

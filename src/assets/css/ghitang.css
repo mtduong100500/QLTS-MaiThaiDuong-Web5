@@ -45,6 +45,7 @@
   table > thead > tr > th:last-child:hover,
    table > tbody > tr > td:last-child:hover {
     background-color: #f0f8ff;
+    cursor: pointer;
   }
 
   .tonggia {
@@ -99,6 +100,7 @@
   }
   .table .v-data-table tr:hover:not(.v-table__expanded__content) {
     background-color: #f0f8ff !important;
+    cursor: pointer;
   }
   
 

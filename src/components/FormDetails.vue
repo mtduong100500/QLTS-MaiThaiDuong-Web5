@@ -42,7 +42,7 @@
           </v-tooltip>
         </div>
       </div>
-      <div class="main-form px-6 mb-4">
+      <div class="main-form px-6 mb-4" >
         <!--Dòng 1-->
         <v-row justify="space-around">
           <v-col md="4">
@@ -52,6 +52,8 @@
                outlined
                v-model="assetCode"
                :rules="inputRules"
+               autofocus
+               tabindex="0"
               ></v-text-field>
             </div>
           </v-col>
@@ -206,6 +208,7 @@
         </div>
       </div>
     </v-form>
+    
   </div>
 </template>
 
