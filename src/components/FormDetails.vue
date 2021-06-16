@@ -3,7 +3,7 @@
     Overlay để hiện Form
     CreatedBy MTDUONG (14/06/2021)
   -->
-  <div class="overlay" @keyup.esc="$store.commit('changeFormState')">
+  <div class="overlay" @keyup.27="$store.commit('changeFormState')" @keydown.112.exact="test">
     <!--
       Nội dung chính của Form
       CreatedBy MTDUONG (14/06/2021)
@@ -252,18 +252,15 @@ export default {
     },
   },
   methods: {
-    formatMoney(money) {
-      return money === null
-        ? "0"
-        : !isNaN(money)
-        ? money.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.")
-        : money;
+    test(){
+      console.log("1")
     },
     submit(){
       if(this.$refs.form.validate()){
         console.log('Lỗi')
       }
     }
+    
   },
 };
 </script>

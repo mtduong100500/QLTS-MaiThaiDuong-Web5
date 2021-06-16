@@ -4,91 +4,91 @@
       Phần thanh siderbar bên trái (không đổi theo router)
       CreatedBy MTDUONG(13/06/2021)
     -->
-      <div class="sidebar">
-        <Sidebar />
-      </div>
+    <div class="sidebar">
+      <Sidebar />
+    </div>
 
-      <!--
+    <!--
         Phần nội dung chính
         CreatedBy MTDUONG(13/06/2021)
       -->
-    
-    <v-main> 
+
+    <v-main>
       <!--
         Phần Header (không đổi theo router)
         CreatedBy MTDUONG(13/06/2021)
       -->
       <div class="header-wrapper">
-        <Header/>
+        <Header />
       </div>
-
 
       <!--
         Phần router-view, nội dung sẽ được thanh đổi khi ấn vào thanh sidebar
         CreatedBy MTDUONG(13/06/2021)
-      --> 
-        <router-view></router-view>
+      -->
+      <router-view></router-view>
     </v-main>
-    
-    <DevelopingFeatures v-if="$store.state.isDeveloping"/>
-    <CloseWarning v-if="$store.state.isClose"/>
+
+    <DevelopingFeatures v-if="$store.state.isDeveloping" />
+    <CloseWarning v-if="$store.state.isClose" />
   </v-app>
 </template>
 
 <script>
-import Sidebar from './components/Sidebar'
-import Header from './components/Header'
-import DevelopingFeatures from './components/DevelopingFeatures.vue'
-import CloseWarning from './components/CloseWarning.vue'
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
+import DevelopingFeatures from "./components/DevelopingFeatures.vue";
+import CloseWarning from "./components/CloseWarning.vue";
 export default {
-  data() { 
-    return{
-      drawer: null
-    }
+  data() {
+    return {
+      drawer: null,
+      
+    };
   },
-  components:{
+  components: {
     Sidebar,
     Header,
     DevelopingFeatures,
-    CloseWarning
-  }
-}
+    CloseWarning,
+  },
+
+  mounted() {
+    window.addEventListener("keydown", (event) => {
+      if (event.keyCode === 112) {
+        event.preventDefault();
+      }
+    });
+
+  },
+};
 </script>
 
 <style>
-  @import './styles/fonts.css';
-  .v-application {
-    font-family: "GoogleSans-Regular", sans-serif;
-    line-height: 0;
-    user-select: none;
--webkit-user-select: none;
--moz-user-select: none;
-
+@import "./styles/fonts.css";
+.v-application {
+  font-family: "GoogleSans-Regular", sans-serif;
+  line-height: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
 }
-.v-list{
-  padding: 0
+.v-list {
+  padding: 0;
 }
-.header-wrapper{
+.header-wrapper {
   border-bottom: 1px solid #e1e1e1;
 }
-.v-main___wrap{
-  display:flex;
+.v-main___wrap {
+  display: flex;
 }
 
-.sidebar .v-list-item--link:hover{
+.sidebar .v-list-item--link:hover {
   cursor: pointer;
   background-color: #273557;
 }
+
 ::-webkit-scrollbar {
-    width: 5px !important;
-    height: 5px !important;
-    z-index: 1231232123421
+  display: none;
 }
-
-::-webkit-scrollbar-track {
-    width:6px;
-    background-color: #bbb;
-}
-      
-
 </style>

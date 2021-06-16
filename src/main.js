@@ -6,6 +6,11 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
+Vue.config.keyCodes = {
+  v: 86,
+  f1: 112,
+  n: 78
+}
 
 new Vue({
   router,

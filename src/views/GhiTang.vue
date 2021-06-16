@@ -7,6 +7,7 @@
           CreatedBy MTDUONG (14/06/2021)
         -->
         <input
+        
           type="text"
           v-model="search"
           placeholder="Tìm kiếm"
@@ -93,7 +94,7 @@
             <td>{{ item.PropertyName }}</td>
             <td>{{ item.PropertyType }}</td>
             <td>{{ item.Department }}</td>
-            <td>{{ formatMoney(item.Price) }}</td>
+            <td class="text-right">{{ formatMoney(item.Price) }}</td>
 
             <!-- 
               3 nút sửa xóa nhân bản trong mỗi dòng của table
@@ -279,7 +280,7 @@ export default {
     };
   },
   // Di chuyển bằng phím mũi tên
-  
+
 
   methods: {
     // Filter theo tên và mã nhân viên (Chưa hoạt động)
@@ -374,4 +375,11 @@ export default {
 .v-menu__content > .v-list > .v-list-item:hover {
   background-color: #dddddd;
 }
+.v-data-table__wrapper::-webkit-scrollbar {
+  display: block;
+    width: 5px !important;
+    height: 5px !important;
+    z-index: 1231232123421
+}
+
 </style>
