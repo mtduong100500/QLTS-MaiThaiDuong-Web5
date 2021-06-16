@@ -89,6 +89,18 @@ export default {
 }
 
 ::-webkit-scrollbar {
-  display: none;
+    width: 5px !important;
+    height: 5px !important;
+    z-index: 1231232123421
+}
+
+::-webkit-scrollbar-track {
+    width:6px;
+    background-color: #bbb;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #808080;
+    border-radius: 8px
 }
 </style>

@@ -58,6 +58,14 @@ namespace MISA.CukCuk.Api
 
             app.UseRouting();
 
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("http://localhost:8080")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+            });
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

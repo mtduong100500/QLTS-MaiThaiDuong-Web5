@@ -85,22 +85,23 @@
         hide-default-footer
         disable-pagination
         v-model="selectedRows"
+        no-data-text="Không có dữ liệu"
       >
-        <template #item="{ item }" > 
-          <tr @contextmenu.prevent="show" :class="[selectedRows.indexOf(item.STT)>-1?'cyan':'' ]" @click.ctrl.prevent="rowClicked(item)" >
-            <td>{{ item.STT }}</td>
-            <td class="text-center">{{ item.Date }}</td>
-            <td>{{ item.PropertyCode }}</td>
-            <td>{{ item.PropertyName }}</td>
-            <td>{{ item.PropertyType }}</td>
-            <td>{{ item.Department }}</td>
-            <td class="text-right">{{ formatMoney(item.Price) }}</td>
+        <template #item="{ item, index }" > 
+          <tr @contextmenu.prevent="show" :class="[selectedRows.indexOf(item.assetCode)>-1?'cyan':'' ]" @click.ctrl.prevent="rowClicked(item)" >
+            <td>{{ index }}</td>
+            <td class="text-center">{{ formatDate(item.increaseDate)}}</td>
+            <td>{{ item.assetCode }}</td>
+            <td>{{ item.assetName }}</td>
+            <td>{{ item.assetTypeId }}</td>
+            <td>{{ item.departmentId }}</td>
+            <td class="text-right">{{ formatMoney(item.originalPrice) }}</td>
 
             <!-- 
               3 nút sửa xóa nhân bản trong mỗi dòng của table
               CreatedBy MTDUONG (14/06/2021)
             -->
-            <td :class="selectedRows.indexOf(item.STT)>-1?'cyan':''">
+            <td :class="selectedRows.indexOf(item.assetCode)>-1?'cyan':''">
               <div class="d-flex align-center">
                 <v-tooltip bottom>
                   <template #activator="{ on, attrs }">
@@ -156,7 +157,7 @@
     -->
     <div class="d-flex table-footer py-7 justify-space-between align-center">
       <div class="px-6 font-weight-bold">
-        Tổng số tài sản: {{ propertySum }}
+        Tổng số tài sản: {{ assetCount() }}
       </div>
       <div class="px-x font-weight-bold tonggia">
         Tổng nguyên giá: {{ priceSumFunc() }}
@@ -167,10 +168,10 @@
 </template>
 
 <script>
-import data from "./data";
 import "../assets/css/ghitang.css";
+import moment from "moment";
 import FormDetails from "../components/FormDetails.vue";
-
+const axios = require('axios');
 export default {
   name: "taisan",
   components: {
@@ -181,38 +182,38 @@ export default {
       // Chứa các thông tin của table headers
       // CreatedBy MTDUONG (14/06/2021)
       headers: [
-        { text: "STT", value: "STT", width: "80px", sortable: false },
+        { text: "STT", value: "this.index", width: "80px", sortable: false },
         {
           text: "NGÀY GHI TĂNG",
-          value: "Date",
+          value: "increaseDate",
           width: "140px",
           sortable: false,
         },
         {
           text: "MÃ TÀI SẢN",
-          value: "PropertyCode",
+          value: "assetCode",
           width: "100px",
           sortable: false,
         },
         {
           text: "TÊN TÀI SẢN",
-          value: "PropertyName",
+          value: "assetName",
           width: "600px",
           sortable: false,
         },
         {
           text: "LOẠI TÀI SẢN",
-          value: "PropertyType",
+          value: "assetTypeId",
           width: "150px",
           sortable: false,
         },
         {
           text: "PHÒNG BAN",
-          value: "Department",
+          value: "departmentId",
           width: "250px",
           sortable: false,
         },
-        { text: "NGUYÊN GIÁ", value: "Price", width: "150px", sortable: false },
+        { text: "NGUYÊN GIÁ", value: "originalPrice", width: "150px", sortable: false },
         {
           text: "CHỨC NĂNG",
           value: "actions",
@@ -224,14 +225,14 @@ export default {
 
       // Dùng để lưu trữ dữ liệu để truyền lên table
       // CreatedBy MTDUONG (14/06/2021)
-      assets: data,
-
+      assets: [],
+      index: 0,
       // model dùng cho chức năng tìm kiếm
       search: "",
 
       // Tính tổng số tài sản
       // CreatedBy MTDUONG (14/06/2021)
-      propertySum: data.length,
+      propertySum: "",
 
       // Tính tổng nguyên giá
       // CreatedBy MTDUONG (14/06/2021)
@@ -248,6 +249,7 @@ export default {
         Department: "",
         Price: "",
       },
+      
 
       // Context Menu
       // CreatedBy MTDUONG (15/06/2021)
@@ -281,7 +283,11 @@ export default {
   },
   // Di chuyển bằng phím mũi tên
 
-
+  async created(){
+    var data = await axios.get("https://localhost:44364/api/assets/")
+    this.assets = data.data
+    console.log(this.assets)
+  },
   methods: {
     // Filter theo tên và mã nhân viên (Chưa hoạt động)
     // CreatedBy MTDUONG(13/06/2021)
@@ -290,6 +296,13 @@ export default {
       let inCode = false;
       return inName || inCode;
     },
+
+    // Tính tổng tài sản
+    // CreatdBy MTDUONG (15/06/2021)
+    assetCount(){
+      return this.index.length
+    },
+
 
     // Tính tổng nguyên giá (chưa hoạt động)
     // CreatedBY MTDUONG (14/06/2021)
