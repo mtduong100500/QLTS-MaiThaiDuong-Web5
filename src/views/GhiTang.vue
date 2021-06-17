@@ -1,5 +1,12 @@
 <template>
   <div class="main-content">
+    <!--
+      Loading trước khi data hiện lên
+      CreatedBy MTDUONG (17/06/2021)
+    -->
+    <v-overlay :value="overlay">
+      <v-progress-circular indeterminate color="primary" size="64"></v-progress-circular>
+    </v-overlay>
     <div class="toolbar">
       <div>
         <!--
@@ -29,7 +36,7 @@
 
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
-            <div class="btn-reload btn-hover" v-bind="attrs" v-on="on">
+            <div class="btn-reload btn-hover" v-bind="attrs" v-on="on" @click="reloadTable">
               <v-img
                 max-height="15"
                 max-width="15"
@@ -41,7 +48,12 @@
         </v-tooltip>
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
-            <div class="btn-delete btn-hover" v-on="on" v-bind="attrs" @click="deleteDialog = true">
+            <div
+              class="btn-delete btn-hover"
+              v-on="on"
+              v-bind="attrs"
+              @click="deleteDialog = true"
+            >
               <v-img
                 height="15"
                 width="15"
@@ -75,6 +87,7 @@
         </v-list-item>
       </v-list>
     </v-menu>
+
     <div class="table">
       <v-data-table
         :items="assets"
@@ -82,16 +95,12 @@
         fixed-header
         hide-default-footer
         disable-pagination
-        v-model="selectedRows"
         no-data-text="Không có dữ liệu"
       >
-        <template #item="{ item, index }" > 
-          <tr 
-          @contextmenu.prevent="show" 
-          :class="[selectedRows.indexOf(item.assetCode)>-1?'cyan':'' ]" 
-          @click.ctrl.prevent="rowClicked(item)" >
+        <template #item="{ item, index }">
+          <tr @contextmenu.prevent="show">
             <td>{{ index }}</td>
-            <td class="text-center">{{ formatDate(item.increaseDate)}}</td>
+            <td class="text-center">{{ formatDate(item.increaseDate) }}</td>
             <td>{{ item.assetCode }}</td>
             <td>{{ item.assetName }}</td>
             <td>{{ item.assetTypeId }}</td>
@@ -165,29 +174,19 @@
         Tổng nguyên giá: {{ priceSumFunc() }}
       </div>
     </div>
-    <v-dialog
-      v-model="deleteDialog"
-      max-width="350"
-    >
+
+    <v-dialog v-model="deleteDialog" max-width="350">
       <v-card>
-        <v-card-title class="text-h5">
-         Thông báo
-        </v-card-title>
-        <v-card-text class="red--text text-h6">Bạn có chắc muốn xóa dữ liệu</v-card-text>
+        <v-card-title class="text-h5"> Thông báo </v-card-title>
+        <v-card-text class="red--text text-h6"
+          >Bạn có chắc muốn xóa dữ liệu</v-card-text
+        >
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="deleteDialog = false"
-          >
+          <v-btn color="green darken-1" text @click="deleteDialog = false">
             Hủy
           </v-btn>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="deleteDialog = false"
-          >
+          <v-btn color="green darken-1" text @click="deleteDialog = false">
             Đồng ý
           </v-btn>
         </v-card-actions>
@@ -201,8 +200,8 @@
 import "../assets/css/ghitang.css";
 import moment from "moment";
 import FormDetails from "../components/FormDetails.vue";
-import headers from '../common/header-table'
-const axios = require('axios');
+import headers from "../common/header-table";
+const axios = require("axios");
 export default {
   name: "taisan",
   components: {
@@ -232,7 +231,10 @@ export default {
 
       // đổ dữ liệu lên form khi sửa
       // CreatedBy MTDUONG (15/06/2021)
-      
+
+      // Loading icon khi load data
+      // CreatedBy MTDUONG (17/06/2021)
+      overlay: true,
 
       // Context Menu
       // CreatedBy MTDUONG (15/06/2021)
@@ -256,40 +258,44 @@ export default {
       showMenu: false,
       x: 0,
       y: 0,
-
-      // Di chuyển bằng phím mũi tên
-      selectedRows: [],
-
-      // Dòng hiện tại
-      
     };
   },
   // Di chuyển bằng phím mũi tên
 
-  async created(){
-    var res = await axios.get("https://localhost:44331/api/assets")
-    this.assets = res.data
+  created() {
+    this.loadData()  
   },
   methods: {
+    // Load dữ liệu
+    // CreadtedBy MTDUONG (17/06/2021)
+    async loadData(){
+      await axios.get("https://localhost:44331/api/assets").then((res) => {
+      this.assets = res.data;
+      this.overlay = false;
+      });
+    },
+
+    // Load lại dữ liệu
+    // CreatedBy MTDUONG (17/06/2021)
+    reloadTable(){
+      this.overlay = true;
+      this.loadData();
+    },
+
+
+    // CreatedBy MTDUONG (17/06/2021)
     // Filter theo tên và mã nhân viên (Chưa hoạt động)
     // CreatedBy MTDUONG(13/06/2021)
 
-
     // Tính tổng tài sản
     // CreatdBy MTDUONG (15/06/2021)
-    assetCount(){
-      return this.assets.length
+    assetCount() {
+      return this.assets.length;
     },
-
 
     // Tính tổng nguyên giá (chưa hoạt động)
     // CreatedBY MTDUONG (14/06/2021)
-    priceSumFunc(data) {
-      for (item in data) {
-        this.priceSum += parseInt(item.Price);
-      }
-      return this.priceSum;
-    },
+    priceSumFunc(data) {},
 
     // Đổ data lên form khi sửa (Chưa xong )
     // CreatedBy MTDUONG (15/06/2021)
@@ -318,7 +324,7 @@ export default {
 
     //Format data
     // CreatedBy MTDUONG (15/06/2021)
-     formatMoney(money) {
+    formatMoney(money) {
       return money === null
         ? "0"
         : !isNaN(money)
@@ -331,22 +337,8 @@ export default {
 
     // Chọn nhiều dòng
     // CreatedBy MTDUONG (15/06/2021)
-    rowClicked(row) {
-      console.log(row)
-      this.toggleSelection(row.id);
-    },
-    toggleSelection(keyID) {
-      if (this.selectedRows.includes(keyID)) {
-        this.selectedRows = this.selectedRows.filter(
-          selectedKeyID => selectedKeyID !== keyID
-        );
-      } else {
-        this.selectedRows.push(keyID);
-      }
-    },
 
     // Di chuyển lên xuống bằng phím mũi tên
-   
   },
 };
 </script>
@@ -369,9 +361,8 @@ export default {
 }
 .v-data-table__wrapper::-webkit-scrollbar {
   display: block;
-    width: 5px !important;
-    height: 5px !important;
-    z-index: 1231232123421
+  width: 5px !important;
+  height: 5px !important;
+  z-index: 1231232123421;
 }
-
 </style>
