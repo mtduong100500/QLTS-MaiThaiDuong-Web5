@@ -7,7 +7,6 @@
           CreatedBy MTDUONG (14/06/2021)
         -->
         <input
-        
           type="text"
           v-model="search"
           placeholder="Tìm kiếm"
@@ -42,7 +41,7 @@
         </v-tooltip>
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
-            <div class="btn-delete btn-hover" v-on="on" v-bind="attrs">
+            <div class="btn-delete btn-hover" v-on="on" v-bind="attrs" @click="deleteDialog = true">
               <v-img
                 height="15"
                 width="15"
@@ -81,14 +80,16 @@
         :items="assets"
         :headers="headers"
         fixed-header
-        :custom-filter="filter"
         hide-default-footer
         disable-pagination
         v-model="selectedRows"
         no-data-text="Không có dữ liệu"
       >
         <template #item="{ item, index }" > 
-          <tr @contextmenu.prevent="show" :class="[selectedRows.indexOf(item.assetCode)>-1?'cyan':'' ]" @click.ctrl.prevent="rowClicked(item)" >
+          <tr 
+          @contextmenu.prevent="show" 
+          :class="[selectedRows.indexOf(item.assetCode)>-1?'cyan':'' ]" 
+          @click.ctrl.prevent="rowClicked(item)" >
             <td>{{ index }}</td>
             <td class="text-center">{{ formatDate(item.increaseDate)}}</td>
             <td>{{ item.assetCode }}</td>
@@ -101,7 +102,7 @@
               3 nút sửa xóa nhân bản trong mỗi dòng của table
               CreatedBy MTDUONG (14/06/2021)
             -->
-            <td :class="selectedRows.indexOf(item.assetCode)>-1?'cyan':''">
+            <td>
               <div class="d-flex align-center">
                 <v-tooltip bottom>
                   <template #activator="{ on, attrs }">
@@ -127,6 +128,7 @@
                       class="btn-hover"
                       v-bind="attrs"
                       v-on="on"
+                      @click="deleteDialog = true"
                     ></v-img>
                   </template>
                   <span>Xóa</span>
@@ -163,6 +165,34 @@
         Tổng nguyên giá: {{ priceSumFunc() }}
       </div>
     </div>
+    <v-dialog
+      v-model="deleteDialog"
+      max-width="350"
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+         Thông báo
+        </v-card-title>
+        <v-card-text class="red--text text-h6">Bạn có chắc muốn xóa dữ liệu</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="deleteDialog = false"
+          >
+            Hủy
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="deleteDialog = false"
+          >
+            Đồng ý
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <FormDetails v-if="$store.state.isOpen" />
   </div>
 </template>
@@ -171,6 +201,7 @@
 import "../assets/css/ghitang.css";
 import moment from "moment";
 import FormDetails from "../components/FormDetails.vue";
+import headers from '../common/header-table'
 const axios = require('axios');
 export default {
   name: "taisan",
@@ -179,49 +210,10 @@ export default {
   },
   data() {
     return {
+      deleteDialog: false,
       // Chứa các thông tin của table headers
       // CreatedBy MTDUONG (14/06/2021)
-      headers: [
-        { text: "STT", value: "this.index", width: "80px", sortable: false },
-        {
-          text: "NGÀY GHI TĂNG",
-          value: "increaseDate",
-          width: "140px",
-          sortable: false,
-        },
-        {
-          text: "MÃ TÀI SẢN",
-          value: "assetCode",
-          width: "100px",
-          sortable: false,
-        },
-        {
-          text: "TÊN TÀI SẢN",
-          value: "assetName",
-          width: "600px",
-          sortable: false,
-        },
-        {
-          text: "LOẠI TÀI SẢN",
-          value: "assetTypeId",
-          width: "150px",
-          sortable: false,
-        },
-        {
-          text: "PHÒNG BAN",
-          value: "departmentId",
-          width: "250px",
-          sortable: false,
-        },
-        { text: "NGUYÊN GIÁ", value: "originalPrice", width: "150px", sortable: false },
-        {
-          text: "CHỨC NĂNG",
-          value: "actions",
-          width: "100px",
-          sortable: false,
-          fixed: true,
-        },
-      ],
+      headers: headers,
 
       // Dùng để lưu trữ dữ liệu để truyền lên table
       // CreatedBy MTDUONG (14/06/2021)
@@ -240,15 +232,6 @@ export default {
 
       // đổ dữ liệu lên form khi sửa
       // CreatedBy MTDUONG (15/06/2021)
-      editedIndex: -1,
-      editedItem: {
-        STT: "",
-        PropertyCode: "",
-        PropertyName: "",
-        PropertyType: "",
-        Department: "",
-        Price: "",
-      },
       
 
       // Context Menu
@@ -284,23 +267,18 @@ export default {
   // Di chuyển bằng phím mũi tên
 
   async created(){
-    var data = await axios.get("https://localhost:44364/api/assets/")
-    this.assets = data.data
-    console.log(this.assets)
+    var res = await axios.get("https://localhost:44331/api/assets")
+    this.assets = res.data
   },
   methods: {
     // Filter theo tên và mã nhân viên (Chưa hoạt động)
     // CreatedBy MTDUONG(13/06/2021)
-    filter(value, search, item) {
-      let inName = RegExp(search, "i").test(item.PropertyName);
-      let inCode = false;
-      return inName || inCode;
-    },
+
 
     // Tính tổng tài sản
     // CreatdBy MTDUONG (15/06/2021)
     assetCount(){
-      return this.index.length
+      return this.assets.length
     },
 
 
@@ -354,7 +332,8 @@ export default {
     // Chọn nhiều dòng
     // CreatedBy MTDUONG (15/06/2021)
     rowClicked(row) {
-      this.toggleSelection(row.STT);
+      console.log(row)
+      this.toggleSelection(row.id);
     },
     toggleSelection(keyID) {
       if (this.selectedRows.includes(keyID)) {

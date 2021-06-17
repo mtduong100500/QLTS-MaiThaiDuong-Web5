@@ -3,7 +3,7 @@
     Overlay để hiện Form
     CreatedBy MTDUONG (14/06/2021)
   -->
-  <div class="overlay" @keyup.27="$store.commit('changeFormState')" @keydown.112.exact="test">
+  <div class="overlay" @keyup.esc="closeDialog = true">
     <!--
       Nội dung chính của Form
       CreatedBy MTDUONG (14/06/2021)
@@ -21,7 +21,7 @@
                 v-on="on"
                 v-bind="attrs"
                 class="btn-hover"
-                @click="$store.commit('changeDevelopingState')"
+                @click="developingDialog = true"
               ></v-img>
             </template>
             <span>Trợ giúp</span>
@@ -35,7 +35,7 @@
                 v-on="on"
                 v-bind="attrs"
                 class="btn-hover ml-2 mr-4"
-                @click="$store.commit('changeCloseConfirmState')"
+                @click="closeDialog = true"
               ></v-img>
             </template>
             <span>Thoát</span>
@@ -192,10 +192,9 @@
         class="btn d-flex justify-space-between py-2"
         style="background-color: #dddddd; height: 100%"
       >
-        <div class="d-flex align-center">
+        <div class="d-flex align-center" @click="closeDialog = true">
           <v-btn
             class="mx-6 px-9 elevation-0 text-capitalize"
-            @click="$store.commit('changeCloseConfirmState')"
             >Hủy</v-btn
           >
         </div>
@@ -208,6 +207,63 @@
         </div>
       </div>
     </v-form>
+
+    <!--
+      Các thông báo 
+      CreatedBy MTDUONG (17/06/2021)
+    -->
+    <v-dialog
+      v-model="closeDialog"
+      persistent
+      max-width="350"
+      no-click-animation
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+         Thông báo
+        </v-card-title >
+        <v-card-text class="text-h6">Bạn có chắc muốn đóng cửa sổ này? </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="closeDialog = false"
+          >
+            Hủy
+          </v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="$store.commit('changeFormState')"
+          >
+            Đồng ý
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog
+      v-model="developingDialog"
+      max-width="350"
+      
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+         Thông báo
+        </v-card-title>
+        <v-card-text class="text-h6">Tính năng này hiện đang được phát triển</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="developingDialog = false"
+          >
+            Quay lại
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     
   </div>
 </template>
@@ -219,6 +275,8 @@ export default {
   name: "FormDetails",
   data() {
     return {
+      developingDialog: false,
+      closeDialog: false,
       assetName:'',
       assetCode:'',
       departmentCode: '',

@@ -29,16 +29,12 @@
       <router-view></router-view>
     </v-main>
 
-    <DevelopingFeatures v-if="$store.state.isDeveloping" />
-    <CloseWarning v-if="$store.state.isClose" />
   </v-app>
 </template>
 
 <script>
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
-import DevelopingFeatures from "./components/DevelopingFeatures.vue";
-import CloseWarning from "./components/CloseWarning.vue";
 export default {
   data() {
     return {
@@ -49,8 +45,6 @@ export default {
   components: {
     Sidebar,
     Header,
-    DevelopingFeatures,
-    CloseWarning,
   },
 
   mounted() {

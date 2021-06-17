@@ -14,7 +14,7 @@
       <!-- Trợ giúp -->
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <div class="help-ico icon-hover" v-bind="attrs" v-on="on" @click="$store.commit('changeDevelopingState')">
+          <div class="help-ico icon-hover" v-bind="attrs" v-on="on" @click="developingDialog = true">
             <v-img src="../assets/icon/help.svg"> </v-img>
           </div>
         </template>
@@ -23,7 +23,7 @@
       <!-- Thông báo -->
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <div class="badge icon-hover" v-bind="attrs" v-on="on" @click="$store.commit('changeDevelopingState')">
+          <div class="badge icon-hover" v-bind="attrs" v-on="on" @click="developingDialog = true">
             <v-badge
               bordered
               bottom
@@ -42,10 +42,11 @@
         src="../assets/icon/Divider.svg"
         max-height="20"
         class="divider"
+
       ></v-img>
 
       <!-- Avatar -->
-      <div class="avatar icon-hover" @click="$store.commit('changeDevelopingState')">
+      <div class="avatar icon-hover" @click="developingDialog = true">
         <v-avatar size="30">
           <v-img src="https://cdn.vuetifyjs.com/images/lists/2.jpg"></v-img>
         </v-avatar>
@@ -56,6 +57,29 @@
         class="icon-hover down-icon"
       ></v-img>
     </div>
+     <v-dialog
+      v-model="developingDialog"
+      max-width="350"
+      
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+         Thông báo
+        </v-card-title>
+        <v-card-text class="text-h6">Tính năng này hiện đang được phát triển</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="developingDialog = false"
+          >
+            Quay lại
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    
   </div>
 </template>
 
@@ -66,6 +90,7 @@ export default {
   name: "Header",
   data() {
     return {
+      developingDialog: false,
       // Breadcrums link
       links: [
         {
