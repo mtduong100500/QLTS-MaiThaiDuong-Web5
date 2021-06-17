@@ -48,11 +48,7 @@ export default {
   },
 
   mounted() {
-    window.addEventListener("keydown", (event) => {
-      if (event.keyCode === 112) {
-        event.preventDefault();
-      }
-    });
+    
 
   },
 };

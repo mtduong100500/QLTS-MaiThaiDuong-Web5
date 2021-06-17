@@ -4,9 +4,12 @@
   .v-input__append-inner {
     margin-top: 9px !important;
   }
-  .v-text-field--outlined fieldset {
+  .v-text-field--outlined fieldset{
     border-radius: 0 !important;
-    border-color: #dddddd !important;
+  }
+  
+  .v-application .primary--text{
+    color:  #01B075 !important;
   }
   
   .v-text-field--full-width.v-input--dense:not(.v-text-field--solo).v-text-field--outlined
@@ -102,3 +105,5 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
   }
+
+  

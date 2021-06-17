@@ -19,17 +19,18 @@
         -->
         <input
           type="text"
+          ref="search"
           v-model="search"
           placeholder="Tìm kiếm"
           class="search-bar search-icon"
         />
       </div>
 
-      <!--
-        3 nút bấm: Thêm, load lại bảng và xóa
-        CreatedBy MTDUONG (14/06/2021)
-      -->
       <div class="btn-group d-flex align-center">
+        <!--
+          Nút thêm
+          CreatedBy MTDUONG (14/06/2021)
+        -->
         <v-btn
           color="#00abfe"
           small
@@ -37,7 +38,10 @@
           @click="$store.commit('changeFormState')"
           >Thêm</v-btn
         >
-
+        <!--
+          Nút tải lại bảng
+          CreatedBy MTDUONG (14/06/2021)
+        -->
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
             <div
@@ -55,6 +59,12 @@
           </template>
           <span>Tải lại bảng</span>
         </v-tooltip>
+
+        <!--
+          Nút xóa nhiều
+          CreatedBy MTDUONG (14/06/2021)
+        -->
+        
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
             <div
@@ -110,20 +120,19 @@
       >
         <template #item="{ item }">
           <tr @contextmenu.prevent="show">
-            <td>{{ assets.indexOf(item) + 1}}</td>
+            <td>{{ assets.indexOf(item) + 1 }}</td>
             <td class="text-center">{{ formatDate(item.increaseDate) }}</td>
             <td>{{ item.assetCode }}</td>
             <td>{{ item.assetName }}</td>
             <td>{{ item.assetTypeId }}</td>
             <td>{{ item.departmentId }}</td>
             <td class="text-right">{{ formatMoney(item.originalPrice) }}</td>
-
-            <!-- 
-              3 nút sửa xóa nhân bản trong mỗi dòng của table
-              CreatedBy MTDUONG (14/06/2021)
-            -->
             <td>
               <div class="d-flex align-center">
+                <!--
+                  Nút chỉnh sửa trên dòng trong bảng
+                  CreatedBy MTDUONG (14/06/2021)
+                -->
                 <v-tooltip bottom>
                   <template #activator="{ on, attrs }">
                     <v-icon
@@ -138,6 +147,11 @@
                   </template>
                   <span>Sửa</span>
                 </v-tooltip>
+
+                <!--
+                  Nút xóa dòng trên bảng
+                  CreatedBy MTDUONG (14/06/2021)
+                -->
                 <v-tooltip bottom>
                   <template #activator="{ on, attrs }">
                     <v-img
@@ -153,6 +167,12 @@
                   </template>
                   <span>Xóa</span>
                 </v-tooltip>
+
+                <!--
+                  Nút nhân bản trên dòng trong bảng
+                  CreatedBy MTDUONG (14/06/2021)
+                -->
+
                 <v-tooltip bottom>
                   <template #activator="{ on, attrs }">
                     <v-icon
@@ -203,7 +223,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <FormDetails v-if="$store.state.isOpen" />
+    <FormDetails v-if="$store.state.isOpen" @keyup.f1="$store.commit('changeFormState')"/>
   </div>
 </template>
 
@@ -212,7 +232,7 @@ import "../assets/css/ghitang.css";
 import moment from "moment";
 import FormDetails from "../components/FormDetails.vue";
 import headers from "../common/header-table";
-import resizableGrid from "../common/resizeColumn"
+import resizableGrid from "../common/resizeColumn";
 const axios = require("axios");
 export default {
   name: "taisan",
@@ -285,6 +305,8 @@ export default {
     for (var i = 0; i < tables.length; i++) {
       resizableGrid(tables[i]);
     }
+    // Focus vào ô input tìm kiếm
+    this.focusInput();
   },
   methods: {
     // Load dữ liệu
@@ -306,10 +328,10 @@ export default {
     // CreatedBy MTDUONG (17/06/2021)
     // Filter theo tên và mã nhân viên
     // CreatedBy MTDUONG(13/06/2021)
-    searchByNameAndCode(value, search, item){
-      let inName = RegExp(search, 'i').test(item.assetName)
-      let inCode = RegExp(search, 'i').test(item.assetCode)
-      return inName || inCode
+    searchByNameAndCode(value, search, item) {
+      let inName = RegExp(search, "i").test(item.assetName);
+      let inCode = RegExp(search, "i").test(item.assetCode);
+      return inName || inCode;
     },
 
     // Tính tổng tài sản
@@ -324,7 +346,6 @@ export default {
 
     // Đổ data lên form khi sửa (Chưa xong )
     // CreatedBy MTDUONG (15/06/2021)
-   
 
     // Chuột phải sẽ hiện context menu
     // CreatedBy MTDUONG (15/06/2021)
@@ -344,7 +365,7 @@ export default {
       this.items[index].click.call(this);
     },
 
-    //Format data
+    // Format tiền
     // CreatedBy MTDUONG (15/06/2021)
     formatMoney(money) {
       return money === null
@@ -353,11 +374,17 @@ export default {
         ? money.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.")
         : money;
     },
+    // Format ngày tháng
+    // CreatedBy MTDUONG (15/06/2021)
     formatDate(date) {
-      return moment(String(date)).format("DD/MM/YYYY");
+      return date ? moment(String(date)).format("DD/MM/YYYY") : '';
     },
 
-   
+    // Focus input
+    // CreatedBy MTDUONG (17/06/2021)
+    focusInput(){
+      this.$refs.search.focus()
+    }
   },
 };
 </script>

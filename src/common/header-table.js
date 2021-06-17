@@ -1,5 +1,5 @@
 var headers = [
-    { text: "STT", value: "this.index", width: "80px", sortable: false },
+    { text: "STT", value: "this.index", width: "40px", sortable: false },
     {
         text: "NGÀY GHI TĂNG",
         value: "increaseDate",

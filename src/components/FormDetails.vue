@@ -73,7 +73,7 @@
         <v-row justify="space-around">
           <v-col md="4">
             <div class="d-flex flex-column">
-              <label class="mb-3">Mã phòng ban (*)</label>
+              <label class="mb-3">Mã phòng ban </label>
               <v-text-field
               v-model="departmentCode"
                outlined
@@ -82,7 +82,7 @@
           </v-col>
           <v-col md="8">
             <div class="d-flex flex-column">
-              <label class="mb-3">Tên phòng ban (*)</label>
+              <label class="mb-3">Tên phòng ban </label>
               <v-text-field
               v-model="departmentName"
                outlined
@@ -95,7 +95,7 @@
         <v-row justify="space-around">
           <v-col md="4">
             <div class="d-flex flex-column">
-              <label class="mb-3">Mã loại tài sản (*)</label>
+              <label class="mb-3">Mã loại tài sản</label>
               <v-autocomplete
                 dense
                 outlined
@@ -109,7 +109,7 @@
           </v-col>
           <v-col md="8">
             <div class="d-flex flex-column">
-              <label class="mb-3">Tên loại tài sản (*)</label>
+              <label class="mb-3">Tên loại tài sản</label>
               <input
                 type="text"
                 class="input-disabled"
@@ -162,11 +162,11 @@
           <v-col class="d-flex" md="8">
             <div class="d-flex flex-column">
               <label class="mb-3">Thời gian sử dụng (năm)</label>
-              <v-text-field outlined></v-text-field>
+              <v-text-field outlined :rules="inputNumberRules.concat(inputRules)" ></v-text-field>
             </div>
             <div class="d-flex flex-column ml-6">
               <label class="mb-3">Tỉ lệ hao mòn (%)</label>
-              <v-text-field outlined></v-text-field>
+              <v-text-field outlined :rules="inputNumberRules.concat(inputRules)"></v-text-field>
             </div>
           </v-col>
         </v-row>
@@ -176,18 +176,21 @@
           <v-col md="4">
             <div class="d-flex flex-column">
               <label class="mb-3">Nguyên giá</label>
-              <v-text-field outlined></v-text-field>
+              <v-text-field outlined :rules="inputNumberRules.concat(inputRules)"></v-text-field>
             </div>
           </v-col>
           <v-col md="4">
             <div class="d-flex flex-column">
               <label class="mb-3">Giá trị hao mòn năm</label>
-              <v-text-field outlined></v-text-field>
+              <v-text-field outlined :rules="inputNumberRules.concat(inputRules)"></v-text-field>
             </div>
           </v-col>
         </v-row>
       </div>
-      <!---->
+      <!--
+        Hai nút bấm dưới cùng của FORM
+        CreatedBy MTDUONG (17/05/2021)
+      -->
       <div
         class="btn d-flex justify-space-between py-2"
         style="background-color: #dddddd; height: 100%"
@@ -209,7 +212,7 @@
     </v-form>
 
     <!--
-      Các thông báo 
+      Thông báo đóng cửa sổ
       CreatedBy MTDUONG (17/06/2021)
     -->
     <v-dialog
@@ -242,6 +245,12 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!--
+      Thông báo chức năng đang được phát triển
+      CreatedBy MTDUONG (17/06/2021)
+    -->
+
     <v-dialog
       v-model="developingDialog"
       max-width="350"
@@ -275,12 +284,20 @@ export default {
   name: "FormDetails",
   data() {
     return {
+      // Trạng thái của các thông báo
+      // CreatedBy MTDUONG (17/05/2021)
       developingDialog: false,
       closeDialog: false,
+
+      // Model của các input
+      // CreatedBy MTDUONG (17/05/2021)
       assetName:'',
       assetCode:'',
       departmentCode: '',
       departmentName: '',
+
+      // Select Box
+      // CreatedBy MTDUONG (15/05/2021)
       assetsType: null,
       assetTypeCodes: [
         {
@@ -292,27 +309,36 @@ export default {
           assetTypeName: "PC",
         },
       ],
+
+      // Datepicker
+      // CreatedBy MTDUONG (15/05/2021)
       menu2: false,
       date: "",
-      editedIndex: -1,
-      editedItem:{
-        
-      },
+
+      // Validate input text
+      // CreatedBy MTDUONG (17/05/2021)
       inputRules:[
-        v => v.length >= 3 || 'Cần nhập ít nhất 3 kí tự',
-        v => v.length <= 10 || 'Chỉ có thể nhập nhiều nhất 10 kí tự'
-      ]
+        v => v && v.length >= 3 || 'Cần nhập ít nhất 3 kí tự',
+        v => v && v.length <= 10 || 'Chỉ có thể nhập nhiều nhất 10 kí tự'
+      ],
+
+      // Validate input số
+      // CreatedBy MTDUONG (17/05/2021)
+      inputNumberRules:[
+        v => !isNaN(v) || "Bạn chỉ được nhập chữ số"
+      ],
     };
   },
+
+   
   computed: {
+    // Format text hiện trên datepicker
     formatDateWithMomentJS() {
       return this.date ? moment(String(this.date)).format("DD/MM/YYYY") : "";
     },
   },
   methods: {
-    test(){
-      console.log("1")
-    },
+    // Validate Form
     submit(){
       if(this.$refs.form.validate()){
         console.log('Lỗi')
