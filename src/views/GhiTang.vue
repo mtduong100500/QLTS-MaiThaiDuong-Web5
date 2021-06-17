@@ -5,7 +5,11 @@
       CreatedBy MTDUONG (17/06/2021)
     -->
     <v-overlay :value="overlay">
-      <v-progress-circular indeterminate color="primary" size="64"></v-progress-circular>
+      <v-progress-circular
+        indeterminate
+        color="primary"
+        size="64"
+      ></v-progress-circular>
     </v-overlay>
     <div class="toolbar">
       <div>
@@ -36,7 +40,12 @@
 
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
-            <div class="btn-reload btn-hover" v-bind="attrs" v-on="on" @click="reloadTable">
+            <div
+              class="btn-reload btn-hover"
+              v-bind="attrs"
+              v-on="on"
+              @click="reloadTable"
+            >
               <v-img
                 max-height="15"
                 max-width="15"
@@ -92,14 +101,16 @@
       <v-data-table
         :items="assets"
         :headers="headers"
+        :custom-filter="searchByNameAndCode"
+        :search="search"
         fixed-header
         hide-default-footer
         disable-pagination
         no-data-text="Không có dữ liệu"
       >
-        <template #item="{ item, index }">
+        <template #item="{ item }">
           <tr @contextmenu.prevent="show">
-            <td>{{ index }}</td>
+            <td>{{ assets.indexOf(item) + 1}}</td>
             <td class="text-center">{{ formatDate(item.increaseDate) }}</td>
             <td>{{ item.assetCode }}</td>
             <td>{{ item.assetName }}</td>
@@ -201,6 +212,7 @@ import "../assets/css/ghitang.css";
 import moment from "moment";
 import FormDetails from "../components/FormDetails.vue";
 import headers from "../common/header-table";
+import resizableGrid from "../common/resizeColumn"
 const axios = require("axios");
 export default {
   name: "taisan",
@@ -254,7 +266,7 @@ export default {
         },
       ],
 
-      // Tọa độ chuột và trajgn thái của context menu
+      // Tọa độ chuột và trạng thái của context menu
       showMenu: false,
       x: 0,
       y: 0,
@@ -263,29 +275,42 @@ export default {
   // Di chuyển bằng phím mũi tên
 
   created() {
-    this.loadData()  
+    this.loadData();
+  },
+
+  mounted() {
+    // Thay đổi độ rộng cột
+    // CreatedBy MTDUONG (17/06/2021)
+    var tables = document.getElementsByTagName("table");
+    for (var i = 0; i < tables.length; i++) {
+      resizableGrid(tables[i]);
+    }
   },
   methods: {
     // Load dữ liệu
     // CreadtedBy MTDUONG (17/06/2021)
-    async loadData(){
+    async loadData() {
       await axios.get("https://localhost:44331/api/assets").then((res) => {
-      this.assets = res.data;
-      this.overlay = false;
+        this.assets = res.data;
+        this.overlay = false;
       });
     },
 
     // Load lại dữ liệu
     // CreatedBy MTDUONG (17/06/2021)
-    reloadTable(){
+    reloadTable() {
       this.overlay = true;
       this.loadData();
     },
 
-
     // CreatedBy MTDUONG (17/06/2021)
-    // Filter theo tên và mã nhân viên (Chưa hoạt động)
+    // Filter theo tên và mã nhân viên
     // CreatedBy MTDUONG(13/06/2021)
+    searchByNameAndCode(value, search, item){
+      let inName = RegExp(search, 'i').test(item.assetName)
+      let inCode = RegExp(search, 'i').test(item.assetCode)
+      return inName || inCode
+    },
 
     // Tính tổng tài sản
     // CreatdBy MTDUONG (15/06/2021)
@@ -299,10 +324,7 @@ export default {
 
     // Đổ data lên form khi sửa (Chưa xong )
     // CreatedBy MTDUONG (15/06/2021)
-    editItem(item) {
-      this.editedIndex = data.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-    },
+   
 
     // Chuột phải sẽ hiện context menu
     // CreatedBy MTDUONG (15/06/2021)
@@ -335,10 +357,7 @@ export default {
       return moment(String(date)).format("DD/MM/YYYY");
     },
 
-    // Chọn nhiều dòng
-    // CreatedBy MTDUONG (15/06/2021)
-
-    // Di chuyển lên xuống bằng phím mũi tên
+   
   },
 };
 </script>
