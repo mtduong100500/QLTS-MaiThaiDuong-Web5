@@ -300,23 +300,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mtduong\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\PC\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\mtduong\\final\\MISA.QLTS\\MISA.QLTS\\MISA.QLTS.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Desktop\\danhgia\\final\\MISA.QLTS\\MISA.QLTS\\MISA.QLTS.csproj",
       "projectName": "MISA.QLTS",
-      "projectPath": "D:\\mtduong\\final\\MISA.QLTS\\MISA.QLTS\\MISA.QLTS.csproj",
-      "packagesPath": "C:\\Users\\mtduong\\.nuget\\packages\\",
-      "outputPath": "D:\\mtduong\\final\\MISA.QLTS\\MISA.QLTS\\obj\\",
+      "projectPath": "C:\\Users\\PC\\Desktop\\danhgia\\final\\MISA.QLTS\\MISA.QLTS\\MISA.QLTS.csproj",
+      "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\PC\\Desktop\\danhgia\\final\\MISA.QLTS\\MISA.QLTS\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\mtduong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -330,11 +326,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "D:\\mtduong\\final\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj": {
-              "projectPath": "D:\\mtduong\\final\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj"
+            "C:\\Users\\PC\\Desktop\\danhgia\\final\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj": {
+              "projectPath": "C:\\Users\\PC\\Desktop\\danhgia\\final\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj"
             },
-            "D:\\mtduong\\final\\MISA.QLTS\\MISA.Infrastruture\\MISA.Infrastruture.csproj": {
-              "projectPath": "D:\\mtduong\\final\\MISA.QLTS\\MISA.Infrastruture\\MISA.Infrastruture.csproj"
+            "C:\\Users\\PC\\Desktop\\danhgia\\final\\MISA.QLTS\\MISA.Infrastruture\\MISA.Infrastruture.csproj": {
+              "projectPath": "C:\\Users\\PC\\Desktop\\danhgia\\final\\MISA.QLTS\\MISA.Infrastruture\\MISA.Infrastruture.csproj"
             }
           }
         }

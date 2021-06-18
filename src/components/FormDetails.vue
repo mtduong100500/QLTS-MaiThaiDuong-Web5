@@ -92,7 +92,9 @@
                 :items="departmentCombo"
                 v-model="newAsset.department"
                 item-text="departmentCode"
-                item-value="departmentName"
+                item-value="department.departmentName"
+                
+                return-object
               ></v-autocomplete>
             </div>
           </v-col>
@@ -103,7 +105,7 @@
                 type="text"
                 class="input-disabled"
                 disabled
-                v-model="newAsset.department"
+                v-model="newAsset.department.departmentName"
               />
             </div>
           </v-col>
@@ -121,7 +123,8 @@
                 :items="assetTypeCombo"
                 v-model="newAsset.assetType"
                 item-text="assetTypeCode"
-                
+                item-value="assetType.assetTypeName"
+                 return-object
               ></v-autocomplete>
             </div>
           </v-col>
@@ -132,7 +135,7 @@
                 type="text"
                 class="input-disabled"
                 disabled
-                v-model="newAsset.assetType"
+                v-model="newAsset.assetType.assetTypeName"
               />
             </div>
           </v-col>
@@ -319,7 +322,7 @@
         >
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="this.$store.dispatch('loadData'), this.successAdd = false">
+          <v-btn color="green darken-1" text @click="this.$store.dispatch('loadData'), successAdd = false">
             Quay lại
           </v-btn>
         </v-card-actions>
@@ -388,8 +391,8 @@ export default {
       wearRate: 0,
       increaseDate: null,
       wearValue: 0,
-      assetType: null,
-      department: "",
+      assetType: {},
+      department: {},
       // Trạng thái của các thông báo
       // CreatedBy MTDUONG (17/05/2021)
       developingDialog: false,
@@ -439,7 +442,9 @@ export default {
   methods: {
     async addAsset() {
       
-      console.log(this.newAsset);
+      this.newAsset.assetTypeId = this.newAsset.assetType.assetTypeId
+      this.newAsset.departmentId = this.newAsset.department.departmentId
+      console.log(this.newAsset)
       await axios.post("https://localhost:44331/api/assets", this.newAsset)
       .then((res) => {
           this.$store.dispatch('loadData')
@@ -483,7 +488,7 @@ export default {
         this.departmentCombo = res.data;
       });
     },
-  },
+    },
 };
 </script>
 

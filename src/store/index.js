@@ -10,6 +10,7 @@ export default new Vuex.Store({
     error: false,
     assets: [],
     overlay: true,
+    isSuccess: false
   },
   mutations: {
     changeFormState(state) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     changeErrorState(state){
       state.error = !state.error
+    },
+    changeSuccess(state){
+      state.isSuccess = !state.isSuccess
     }
 
   },
