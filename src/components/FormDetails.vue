@@ -162,11 +162,11 @@
           <v-col class="d-flex" md="8">
             <div class="d-flex flex-column">
               <label class="mb-3">Thời gian sử dụng (năm)</label>
-              <v-text-field outlined :rules="inputNumberRules.concat(inputRules)" ></v-text-field>
+              <v-text-field outlined :rules="inputRules.concat(inputNumberRules)" ></v-text-field>
             </div>
             <div class="d-flex flex-column ml-6">
               <label class="mb-3">Tỉ lệ hao mòn (%)</label>
-              <v-text-field outlined :rules="inputNumberRules.concat(inputRules)"></v-text-field>
+              <v-text-field outlined :rules="inputRules.concat(inputNumberRules)"></v-text-field>
             </div>
           </v-col>
         </v-row>
@@ -176,13 +176,13 @@
           <v-col md="4">
             <div class="d-flex flex-column">
               <label class="mb-3">Nguyên giá</label>
-              <v-text-field outlined :rules="inputNumberRules.concat(inputRules)"></v-text-field>
+              <v-text-field outlined :rules="inputRules.concat(inputNumberRules)"></v-text-field>
             </div>
           </v-col>
           <v-col md="4">
             <div class="d-flex flex-column">
               <label class="mb-3">Giá trị hao mòn năm</label>
-              <v-text-field outlined :rules="inputNumberRules.concat(inputRules)"></v-text-field>
+              <v-text-field outlined :rules="inputRules.concat(inputNumberRules)"></v-text-field>
             </div>
           </v-col>
         </v-row>

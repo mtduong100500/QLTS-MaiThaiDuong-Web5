@@ -22,3 +22,15 @@ C:\Users\PC\Desktop\danhgia\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core
 C:\Users\PC\Desktop\danhgia\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.dll
 C:\Users\PC\Desktop\danhgia\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\ref\MISA.Core.dll
 C:\Users\PC\Desktop\danhgia\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.pdb
+D:\mtduong\final\MISA.QLTS\MISA.Core\bin\Debug\net5.0\MISA.Core.deps.json
+D:\mtduong\final\MISA.QLTS\MISA.Core\bin\Debug\net5.0\MISA.Core.dll
+D:\mtduong\final\MISA.QLTS\MISA.Core\bin\Debug\net5.0\ref\MISA.Core.dll
+D:\mtduong\final\MISA.QLTS\MISA.Core\bin\Debug\net5.0\MISA.Core.pdb
+D:\mtduong\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.csprojAssemblyReference.cache
+D:\mtduong\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\mtduong\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.AssemblyInfoInputs.cache
+D:\mtduong\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.AssemblyInfo.cs
+D:\mtduong\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.csproj.CoreCompileInputs.cache
+D:\mtduong\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.dll
+D:\mtduong\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\ref\MISA.Core.dll
+D:\mtduong\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.pdb
