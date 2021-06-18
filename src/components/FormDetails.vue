@@ -9,6 +9,7 @@
       CreatedBy MTDUONG (14/06/2021)
     -->
     <v-form class="form d-flex flex-column" ref="form">
+      <!--Tiêu đề và nút công cụ-->
       <div class="form-header d-flex justify-space-between px-6">
         <h2 class="mt-8 my-12">Ghi tăng tài sản</h2>
         <div class="btn-group d-flex mt-6">
@@ -297,6 +298,7 @@
 import moment from "moment";
 import "../assets/css/formdetails.css";
 import axios from 'axios';
+
 export default {
   name: "FormDetails",
   data() {
@@ -345,6 +347,7 @@ export default {
  
     };
   },
+  // Gọi hàm lấy data trên API
   created() {
     this.getComboDepartmentData()
     this.getComboAssetTypeData()

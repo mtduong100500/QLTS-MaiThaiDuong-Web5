@@ -308,6 +308,7 @@ export default {
 
   created() {
     this.loadData();
+    
 
   },
 
@@ -315,6 +316,8 @@ export default {
     
     // Focus vào ô input tìm kiếm
     this.focusInput();
+
+    this.priceSumFunc()
   },
   methods: {
     edit(){
@@ -328,7 +331,7 @@ export default {
       });
     },
 
-   
+     
 
     // Load lại dữ liệu
     // CreatedBy MTDUONG (17/06/2021)
@@ -354,7 +357,14 @@ export default {
 
     // Tính tổng nguyên giá (chưa hoạt động)
     // CreatedBY MTDUONG (14/06/2021)
-    priceSumFunc(data) {},
+    priceSumFunc() {
+      var sum = 0;
+      this.assets.filter((data)=>{
+        sum += data.originalPrice;
+      })
+
+      return sum = this.formatMoney(sum);
+    },
 
     // Đổ data lên form khi sửa (Chưa xong )
     // CreatedBy MTDUONG (15/06/2021)
