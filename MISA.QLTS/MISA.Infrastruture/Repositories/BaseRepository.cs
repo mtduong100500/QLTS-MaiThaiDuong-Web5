@@ -67,7 +67,7 @@ namespace MISA.Infrastruture.Repositories
                         sqlCommandValue += $"@{propName},";
                     }
             }
-            var sqlCommand = $"insert into {className} ({sqlCommandField}) values ({sqlCommandValue})";
+            var sqlCommand = $"Proc_Insert{className}";
             foreach (var pro in properties)
             {
                 var propName = pro.Name;
@@ -78,7 +78,7 @@ namespace MISA.Infrastruture.Repositories
                 }
                 dynamicParameters.Add($"@{propName}", propValue);
             }
-            var res = DbConnection.Execute(sqlCommand, param: dynamicParameters);
+            var res = DbConnection.Execute(sqlCommand, param: dynamicParameters, commandType: CommandType.StoredProcedure);
             return res;
         }
 
@@ -94,7 +94,7 @@ namespace MISA.Infrastruture.Repositories
             var condition = "";
             var properties = entity.GetType().GetProperties();
             // Khởi tạo câu lệnh truy vấn
-            var sqlCommand = $"UPDATE {className} SET {sqlCommandValue} WHERE {condition}";
+            var sqlCommand = $"Proc_Update{className}";
             DynamicParameters dynamicParameters = new DynamicParameters();
 
             var i = 0;
@@ -124,17 +124,17 @@ namespace MISA.Infrastruture.Repositories
                 dynamicParameters.Add($"@{propName}", propValue);
             }
 
-            var res = DbConnection.Execute(sqlCommand, param: dynamicParameters);
+            var res = DbConnection.Execute(sqlCommand, param: dynamicParameters, commandType: CommandType.StoredProcedure);
             return res;
 
         }
 
         public int Delete(Guid entityId)
         {
-            var sqlCommand = $"DELETE FROM {className} WHERE {className}Id = @{className}Id";
+            var sqlCommand = $"Proc_Delete{className}";
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@{className}Id", entityId);
-            var res = DbConnection.Execute(sqlCommand, param: dynamicParameters);
+            var res = DbConnection.Execute(sqlCommand, param: dynamicParameters, commandType: CommandType.StoredProcedure);
 
             // Trả về kết quả
             return res;

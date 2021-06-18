@@ -230,10 +230,15 @@
     </v-dialog>
 
     <!--
-      FORM
+      FORM thêm
       CreatedBy MTDUONG (17/06/2021)
       -->
-    <FormDetails v-if="$store.state.isOpen"/>
+    <FormDetails v-if="$store.state.isOpen" :edited="false"/>
+    <!--
+      FORM sửa
+      CreatedBy MTDUONG (17/06/2021)
+      -->
+    <FormDetails v-if="$store.state.isEdit"/>
   </div>
 </template>
 
@@ -242,7 +247,8 @@ import "../assets/css/ghitang.css";
 import moment from "moment";
 import FormDetails from "../components/FormDetails.vue";
 import headers from "../common/header-table";
-const axios = require("axios");
+import api from "../service/api"
+
 export default {
   name: "taisan",
   components: {
@@ -258,9 +264,6 @@ export default {
       // CreatedBy MTDUONG (14/06/2021)
       headers: headers,
 
-      // Dùng để lưu trữ dữ liệu để truyền lên table
-      // CreatedBy MTDUONG (14/06/2021)
-      assets: [],
       index: 0,
       // model dùng cho chức năng tìm kiếm
       search: "",
@@ -276,17 +279,13 @@ export default {
       // đổ dữ liệu lên form khi sửa
       // CreatedBy MTDUONG (15/06/2021)
 
-      // Loading icon khi load data
-      // CreatedBy MTDUONG (17/06/2021)
-      overlay: true,
-
       // Context Menu
       // CreatedBy MTDUONG (15/06/2021)
       items: [
         {
           title: "Sửa",
           click() {
-            this.$store.commit("changeFormState");
+            this.$store.commit("changeEditFormState");
           },
         },
         { title: "Xóa" },
@@ -304,40 +303,31 @@ export default {
       y: 0,
     };
   },
-  // Di chuyển bằng phím mũi tên
 
   created() {
-    this.loadData();
-    
-
+    this.$store.dispatch('loadData')
   },
-
+  computed: {
+    assets(){
+      return this.$store.state.assets
+    },
+    overlay(){
+      return this.$store.state.overlay
+    }
+  },
   mounted() {
-    
-    // Focus vào ô input tìm kiếm
-    this.focusInput();
-
     this.priceSumFunc()
   },
   methods: {
     edit(){
     },
-    // Load dữ liệu
-    // CreadtedBy MTDUONG (17/06/2021)
-    async loadData() {
-      await axios.get("https://localhost:44331/api/assets/").then((res) => {
-        this.assets = res.data;
-        this.overlay = false;
-      });
-    },
-
-     
 
     // Load lại dữ liệu
     // CreatedBy MTDUONG (17/06/2021)
     reloadTable() {
-      this.overlay = true;
-      this.loadData();
+      this.$store.commit('changeLoadingState')
+      this.$store.dispatch('loadData');
+      
     },
 
     // CreatedBy MTDUONG (17/06/2021)

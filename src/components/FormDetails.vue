@@ -43,35 +43,38 @@
           </v-tooltip>
         </div>
       </div>
-      <div class="main-form px-6 mb-4" >
+      <div class="main-form px-6 mb-4">
         <!--Dòng 1-->
         <v-row justify="space-around">
-          
           <v-col md="4">
-            <v-btn class="elevation-0" plain color="#dddddd"  @keyup.tab="focusLast" small max-width="3" width="3"></v-btn>
-            <div v-show="hide">
-              <v-btn @keyup.shift.tab="focusLast"></v-btn>
-            </div>
+            <v-btn
+              class="elevation-0"
+              plain
+              color="#ffffff"
+              @keyup.shift.tab="focusLast"
+              small
+              max-width="3"
+              width="3"
+            ></v-btn>
             <div class="d-flex flex-column">
               <label class="mb-5">Mã tài sản (*)</label>
               <v-text-field
-               outlined
-               v-model="assetCode"
-               :rules="inputRules"
-               autofocus
-               tabindex="0"
-               ref="firstInput"
+                outlined
+                v-model="newAsset.assetCode"
+                :rules="inputRules"
+                autofocus
+                tabindex="0"
+                ref="firstInput"
               ></v-text-field>
             </div>
-            
           </v-col>
           <v-col md="8">
             <div class="d-flex flex-column">
               <label class="mb-5">Tên tài sản (*)</label>
               <v-text-field
-              v-model="assetName"
-               outlined
-               :rules="inputRules"
+                v-model="newAsset.assetName"
+                outlined
+                :rules="inputRules"
               ></v-text-field>
             </div>
           </v-col>
@@ -87,7 +90,7 @@
                 outlined
                 auto-select-first
                 :items="departmentCombo"
-                v-model="department"
+                v-model="newAsset.department"
                 item-text="departmentCode"
                 item-value="departmentName"
               ></v-autocomplete>
@@ -100,7 +103,7 @@
                 type="text"
                 class="input-disabled"
                 disabled
-                v-model="department"
+                v-model="newAsset.department"
               />
             </div>
           </v-col>
@@ -116,9 +119,9 @@
                 outlined
                 auto-select-first
                 :items="assetTypeCombo"
-                v-model="assetsType"
+                v-model="newAsset.assetType"
                 item-text="assetTypeCode"
-                item-value="assetTypeName"
+                
               ></v-autocomplete>
             </div>
           </v-col>
@@ -129,7 +132,7 @@
                 type="text"
                 class="input-disabled"
                 disabled
-                v-model="assetsType"
+                v-model="newAsset.assetType"
               />
             </div>
           </v-col>
@@ -167,7 +170,7 @@
                 <v-date-picker
                   :first-day-of-week="1"
                   locale="vi-VN"
-                  v-model="date"
+                  v-model="newAsset.increaseDate"
                   no-title
                   @input="menu2 = false"
                 ></v-date-picker>
@@ -177,11 +180,19 @@
           <v-col class="d-flex" md="8">
             <div class="d-flex flex-column">
               <label class="mb-3">Thời gian sử dụng (năm)</label>
-              <v-text-field outlined :rules="inputNumberRules" ></v-text-field>
+              <v-text-field
+                outlined
+                :rules="inputNumberRules"
+                v-model="newAsset.timeUse"
+              ></v-text-field>
             </div>
             <div class="d-flex flex-column ml-6">
               <label class="mb-3">Tỉ lệ hao mòn (%)</label>
-              <v-text-field outlined :rules="inputNumberRules"></v-text-field>
+              <v-text-field
+                outlined
+                :rules="inputNumberRules"
+                v-model="newAsset.wearRate"
+              ></v-text-field>
             </div>
           </v-col>
         </v-row>
@@ -191,13 +202,22 @@
           <v-col md="4">
             <div class="d-flex flex-column">
               <label class="mb-3">Nguyên giá</label>
-              <v-text-field outlined :rules="inputNumberRules"></v-text-field>
+              <v-text-field
+                outlined
+                :rules="inputNumberRules"
+                v-model="newAsset.originalPrice"
+              ></v-text-field>
             </div>
           </v-col>
           <v-col md="4">
             <div class="d-flex flex-column">
               <label class="mb-3">Giá trị hao mòn năm</label>
-              <v-text-field outlined :rules="inputNumberRules" ref="lastInput"></v-text-field>
+              <v-text-field
+                outlined
+                :rules="inputNumberRules"
+                ref="lastInput"
+                v-model="newAsset.wearValue"
+              ></v-text-field>
             </div>
           </v-col>
         </v-row>
@@ -211,21 +231,24 @@
         style="background-color: #dddddd; height: 100%"
       >
         <div class="d-flex align-center" @click="closeDialog = true">
-          <v-btn
-            class="mx-6 px-9 elevation-0 text-capitalize"
-            
-            >Hủy</v-btn
-          >
+          <v-btn class="mx-6 px-9 elevation-0 text-capitalize">Hủy</v-btn>
         </div>
-        
+
         <div class="d-flex align-center" @click="submit">
           <v-btn
             color="#00abfe"
-            class="white--text px-9 py-4  elevation-0 text-capitalize"
+            class="white--text px-9 elevation-0 text-capitalize"
             >Lưu</v-btn
           >
-        <v-btn class="elevation-0" plain color="#dddddd"  @keyup.tab="focusFirst" small max-width="3" width="3"></v-btn>
-
+          <v-btn
+            class="elevation-0"
+            plain
+            color="#dddddd"
+            @keyup.tab="focusFirst"
+            small
+            max-width="3"
+            width="3"
+          ></v-btn>
         </div>
       </div>
     </v-form>
@@ -241,17 +264,13 @@
       no-click-animation
     >
       <v-card>
-        <v-card-title class="text-h5">
-         Thông báo
-        </v-card-title >
-        <v-card-text class="text-h6">Bạn có chắc muốn đóng cửa sổ này? </v-card-text>
+        <v-card-title class="text-h5"> Thông báo </v-card-title>
+        <v-card-text class="text-h6"
+          >Bạn có chắc muốn đóng cửa sổ này?
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="closeDialog = false"
-          >
+          <v-btn color="green darken-1" text @click="closeDialog = false">
             Hủy
           </v-btn>
           <v-btn
@@ -269,54 +288,117 @@
       Thông báo chức năng đang được phát triển
       CreatedBy MTDUONG (17/06/2021)
     -->
-    <v-dialog
-      v-model="developingDialog"
-      max-width="350"
-    >
+    <v-dialog v-model="developingDialog" max-width="350">
       <v-card>
-        <v-card-title class="text-h5">
-         Thông báo
-        </v-card-title>
-        <v-card-text class="text-h6">Tính năng này hiện đang được phát triển</v-card-text>
+        <v-card-title class="text-h5"> Thông báo </v-card-title>
+        <v-card-text class="text-h6"
+          >Tính năng này hiện đang được phát triển</v-card-text
+        >
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="developingDialog = false"
-          >
+          <v-btn color="green darken-1" text @click="developingDialog = false">
             Quay lại
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    
+    <!--
+      Thông báo khi thêm thành công
+      CreatedBy MTDUONG (18/06/2021)
+    -->
+    <v-dialog
+      v-model="successAdd"
+      persistent
+      max-width="350"
+      no-click-animation
+    >
+      <v-card>
+        <v-card-title class="text-h5"> Thông báo </v-card-title>
+        <v-card-text class="text-h6"
+          >Dữ liệu đã được thêm thành công</v-card-text
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="this.$store.dispatch('loadData'), this.successAdd = false">
+            Quay lại
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!--
+      Thông báo khi có lỗi 
+      CreatedBy MTDUONG (18/06/2021)
+    -->
+    <v-dialog
+      v-model="$store.state.error"
+      persistent
+      max-width="350"
+      no-click-animation
+    >
+      <v-card>
+        <v-card-title class="text-h5"> Thông báo </v-card-title>
+        <v-card-text class="text-h6 red--text"
+          >Đã xảy ra lỗi. Vui lòng liên hệ nhà phát triển</v-card-text
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="$store.commit('changeErrorState')">
+            Quay lại
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import moment from "moment";
 import "../assets/css/formdetails.css";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "FormDetails",
+  props: {
+    state: String,
+    formField: Object,
+  },
   data() {
     return {
-      
+      // Dữ liệu thêm mới
+      newAsset: {
+        assetName: "",
+        assetCode: "",
+        originalPrice: 0,
+        timeUse: 0,
+        wearRate: 0,
+        increaseDate: null,
+        wearValue: 0,
+        assetType: "",
+        department: "",
+        departmentId: "",
+        assetTypeId: ""
+      },
+
+      // Model của các input
+      // CreatedBy MTDUONG (17/05/2021)
+      assetName: "",
+      assetCode: "",
+      originalPrice: 0,
+      timeUse: 0,
+      wearRate: 0,
+      increaseDate: null,
+      wearValue: 0,
+      assetType: null,
+      department: "",
       // Trạng thái của các thông báo
       // CreatedBy MTDUONG (17/05/2021)
       developingDialog: false,
       closeDialog: false,
-
-      // Model của các input
-      // CreatedBy MTDUONG (17/05/2021)
-      assetName:'',
-      assetCode:'',
-
+      successAdd: false,
+      errorDialog: false,
       // Select Box loại tài sản
       // CreatedBy MTDUONG (15/05/2021)
-      assetsType: null,
+
       assetTypeCombo: [],
 
       // Select Box loại tài sản
@@ -327,73 +409,80 @@ export default {
       // Datepicker
       // CreatedBy MTDUONG (15/05/2021)
       menu2: false,
-      date: "",
 
       // Validate input text
       // CreatedBy MTDUONG (17/05/2021)
-      inputRules:[
-        v => v && v.length >= 3 || 'Cần nhập ít nhất 3 kí tự',
-        v => v && v.length <= 10 || 'Chỉ có thể nhập nhiều nhất 10 kí tự'
-      ],
+      inputRules: [(v) => (v && v.length >= 0) || "Không được để trống"],
 
       // Validate input số
       // CreatedBy MTDUONG (17/05/2021)
-      inputNumberRules:[
-        v => v && v.length >= 3 || 'Cần nhập ít nhất 3 kí tự',
-        v => v && !isNaN(v) || "Bạn chỉ được nhập chữ số",
-        v => v && v.length <= 10 || 'Chỉ có thể nhập nhiều nhất 10 kí tự'
+      inputNumberRules: [
+        (v) => (v && v.length >= 0) || "Không được để trống",
+        (v) => (v && !isNaN(v)) || "Bạn chỉ được nhập chữ số",
       ],
-
- 
     };
   },
   // Gọi hàm lấy data trên API
   created() {
-    this.getComboDepartmentData()
-    this.getComboAssetTypeData()
+    this.getComboDepartmentData();
+    this.getComboAssetTypeData();
   },
-   
+
   computed: {
     // Format text hiện trên datepicker
     formatDateWithMomentJS() {
-      return this.date ? moment(String(this.date)).format("DD/MM/YYYY") : "";
+      return this.newAsset.increaseDate
+        ? moment(String(this.newAsset.increaseDate)).format("DD/MM/YYYY")
+        : "";
     },
   },
   methods: {
+    async addAsset() {
+      
+      console.log(this.newAsset);
+      await axios.post("https://localhost:44331/api/assets", this.newAsset)
+      .then((res) => {
+          this.$store.dispatch('loadData')
+          this.successAdd = true
+      })
+      .catch((error) => {
+          this.$store.commit('changeErrorState')
+          console.log(error)
+      });
+    },
     // Validate Form
-    submit(){
-      if(this.$refs.form.validate()){
-        console.log('Lỗi')
+    submit() {
+      if (this.$refs.form.validate()) {
+        this.addAsset();
       }
     },
     // Focus vào input đầu
     // CreatedBy MTDUONG (18/06/2021)
-    focusFirst(){
-      this.$refs.firstInput.focus()
+    focusFirst() {
+      this.$refs.firstInput.focus();
     },
 
     // Focus vào input cuối
     // CreatedBy MTDUONG (18/06/2021)
-    focusLast(){
-      this.$refs.lastInput.focus()
+    focusLast() {
+      this.$refs.lastInput.focus();
     },
 
     // Lấy data đổ vào combobox loại tài sản
     // CreatedBy MTDUONG (18/06/2021)
-    async getComboAssetTypeData(){
-      await axios.get("https://localhost:44331/api/AssetTypes").then(res => {
-        this.assetTypeCombo = res.data
-      })
+    async getComboAssetTypeData() {
+      await axios.get("https://localhost:44331/api/AssetTypes").then((res) => {
+        this.assetTypeCombo = res.data;
+      });
     },
 
     // Lấy data đổ vào combobox phòng ban
     // CreatedBy MTDUONG (18/06/2021)
-    async getComboDepartmentData(){
-      await axios.get("https://localhost:44331/api/Departments").then(res => {
-        this.departmentCombo = res.data
-      })
-    }
-    
+    async getComboDepartmentData() {
+      await axios.get("https://localhost:44331/api/Departments").then((res) => {
+        this.departmentCombo = res.data;
+      });
+    },
   },
 };
 </script>
