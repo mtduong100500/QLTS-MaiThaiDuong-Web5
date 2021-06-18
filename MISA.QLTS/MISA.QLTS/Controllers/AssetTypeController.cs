@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MISA.Core.Entitites;
+using MISA.Core.Interfaces.Infrastructures;
+using MISA.Core.Interfaces.Services;
+using MISA.QLTS.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +10,15 @@ using System.Threading.Tasks;
 
 namespace MISA.Infrastruture.Repositories
 {
-    public class AssetTypeController : Controller
+    public class AssetTypeController : MISAEntityController<AssetType>
     {
-        public IActionResult Index()
+        IAssetTypeRepository _assetTypeRepository;
+        IAssetTypeService _assetTypeService;
+
+        public AssetTypeController(IAssetTypeService assetTypeService, IAssetTypeRepository assetTypeRepository) : base(assetTypeService, assetTypeRepository)
         {
-            return View();
+            _assetTypeService = assetTypeService;
+            _assetTypeRepository = assetTypeRepository;
         }
     }
 }

@@ -72,5 +72,21 @@ namespace MISA.Core.Entitites
         /// Người chỉnh sửa
         /// </summary>
         public string ModifiedBy { get; set; }
+        /// <summary>
+        /// Mã loại tài sản
+        /// </summary>
+        public string AssetTypeCode { get; set; }
+        /// <summary>
+        /// Tên loại tài sản
+        /// </summary>
+        public string AssetTypeName { get; set; }
+        /// <summary>
+        /// Mã phòng ban
+        /// </summary>
+        public string DepartmentCode { get; set; }
+        /// <summary>
+        /// Tên phòng ban
+        /// </summary>
+        public string DepartmentName { get; set; }
     }
 }

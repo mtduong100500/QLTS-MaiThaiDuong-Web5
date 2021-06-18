@@ -5,7 +5,7 @@ var headers = [
         value: "increaseDate",
         width: "140px",
         sortable: false,
-        align: 'center'
+        align: 'center',
     },
     {
         text: "MÃ TÀI SẢN",
@@ -21,24 +21,29 @@ var headers = [
     },
     {
         text: "LOẠI TÀI SẢN",
-        value: "assetTypeId",
+        value: "assetTypeName",
         width: "150px",
         sortable: false,
     },
     {
         text: "PHÒNG BAN",
-        value: "departmentId",
+        value: "departmentName",
         width: "250px",
         sortable: false,
     },
-    { text: "NGUYÊN GIÁ", value: "originalPrice", width: "150px", sortable: false , align: 'right'},
+    {
+        text: "NGUYÊN GIÁ",
+        value: "originalPrice",
+        width: "150px",
+        sortable: false,
+        align: 'right'
+    },
     {
         text: "CHỨC NĂNG",
         value: "actions",
         width: "100px",
         sortable: false,
         fixed: true,
-        
     },
 ];
 

@@ -41,6 +41,6 @@ namespace MISA.Core.Interfaces.Infrastructures
         /// </summary>
         /// <returns>Xóa thông tin tài sản</returns>
         /// CreatedBy mtduong(16/06/2021)
-        int Delete(MISAEntity entityId);
+        int Delete(Guid entityId);
     }
 }

@@ -30,8 +30,8 @@ namespace MISA.Infrastruture.Repositories
         #region Methods
         public List<MISAEntity> getAll()
         {
-            var sqlCommand = $"SELECT * FROM {className}";
-            var entities = DbConnection.Query<MISAEntity>(sqlCommand).ToList();
+            var sqlCommand = $"Proc_Get{className}";
+            var entities = DbConnection.Query<MISAEntity>(sqlCommand, commandType: CommandType.StoredProcedure).ToList();
             return entities;
         }
 
@@ -86,9 +86,9 @@ namespace MISA.Infrastruture.Repositories
         /// Sửa 
         /// </summary>
         /// <param name="entity"></param>
-        /// <param name="EntityId"></param>
+        /// <param name="entityId"></param>
         /// <returns></returns>
-        public int Update(MISAEntity entity, Guid EntityId)
+        public int Update(MISAEntity entity, Guid entityId)
         {
             var sqlCommandValue = "";
             var condition = "";
@@ -128,7 +128,8 @@ namespace MISA.Infrastruture.Repositories
             return res;
 
         }
-        public int Delete(MISAEntity entityId)
+
+        public int Delete(Guid entityId)
         {
             var sqlCommand = $"DELETE FROM {className} WHERE {className}Id = @{className}Id";
             DynamicParameters dynamicParameters = new DynamicParameters();
@@ -138,6 +139,6 @@ namespace MISA.Infrastruture.Repositories
             // Trả về kết quả
             return res;
         }
-        #endregion  
+        #endregion
     }
 }

@@ -41,6 +41,12 @@ namespace MISA.QLTS
 
             services.AddScoped<IAssetRepository, AssetRepository>();
             services.AddScoped<IAssetService, AssetService>();
+
+            services.AddScoped<IAssetTypeRepository, AssetTypeRepository>();
+            services.AddScoped<IAssetTypeService, AssetTypeService>();
+
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

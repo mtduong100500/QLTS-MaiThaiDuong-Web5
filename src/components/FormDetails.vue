@@ -45,7 +45,12 @@
       <div class="main-form px-6 mb-4" >
         <!--Dòng 1-->
         <v-row justify="space-around">
+          
           <v-col md="4">
+            <v-btn class="elevation-0" plain color="#dddddd"  @keyup.tab="focusLast" small max-width="3" width="3"></v-btn>
+            <div v-show="hide">
+              <v-btn @keyup.shift.tab="focusLast"></v-btn>
+            </div>
             <div class="d-flex flex-column">
               <label class="mb-5">Mã tài sản (*)</label>
               <v-text-field
@@ -54,8 +59,10 @@
                :rules="inputRules"
                autofocus
                tabindex="0"
+               ref="firstInput"
               ></v-text-field>
             </div>
+            
           </v-col>
           <v-col md="8">
             <div class="d-flex flex-column">
@@ -73,20 +80,27 @@
         <v-row justify="space-around">
           <v-col md="4">
             <div class="d-flex flex-column">
-              <label class="mb-3">Mã phòng ban </label>
-              <v-text-field
-              v-model="departmentCode"
-               outlined
-              ></v-text-field>
+              <label class="mb-3">Mã phòng ban</label>
+              <v-autocomplete
+                dense
+                outlined
+                auto-select-first
+                :items="departmentCombo"
+                v-model="department"
+                item-text="departmentCode"
+                item-value="departmentName"
+              ></v-autocomplete>
             </div>
           </v-col>
           <v-col md="8">
             <div class="d-flex flex-column">
-              <label class="mb-3">Tên phòng ban </label>
-              <v-text-field
-              v-model="departmentName"
-               outlined
-              ></v-text-field>
+              <label class="mb-3">Tên phòng ban</label>
+              <input
+                type="text"
+                class="input-disabled"
+                disabled
+                v-model="department"
+              />
             </div>
           </v-col>
         </v-row>
@@ -100,7 +114,7 @@
                 dense
                 outlined
                 auto-select-first
-                :items="assetTypeCodes"
+                :items="assetTypeCombo"
                 v-model="assetsType"
                 item-text="assetTypeCode"
                 item-value="assetTypeName"
@@ -162,11 +176,11 @@
           <v-col class="d-flex" md="8">
             <div class="d-flex flex-column">
               <label class="mb-3">Thời gian sử dụng (năm)</label>
-              <v-text-field outlined :rules="inputRules.concat(inputNumberRules)" ></v-text-field>
+              <v-text-field outlined :rules="inputNumberRules" ></v-text-field>
             </div>
             <div class="d-flex flex-column ml-6">
               <label class="mb-3">Tỉ lệ hao mòn (%)</label>
-              <v-text-field outlined :rules="inputRules.concat(inputNumberRules)"></v-text-field>
+              <v-text-field outlined :rules="inputNumberRules"></v-text-field>
             </div>
           </v-col>
         </v-row>
@@ -176,13 +190,13 @@
           <v-col md="4">
             <div class="d-flex flex-column">
               <label class="mb-3">Nguyên giá</label>
-              <v-text-field outlined :rules="inputRules.concat(inputNumberRules)"></v-text-field>
+              <v-text-field outlined :rules="inputNumberRules"></v-text-field>
             </div>
           </v-col>
           <v-col md="4">
             <div class="d-flex flex-column">
               <label class="mb-3">Giá trị hao mòn năm</label>
-              <v-text-field outlined :rules="inputRules.concat(inputNumberRules)"></v-text-field>
+              <v-text-field outlined :rules="inputNumberRules" ref="lastInput"></v-text-field>
             </div>
           </v-col>
         </v-row>
@@ -198,15 +212,19 @@
         <div class="d-flex align-center" @click="closeDialog = true">
           <v-btn
             class="mx-6 px-9 elevation-0 text-capitalize"
+            
             >Hủy</v-btn
           >
         </div>
+        
         <div class="d-flex align-center" @click="submit">
           <v-btn
             color="#00abfe"
-            class="white--text px-9 py-4 mx-6 elevation-0 text-capitalize"
+            class="white--text px-9 py-4  elevation-0 text-capitalize"
             >Lưu</v-btn
           >
+        <v-btn class="elevation-0" plain color="#dddddd"  @keyup.tab="focusFirst" small max-width="3" width="3"></v-btn>
+
         </div>
       </div>
     </v-form>
@@ -250,11 +268,9 @@
       Thông báo chức năng đang được phát triển
       CreatedBy MTDUONG (17/06/2021)
     -->
-
     <v-dialog
       v-model="developingDialog"
       max-width="350"
-      
     >
       <v-card>
         <v-card-title class="text-h5">
@@ -280,10 +296,12 @@
 <script>
 import moment from "moment";
 import "../assets/css/formdetails.css";
+import axios from 'axios';
 export default {
   name: "FormDetails",
   data() {
     return {
+      
       // Trạng thái của các thông báo
       // CreatedBy MTDUONG (17/05/2021)
       developingDialog: false,
@@ -293,22 +311,16 @@ export default {
       // CreatedBy MTDUONG (17/05/2021)
       assetName:'',
       assetCode:'',
-      departmentCode: '',
-      departmentName: '',
 
-      // Select Box
+      // Select Box loại tài sản
       // CreatedBy MTDUONG (15/05/2021)
       assetsType: null,
-      assetTypeCodes: [
-        {
-          assetTypeCode: "DP0001",
-          assetTypeName: "Laptop",
-        },
-        {
-          assetTypeCode: "DP0002",
-          assetTypeName: "PC",
-        },
-      ],
+      assetTypeCombo: [],
+
+      // Select Box loại tài sản
+      // CreatedBy MTDUONG (15/05/2021)
+      department: null,
+      departmentCombo: [],
 
       // Datepicker
       // CreatedBy MTDUONG (15/05/2021)
@@ -325,11 +337,18 @@ export default {
       // Validate input số
       // CreatedBy MTDUONG (17/05/2021)
       inputNumberRules:[
-        v => !isNaN(v) || "Bạn chỉ được nhập chữ số"
+        v => v && v.length >= 3 || 'Cần nhập ít nhất 3 kí tự',
+        v => v && !isNaN(v) || "Bạn chỉ được nhập chữ số",
+        v => v && v.length <= 10 || 'Chỉ có thể nhập nhiều nhất 10 kí tự'
       ],
+
+ 
     };
   },
-
+  created() {
+    this.getComboDepartmentData()
+    this.getComboAssetTypeData()
+  },
    
   computed: {
     // Format text hiện trên datepicker
@@ -343,6 +362,33 @@ export default {
       if(this.$refs.form.validate()){
         console.log('Lỗi')
       }
+    },
+    // Focus vào input đầu
+    // CreatedBy MTDUONG (18/06/2021)
+    focusFirst(){
+      this.$refs.firstInput.focus()
+    },
+
+    // Focus vào input cuối
+    // CreatedBy MTDUONG (18/06/2021)
+    focusLast(){
+      this.$refs.lastInput.focus()
+    },
+
+    // Lấy data đổ vào combobox loại tài sản
+    // CreatedBy MTDUONG (18/06/2021)
+    async getComboAssetTypeData(){
+      await axios.get("https://localhost:44331/api/AssetTypes").then(res => {
+        this.assetTypeCombo = res.data
+      })
+    },
+
+    // Lấy data đổ vào combobox phòng ban
+    // CreatedBy MTDUONG (18/06/2021)
+    async getComboDepartmentData(){
+      await axios.get("https://localhost:44331/api/Departments").then(res => {
+        this.departmentCombo = res.data
+      })
     }
     
   },

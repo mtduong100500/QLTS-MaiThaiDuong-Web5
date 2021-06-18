@@ -117,6 +117,7 @@
         hide-default-footer
         disable-pagination
         no-data-text="Không có dữ liệu"
+        
       >
         <template #item="{ item }">
           <tr @contextmenu.prevent="show">
@@ -124,8 +125,8 @@
             <td class="text-center">{{ formatDate(item.increaseDate) }}</td>
             <td>{{ item.assetCode }}</td>
             <td>{{ item.assetName }}</td>
-            <td>{{ item.assetTypeId }}</td>
-            <td>{{ item.departmentId }}</td>
+            <td>{{ item.assetTypeName }}</td>
+            <td>{{ item.departmentName }}</td>
             <td class="text-right">{{ formatMoney(item.originalPrice) }}</td>
             <td>
               <div class="d-flex align-center">
@@ -195,7 +196,7 @@
 
     <!--
       Thông tin về tổng số tài sản và tổng nguyên giá
-      CreatedBy MTDUONg (14/06/2021)
+      CreatedBy MTDUONG (14/06/2021)
     -->
     <div class="d-flex table-footer py-7 justify-space-between align-center">
       <div class="px-6 font-weight-bold">
@@ -206,6 +207,10 @@
       </div>
     </div>
 
+    <!--
+      Thông báo xóa 
+      CreatedBy MTDUONG (17/06/2021)
+    -->
     <v-dialog v-model="deleteDialog" max-width="350">
       <v-card>
         <v-card-title class="text-h5"> Thông báo </v-card-title>
@@ -223,7 +228,12 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <FormDetails v-if="$store.state.isOpen" @keyup.f1="$store.commit('changeFormState')"/>
+
+    <!--
+      FORM
+      CreatedBy MTDUONG (17/06/2021)
+      -->
+    <FormDetails v-if="$store.state.isOpen"/>
   </div>
 </template>
 
@@ -232,12 +242,14 @@ import "../assets/css/ghitang.css";
 import moment from "moment";
 import FormDetails from "../components/FormDetails.vue";
 import headers from "../common/header-table";
-import resizableGrid from "../common/resizeColumn";
 const axios = require("axios");
 export default {
   name: "taisan",
   components: {
     FormDetails,
+  },
+  props:{
+    editedItem: Object
   },
   data() {
     return {
@@ -296,27 +308,27 @@ export default {
 
   created() {
     this.loadData();
+
   },
 
   mounted() {
-    // Thay đổi độ rộng cột
-    // CreatedBy MTDUONG (17/06/2021)
-    var tables = document.getElementsByTagName("table");
-    for (var i = 0; i < tables.length; i++) {
-      resizableGrid(tables[i]);
-    }
+    
     // Focus vào ô input tìm kiếm
     this.focusInput();
   },
   methods: {
+    edit(){
+    },
     // Load dữ liệu
     // CreadtedBy MTDUONG (17/06/2021)
     async loadData() {
-      await axios.get("https://localhost:44331/api/assets").then((res) => {
+      await axios.get("https://localhost:44331/api/assets/").then((res) => {
         this.assets = res.data;
         this.overlay = false;
       });
     },
+
+   
 
     // Load lại dữ liệu
     // CreatedBy MTDUONG (17/06/2021)
@@ -357,6 +369,7 @@ export default {
       this.$nextTick(() => {
         this.showMenu = true;
       });
+      console.log(e)
     },
 
     // Sự kiện khi click vào dòng trong context menu
@@ -390,25 +403,7 @@ export default {
 </script>
 
 <style scoped>
-.active-item {
-  background-color: red;
-}
-.portrait.v-card {
-  margin: 0 auto;
-  max-width: 300px;
-  width: 100%;
-}
 
-.v-menu__content > .v-list > .v-list-item {
-  min-height: 30px !important;
-}
-.v-menu__content > .v-list > .v-list-item:hover {
-  background-color: #dddddd;
-}
-.v-data-table__wrapper::-webkit-scrollbar {
-  display: block;
-  width: 5px !important;
-  height: 5px !important;
-  z-index: 1231232123421;
-}
+
+
 </style>

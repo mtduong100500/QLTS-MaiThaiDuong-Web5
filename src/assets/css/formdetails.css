@@ -106,4 +106,8 @@
     z-index: 2;
   }
 
+  .v-btn:not(.v-btn--round).v-size--small{
+    min-height: 0 !important;
+    height: 0 !important;
+  }
   
