@@ -15,24 +15,31 @@ export default new Vuex.Store({
 
   },
   mutations: {
+    // Đóng mở form thêm
     changeFormState(state) {
       state.isOpen = !state.isOpen
     },
+    // Đóng mở form sửa
     changeEditFormState(state) {
       state.isEdited = !state.isEdited
     },
+    // Đóng mở form nhân bản
     changeDuplicateState(state) {
       state.isDuplicated = !state.isDuplicated
     },
+    // truyền dữ liệu lấy từ api để đổ sang biến global
     GET_ASSETS(state, assets) {
       state.assets = assets
     },
+    // Trạng thái của icon xoay loading
     changeLoadingState(state) {
       state.overlay = !state.overlay
     },
+    // Trạng thái khi gửi request có lỗi
     changeErrorState(state) {
       state.error = !state.error
     },
+    // Trạng thái khi thêm thành công
     changeSuccessState(state) {
       state.isSuccess = !state.isSuccess
     },
@@ -40,6 +47,7 @@ export default new Vuex.Store({
     
   },
   actions: {
+    // Lấy dữ liệu từ API
     async loadData({ commit }, state) {
       await api().get("/assets").then(res => {
         commit('GET_ASSETS', res.data)
@@ -53,8 +61,5 @@ export default new Vuex.Store({
   modules: {
   },
   getters: {
-    hasError: state => state.hasError,
-    error: state => state.error,
-    usernameAlredyExists: state => state.usernameAlredyExists
   }
 })

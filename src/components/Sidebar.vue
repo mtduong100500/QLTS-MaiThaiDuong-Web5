@@ -234,6 +234,7 @@ export default {
       // CreatedBy MTDUONG(13/06/2021)
       drawer: true,
       mini: true,
+      // Sub menu
       links: [
         { text: "Ghi tăng" },
         { text: "Điều chuyển" },

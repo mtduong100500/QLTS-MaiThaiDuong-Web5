@@ -70,7 +70,12 @@
 
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
-            <div class="btn-delete btn-hover" v-on="on" v-bind="attrs">
+            <div
+              class="btn-delete btn-hover"
+              v-on="on"
+              v-bind="attrs"
+              @click="multipleDelete"
+            >
               <v-img
                 height="15"
                 width="15"
@@ -84,7 +89,7 @@
     </div>
 
     <!--
-      Bảng dữ liệu
+      Context Menu của table
       CreatedBy MTDUONG (14/06/2021)
     -->
     <v-menu
@@ -105,8 +110,13 @@
       </v-list>
     </v-menu>
 
+    <!--
+      Bảng dữ liệu
+      CreatedBy MTDUONG (14/06/2021)
+    -->
     <div class="table">
       <v-data-table
+        v-model="selected"
         :items="assets"
         :headers="headers"
         :custom-filter="searchByNameAndCode"
@@ -115,16 +125,21 @@
         hide-default-footer
         disable-pagination
         no-data-text="Không có dữ liệu"
+        no-results-text="Không có bản ghi nào được tìm thấy"
       >
         <template #item="{ item }">
-          <tr @contextmenu.prevent="show($event, item)">
+          <tr
+            @contextmenu.prevent="show($event, item)"
+            :class="selected.indexOf(item.assetId) > -1 ? 'cyan lighten-4' : ''"
+            @click.ctrl.stop.exact="rowClicked(item)"
+          >
             <td>{{ assets.indexOf(item) + 1 }}</td>
-            <td class="text-center">{{formatDate(item.increaseDate)}}</td>
-            <td>{{item.assetCode}}</td>
-            <td>{{item.assetName}}</td>
-            <td>{{item.assetTypeName}}</td>
-            <td>{{item.departmentName}}</td>
-            <td class="text-right">{{formatMoney(item.originalPrice)}}</td>
+            <td class="text-center">{{ formatDate(item.increaseDate) }}</td>
+            <td>{{ item.assetCode }}</td>
+            <td>{{ item.assetName }}</td>
+            <td>{{ item.assetTypeName }}</td>
+            <td>{{ item.departmentName }}</td>
+            <td class="text-right">{{ formatMoney(item.originalPrice) }}</td>
             <td>
               <div class="d-flex align-center">
                 <!--
@@ -259,7 +274,10 @@
       :item="editedAsset"
       :status="status"
     />
-
+    <!--
+      Form nhân bản
+      CreatedBy MTDUONG (19/06/2021)
+    -->
     <FormDetails
       v-if="$store.state.isDuplicated"
       :item="duplicateAsset"
@@ -274,7 +292,6 @@ import moment from "moment";
 import FormDetails from "../components/FormDetails.vue";
 import headers from "../common/header-table";
 import api from "../service/api";
-import { bus } from "../main";
 
 export default {
   name: "taisan",
@@ -284,14 +301,28 @@ export default {
 
   data() {
     return {
+      // Chứa thông tin các dòng được chọn
+      // CreatedBy MTDUONG (19/06/2021)
+      selected: [],
+
+      // Trạng thái của FORM - Cho FORM biết được là thêm mới, sửa hay nhân bản
+      // CreatedBy MTDUONG (19/06/2021)
       status: "",
+
+      // Đổ dữ liệu để truyền lên props của Form nhân bản
+      // CreatedBy MTDUONG (19/06/2021)
       duplicateAsset: {},
+
+      // Đổ dữ liệu để truyền lên props của Form sửa
+      // CreatedBy MTDUONG (19/06/2021)
       editedAsset: {},
+
       deleteDialog: false,
       // Chứa các thông tin của table headers
       // CreatedBy MTDUONG (14/06/2021)
       headers: headers,
 
+      // Số thứ tự trong bản
       index: 0,
       // model dùng cho chức năng tìm kiếm
       search: "",
@@ -304,12 +335,10 @@ export default {
       // CreatedBy MTDUONG (14/06/2021)
       priceSum: 0,
 
-      // đổ dữ liệu lên form khi sửa
-      // CreatedBy MTDUONG (15/06/2021)
-
       // Context Menu
       // CreatedBy MTDUONG (15/06/2021)
       items: [
+        // Ô thêm trong context Menu
         {
           title: "Thêm",
           click() {
@@ -317,21 +346,24 @@ export default {
             this.status = "add";
           },
         },
+        // Ô sửa trong context Menu
         {
           title: "Sửa",
           click() {
             this.$store.commit("changeEditFormState");
-            this.status = "edit"
-            this.editedAsset = this.contextItem
+            this.status = "edit";
+            this.editedAsset = this.contextItem;
           },
         },
-        { 
+        // Ô xóa trong context Menu
+        {
           title: "Xóa",
-          click(){
+          click() {
             this.deleteDialog = true;
-            this.deleteItem(this.contextItem)
-          }
-         },
+            this.deleteItem(this.contextItem);
+          },
+        },
+        // Ô nhân bản trong context Menu
         {
           title: "Nhân bản",
           click() {
@@ -379,14 +411,27 @@ export default {
   },
 
   methods: {
-    
+    // Chọn nhiều dòng
+    // CreatedBy MTDUONG (19/06/2021)
+    rowClicked(row) {
+      this.toggleSelection(row.assetId);
+    },
+    toggleSelection(keyID) {
+      if (this.selected.includes(keyID)) {
+        this.selected = this.selected.filter(
+          (selectedKeyID) => selectedKeyID !== keyID
+        );
+      } else {
+        this.selected.push(keyID);
+      }
+    },
     // Thay đổi trạng thái đóng mở của thông báo xóa
     // CreatedBy MTDUONG (18/06/2021)
     changeDelete() {
       this.deleteDialog = !this.deleteDialog;
     },
 
-    // DELETE REQUEST
+    // Xóa một bản ghi
     // CreatedBy MTDUONG (18/06/2021)
     async deleteItem(item) {
       await api()
@@ -394,6 +439,18 @@ export default {
         .then((res) => {
           this.deleteDialog = true;
         });
+    },
+
+    // Xóa nhiều
+    // CreatedBy MTDUONG (19/06/2021)
+    async multipleDelete(item) {
+      for (item in this.selected) {
+        if (this.selected.hasOwnProperty(item)) {
+          var value = this.selected[item];
+          await api().delete(`/assets/${value}`)
+        }
+      }
+      this.deleteDialog = true
     },
 
     // Gán data cho props để truyền lên Form khi sửa
@@ -440,22 +497,17 @@ export default {
       return (sum = this.formatMoney(sum));
     },
 
-    // Đổ data lên form khi sửa (Chưa xong )
-    // CreatedBy MTDUONG (15/06/2021)
-
     // Chuột phải sẽ hiện context menu
     // CreatedBy MTDUONG (15/06/2021)
     show(e, item) {
       e.preventDefault();
-      
-      
       this.showMenu = false;
       this.x = e.clientX;
       this.y = e.clientY;
       this.$nextTick(() => {
         this.showMenu = true;
       });
-      this.contextItem = item
+      this.contextItem = item;
     },
 
     // Sự kiện khi click vào dòng trong context menu

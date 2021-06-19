@@ -397,7 +397,7 @@ import moment from "moment";
 import "../assets/css/formdetails.css";
 import axios from "axios";
 import api from "../service/api";
-import {bus} from '../main'
+
 export default {
   name: "FormDetails",
   props: {
@@ -443,16 +443,11 @@ export default {
       errorDialog: false,
       successEdit: false,
 
-      // Select Box loại tài sản
+      // Select Box loại tài sản và phòng ban
       // CreatedBy MTDUONG (15/05/2021)
-
-      assetTypeCombo: [],
-
-      // Select Box loại tài sản
-      // CreatedBy MTDUONG (15/05/2021)
-      department: null,
       departmentCombo: [],
-
+      assetTypeCombo: [],
+    
       // Datepicker
       // CreatedBy MTDUONG (15/05/2021)
       menu2: false,
@@ -468,6 +463,8 @@ export default {
         (v) => (v && !isNaN(v)) || "Bạn chỉ được nhập chữ số",
       ],
 
+      // THông báo khi có lỗi từ server
+      // CreatedBy MTDUONG (19/06/2021)
       error: "",
     };
   },
@@ -522,7 +519,6 @@ export default {
         : "";
     },
   },
-  watch: {},
   methods: {
     // Đóng thông báo lưu thành công
     // CreatedBy MTDUONG(18/06/2021)
