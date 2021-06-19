@@ -59,6 +59,7 @@
             <div class="d-flex flex-column">
               <label class="mb-5">Mã tài sản (*)</label>
               <v-text-field
+                :disabled="isDisable"
                 outlined
                 v-model="newAsset.assetCode"
                 :rules="inputRules"
@@ -405,6 +406,10 @@ export default {
   },
   data() {
     return {
+
+      // Tắt input mã tài sản khi sửa
+      isDisable: false,
+
       // Dữ liệu thêm mới
       newAsset: {
         assetName: "",
@@ -502,6 +507,7 @@ export default {
       if (this.status === "edit") {
         this.newAsset.assetCode = this.item.assetCode;
         this.newAsset.assetName = this.item.assetName;
+        this.isDisable = true
       } else if (this.status === "duplicate") {
         this.newAsset.assetCode = "";
         this.newAsset.assetName = "";
@@ -591,7 +597,11 @@ export default {
           this.successAdd = true;
         })
         .catch((error) => {
-          this.$store.commit("changeErrorState");
+           if(error.response.request.status == 400){
+            this.error = "Mã tài sản đã tồn tại trong hệ thống"
+          }else{
+            this.$store.commit("changeErrorState");
+          }
         });
     },
 
