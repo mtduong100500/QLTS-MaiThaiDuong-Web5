@@ -397,7 +397,7 @@ import moment from "moment";
 import "../assets/css/formdetails.css";
 import axios from "axios";
 import api from "../service/api";
-
+import {bus} from '../main'
 export default {
   name: "FormDetails",
   props: {
@@ -511,6 +511,8 @@ export default {
         this.newAsset.assetName = "";
       }
     }
+
+    bus.$on('addAsset', this.addAsset)
   },
   computed: {
     // Format text hiện trên datepicker
@@ -568,12 +570,10 @@ export default {
     // Sửa tài sản
     // CreatedBy MTDUONG(18/06/2021)
     async editAsset(item) {
-      console.log(this.newAsset)
       await api()
         .put(`/assets/${this.item.assetId}`, this.newAsset)
         .then((res) => {
           // Gọi hàm loadData trong Vuex
-          console.log(res);
           this.$store.dispatch("loadData");
           this.successEdit = true;
         })

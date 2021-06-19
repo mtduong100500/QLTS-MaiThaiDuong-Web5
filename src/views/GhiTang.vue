@@ -35,7 +35,10 @@
           color="#00abfe"
           small
           class="white--text px-7 py-4 elevation-0"
-          @click="$store.commit('changeFormState'); status = 'add'"
+          @click="
+            $store.commit('changeFormState');
+            status = 'add';
+          "
           >Thêm</v-btn
         >
         <!--
@@ -67,11 +70,7 @@
 
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
-            <div
-              class="btn-delete btn-hover"
-              v-on="on"
-              v-bind="attrs"
-            >
+            <div class="btn-delete btn-hover" v-on="on" v-bind="attrs">
               <v-img
                 height="15"
                 width="15"
@@ -116,83 +115,90 @@
         hide-default-footer
         disable-pagination
         no-data-text="Không có dữ liệu"
-        @contextmenu:row.prevent="show"
       >
-        <!--Cột số thứ tự-->
-        <template v-slot:item.index="{ item }">
-          <span>{{ assets.indexOf(item) + 1}}</span>
-        </template>
-
-        <!--Format ngày ghi tăng-->
-        <template v-slot:item.increaseDate="{ item }">
-          <span>{{ formatDate(item.increaseDate) }}</span>
-        </template>
-
-        <!--Format số tiền-->
-        <template v-slot:item.originalPrice="{ item }">
-          <span>{{ formatMoney(item.originalPrice) }}</span>
-        </template>
-        <template v-slot:item.actions="{ item }">
-          <div class="d-flex align-center">
-            <!--
+        <template #item="{ item }">
+          <tr @contextmenu.prevent="show($event, item)">
+            <td>{{ assets.indexOf(item) + 1 }}</td>
+            <td class="text-center">{{formatDate(item.increaseDate)}}</td>
+            <td>{{item.assetCode}}</td>
+            <td>{{item.assetName}}</td>
+            <td>{{item.assetTypeName}}</td>
+            <td>{{item.departmentName}}</td>
+            <td class="text-right">{{formatMoney(item.originalPrice)}}</td>
+            <td>
+              <div class="d-flex align-center">
+                <!--
                   Nút chỉnh sửa trên dòng trong bảng
                   CreatedBy MTDUONG (14/06/2021)
                 -->
-            <v-tooltip bottom>
-              <template #activator="{ on, attrs }">
-                <v-icon
-                  small
-                  class="mr-2 btn-hover"
-                  v-bind="attrs"
-                  v-on="on"
-                  @click="editItem(item); status = 'edit'; $store.commit('changeEditFormState')"
-                >
-                  mdi-pencil
-                </v-icon>
-              </template>
-              <span>Sửa</span>
-            </v-tooltip>
+                <v-tooltip bottom>
+                  <template #activator="{ on, attrs }">
+                    <v-icon
+                      small
+                      class="mr-2 btn-hover"
+                      v-bind="attrs"
+                      v-on="on"
+                      @click="
+                        editItem(item);
+                        status = 'edit';
+                        $store.commit('changeEditFormState');
+                      "
+                    >
+                      mdi-pencil
+                    </v-icon>
+                  </template>
+                  <span>Sửa</span>
+                </v-tooltip>
 
-            <!--
+                <!--
                   Nút xóa dòng trên bảng
                   CreatedBy MTDUONG (14/06/2021)
                 -->
-            <v-tooltip bottom>
-              <template #activator="{ on, attrs }">
-                <v-img
-                  small
-                  src="../assets/icon/trash.svg"
-                  max-height="15"
-                  max-width="15"
-                  class="btn-hover"
-                  v-bind="attrs"
-                  v-on="on"
-                  @click="deleteItem(item); (deleteDialog = true)"
-                ></v-img>
-              </template>
-              <span>Xóa</span>
-            </v-tooltip>
+                <v-tooltip bottom>
+                  <template #activator="{ on, attrs }">
+                    <v-img
+                      small
+                      src="../assets/icon/trash.svg"
+                      max-height="15"
+                      max-width="15"
+                      class="btn-hover"
+                      v-bind="attrs"
+                      v-on="on"
+                      @click="
+                        deleteItem(item);
+                        deleteDialog = true;
+                      "
+                    ></v-img>
+                  </template>
+                  <span>Xóa</span>
+                </v-tooltip>
 
-            <!--
+                <!--
                   Nút nhân bản trên dòng trong bảng
                   CreatedBy MTDUONG (14/06/2021)
                 -->
 
-            <v-tooltip bottom>
-              <template #activator="{ on, attrs }">
-                <v-icon
-                  small
-                  class="ml-2 btn-hover"
-                  v-bind="attrs"
-                  v-on="on"
-                  @click="duplicate(item); status = 'duplicate'; $store.commit('changeDuplicateState')"
-                >
-                  mdi-history
-                </v-icon>
-              </template>
-              <span>Nhân bản dữ liệu</span>
-            </v-tooltip>
-          </div>
+                <v-tooltip bottom>
+                  <template #activator="{ on, attrs }">
+                    <v-icon
+                      small
+                      class="ml-2 btn-hover"
+                      v-bind="attrs"
+                      v-on="on"
+                      @click="
+                        duplicate(item);
+                        status = 'duplicate';
+                        $store.commit('changeDuplicateState');
+                      "
+                    >
+                      mdi-history
+                    </v-icon>
+                  </template>
+                  <span>Nhân bản dữ liệu</span>
+                </v-tooltip>
+              </div>
+            </td>
+          </tr>
         </template>
       </v-data-table>
     </div>
@@ -243,14 +249,22 @@
       FORM thêm
       CreatedBy MTDUONG (17/06/2021)
       -->
-    <FormDetails v-if="$store.state.isOpen" :status="status"/>
+    <FormDetails v-if="$store.state.isOpen" :status="status" />
     <!--
       FORM sửa
       CreatedBy MTDUONG (17/06/2021)
       -->
-    <FormDetails v-if="$store.state.isEdited" :item="editedAsset" :status="status"/>
+    <FormDetails
+      v-if="$store.state.isEdited"
+      :item="editedAsset"
+      :status="status"
+    />
 
-    <FormDetails v-if="$store.state.isDuplicated" :item="duplicateAsset" :status="status"/>
+    <FormDetails
+      v-if="$store.state.isDuplicated"
+      :item="duplicateAsset"
+      :status="status"
+    />
   </div>
 </template>
 
@@ -260,6 +274,7 @@ import moment from "moment";
 import FormDetails from "../components/FormDetails.vue";
 import headers from "../common/header-table";
 import api from "../service/api";
+import { bus } from "../main";
 
 export default {
   name: "taisan",
@@ -268,11 +283,10 @@ export default {
   },
 
   data() {
-
     return {
       status: "",
-      duplicateAsset:{},
-      editedAsset:{},
+      duplicateAsset: {},
+      editedAsset: {},
       deleteDialog: false,
       // Chứa các thông tin của table headers
       // CreatedBy MTDUONG (14/06/2021)
@@ -297,16 +311,33 @@ export default {
       // CreatedBy MTDUONG (15/06/2021)
       items: [
         {
+          title: "Thêm",
+          click() {
+            this.$store.commit("changeFormState");
+            this.status = "add";
+          },
+        },
+        {
           title: "Sửa",
           click() {
             this.$store.commit("changeEditFormState");
+            this.status = "edit"
+            this.editedAsset = this.contextItem
           },
         },
-        { title: "Xóa" },
+        { 
+          title: "Xóa",
+          click(){
+            this.deleteDialog = true;
+            this.deleteItem(this.contextItem)
+          }
+         },
         {
           title: "Nhân bản",
           click() {
-            this.$store.commit("changeFormState");
+            this.$store.commit("changeDuplicateState");
+            this.status = "duplicate";
+            this.duplicateAsset = this.contextItem;
           },
         },
       ],
@@ -315,6 +346,11 @@ export default {
       showMenu: false,
       x: 0,
       y: 0,
+
+      // Khởi tạo data của context menu
+      // Khi chuột phải vào dòng trong bảng sẽ nhận vào thông tin của dòng trong bảng
+      // CreatedBY MTDUONG(19/06/2021)
+      contextItem: {},
     };
   },
 
@@ -360,14 +396,17 @@ export default {
         });
     },
 
-    editItem(item){
-      this.editedAsset = item
+    // Gán data cho props để truyền lên Form khi sửa
+    // CreatedBy MTDUONG (18/06/2021)
+    editItem(item) {
+      this.editedAsset = item;
     },
 
-    duplicate(item){
-      this.duplicateAsset = item
+    // Gán data cho props để truyền lên Form khi nhân bản
+    // CreatedBy MTDUONG (18/06/2021)
+    duplicate(item) {
+      this.duplicateAsset = item;
     },
-
 
     // Load lại dữ liệu
     // CreatedBy MTDUONG (17/06/2021)
@@ -408,13 +447,15 @@ export default {
     // CreatedBy MTDUONG (15/06/2021)
     show(e, item) {
       e.preventDefault();
+      
+      
       this.showMenu = false;
       this.x = e.clientX;
       this.y = e.clientY;
       this.$nextTick(() => {
         this.showMenu = true;
       });
-      console.log(e, item);
+      this.contextItem = item
     },
 
     // Sự kiện khi click vào dòng trong context menu
