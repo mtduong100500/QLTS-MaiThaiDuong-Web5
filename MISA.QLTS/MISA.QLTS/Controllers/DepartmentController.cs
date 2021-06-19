@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace MISA.Infrastruture.Repositories
 {
+    /// <summary>
+    /// Phòng ban API
+    /// CreatedBy MTDUONG (17/06/2021)
+    /// </summary>
     public class DepartmentController : MISAEntityController<Department>
     {
         IDepartmentRepository _deparmentRepository;

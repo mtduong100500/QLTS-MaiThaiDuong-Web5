@@ -42,5 +42,12 @@ namespace MISA.Core.Interfaces.Infrastructures
         /// <returns>Xóa thông tin tài sản</returns>
         /// CreatedBy mtduong(16/06/2021)
         int Delete(Guid entityId);
+        /// <summary>
+        /// Hàm kiểm tra mã tài sản đã tồn tại hay chưa
+        /// </summary>
+        /// <param name="assetCode">Mã tài sản cần check</param>
+        /// <returns>true: đã tồn tại, false: ko tồn tại</returns>
+        /// CreatedBy: MTDUONG(16/06/2021)
+        public bool CheckCodeExist(string assetCode);
     }
 }

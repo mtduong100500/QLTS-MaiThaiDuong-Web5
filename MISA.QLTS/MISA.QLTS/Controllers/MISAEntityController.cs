@@ -17,7 +17,12 @@ namespace MISA.QLTS.Controllers
         IBaseService<MISAEntity> _baseService;
         IBaseRepository<MISAEntity> _baseRepository;
         #endregion
-
+        /// <summary>
+        /// Hàm khởi tại
+        /// CreatedBy MTDUONG (17/06/2021)
+        /// </summary>
+        /// <param name="baseService"></param>
+        /// <param name="baseRepository"></param>
         #region Constructor
         public MISAEntityController(IBaseService<MISAEntity> baseService, IBaseRepository<MISAEntity> baseRepository)
         {
@@ -27,6 +32,11 @@ namespace MISA.QLTS.Controllers
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Lấy tất cả dữ liệu
+        /// CreatedBy MTDUONG (17/06/2021)
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get()
         {
@@ -34,14 +44,24 @@ namespace MISA.QLTS.Controllers
             return Ok(entity);
         }
 
+        /// <summary>
+        /// Lấy dữ liệu theo Id
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
         [HttpGet("{entityId}")]
-
         public IActionResult Get(Guid entityId)
         {
             var entity = _baseRepository.GetById(entityId);
             return Ok(entity);
         }
 
+        /// <summary>
+        /// Thêm dữ liệu
+        /// CreatedBy MTDUONG (17/06/2021)
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Post(MISAEntity entity)
         {
@@ -56,7 +76,13 @@ namespace MISA.QLTS.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Sửa dữ liệu
+        /// CreatedBy MTDUONG (17/06/2021)
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
         [HttpPut("{entityId}")]
         public IActionResult Put(MISAEntity entity, Guid entityId)
         {
@@ -71,6 +97,13 @@ namespace MISA.QLTS.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Xóa dữ liệu
+        /// CreatedBy MTDUONG (17/06/2021)
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
         [HttpDelete("{entityId}")]
         public IActionResult Delete(Guid entityId)
         {

@@ -11,7 +11,8 @@ export default new Vuex.Store({
     error: false,
     assets: [],
     overlay: false,
-    isSuccess: false
+    isSuccess: false,
+
   },
   mutations: {
     changeFormState(state) {
@@ -26,16 +27,17 @@ export default new Vuex.Store({
     GET_ASSETS(state, assets) {
       state.assets = assets
     },
-    changeLoadingState(state){
+    changeLoadingState(state) {
       state.overlay = !state.overlay
     },
-    changeErrorState(state){
+    changeErrorState(state) {
       state.error = !state.error
     },
-    changeSuccessState(state){
+    changeSuccessState(state) {
       state.isSuccess = !state.isSuccess
-    }
+    },
 
+    
   },
   actions: {
     async loadData({ commit }, state) {
@@ -51,5 +53,8 @@ export default new Vuex.Store({
   modules: {
   },
   getters: {
+    hasError: state => state.hasError,
+    error: state => state.error,
+    usernameAlredyExists: state => state.usernameAlredyExists
   }
 })

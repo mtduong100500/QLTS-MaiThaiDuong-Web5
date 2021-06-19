@@ -12,11 +12,20 @@ namespace MISA.Infrastruture.Repositories
 {
     public class BaseRepository<MISAEntity> : IBaseRepository<MISAEntity>
     {
+        /// <summary>
+        /// Khai báo
+        /// CreatedBy MTDUONG (17/06/2021)
+        /// </summary>
         #region Fields
         protected IDbConnection DbConnection;
         protected string className = string.Empty;
         #endregion
 
+        /// <summary>
+        /// Hàm tạo
+        /// CreatedBy MTDUONG (17/06/2021)
+        /// </summary>
+        /// <param name="configuration"></param>
         #region Constructor
         public BaseRepository(IConfiguration configuration)
         {
@@ -28,12 +37,24 @@ namespace MISA.Infrastruture.Repositories
 
 
         #region Methods
+        /// <summary>
+        /// Lấy tất cả dữ liệu
+        ///  CreatedBy MTDUONG (17/06/2021)
+        /// </summary>
+        /// <returns></returns>
         public List<MISAEntity> getAll()
         {
             var sqlCommand = $"Proc_Get{className}";
             var entities = DbConnection.Query<MISAEntity>(sqlCommand, commandType: CommandType.StoredProcedure).ToList();
             return entities;
         }
+
+        /// <summary>
+        /// Lây dữ liệu theo ID
+        /// CreatedBy MTDUONG (17/06/2021)
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
 
         public MISAEntity GetById(Guid entityId)
         {
@@ -45,6 +66,12 @@ namespace MISA.Infrastruture.Repositories
             return entities;
         }
 
+        /// <summary>
+        /// Thêm dữ liệu
+        /// CreatedBy MTDUONG (17/06/2021)
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public int Insert(MISAEntity entity)
         {
             var sqlCommandField = "";
@@ -83,7 +110,8 @@ namespace MISA.Infrastruture.Repositories
         }
 
         /// <summary>
-        /// Sửa 
+        /// Sửa dữ liệu
+        /// CreatedBy MTDUONG (17/06/2021)
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="entityId"></param>
@@ -129,6 +157,13 @@ namespace MISA.Infrastruture.Repositories
 
         }
 
+
+        /// <summary>
+        /// Xóa dữ liệu
+        /// CreatedBy MTDUONG (17/06/2021)
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
         public int Delete(Guid entityId)
         {
             var sqlCommand = $"Proc_Delete{className}";
@@ -138,6 +173,22 @@ namespace MISA.Infrastruture.Repositories
 
             // Trả về kết quả
             return res;
+        }
+
+        public bool CheckCodeExist(string assetCode)
+        {
+            string sqlcommand = $"Proc_CheckCodeExist";
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@AssetCode", assetCode);
+            try
+            {
+                var res = DbConnection.QueryFirstOrDefault<bool>(sqlcommand, param: param, commandType: CommandType.StoredProcedure);
+                return res;
+            }
+            catch
+            {
+                return false;
+            }
         }
         #endregion
     }

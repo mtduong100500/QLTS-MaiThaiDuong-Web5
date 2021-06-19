@@ -119,12 +119,17 @@
         no-data-text="Không có dữ liệu"
         @contextmenu:row.prevent="show"
       >
+        <!--Cột số thứ tự-->
         <template v-slot:item.index="{ item }">
           <span>{{ assets.indexOf(item) + 1}}</span>
         </template>
+
+        <!--Format ngày ghi tăng-->
         <template v-slot:item.increaseDate="{ item }">
           <span>{{ formatDate(item.increaseDate) }}</span>
         </template>
+
+        <!--Format số tiền-->
         <template v-slot:item.originalPrice="{ item }">
           <span>{{ formatMoney(item.originalPrice) }}</span>
         </template>

@@ -62,6 +62,7 @@
                 outlined
                 v-model="newAsset.assetCode"
                 :rules="inputRules"
+                :error-messages="error"
                 autofocus
                 tabindex="0"
                 ref="firstInput"
@@ -408,11 +409,11 @@ export default {
       newAsset: {
         assetName: "",
         assetCode: "",
-        originalPrice: null,
-        timeUse: null,
-        wearRate: null,
+        originalPrice: "",
+        timeUse: "",
+        wearRate: "",
         increaseDate: null,
-        wearValue: null,
+        wearValue: "",
         assetType: "",
         department: "",
         departmentId: "",
@@ -423,11 +424,11 @@ export default {
       // CreatedBy MTDUONG (17/05/2021)
       assetName: "",
       assetCode: "",
-      originalPrice: null,
-      timeUse: null,
-      wearRate: null,
+      originalPrice: "",
+      timeUse: "",
+      wearRate: "",
       increaseDate: null,
-      wearValue: null,
+      wearValue: "",
       assetType: {},
       department: {},
       // Trạng thái của các thông báo
@@ -459,12 +460,15 @@ export default {
       // Validate input số
       // CreatedBy MTDUONG (17/05/2021)
       inputNumberRules: [
-        (v) => (v && v.length >= 0) || "Không được để trống",
+        (v) => !!v || "Không được để trống",
         (v) => (v && !isNaN(v)) || "Bạn chỉ được nhập chữ số",
+        
       ],
+
+      error: ""
     };
   },
-  
+
   // Gọi hàm lấy data trên API
   // CreatedBy MTDUONG(18/06/2021)
   created() {
@@ -511,6 +515,10 @@ export default {
         ? moment(String(this.newAsset.increaseDate)).format("DD/MM/YYYY")
         : "";
     },
+    
+  },
+  watch:{
+
   },
   methods: {
 
@@ -544,24 +552,31 @@ export default {
       await api()
         .post("/assets", this.newAsset)
         .then((res) => {
+          // Gọi hàm loadData trong Vuex
           this.$store.dispatch("loadData");
           this.successAdd = true;
         })
         .catch((error) => {
-          this.$store.commit("changeErrorState");
+          if(error.response.request.status == 400){
+            this.error = "Mã tài sản đã tồn tại trong hệ thống"
+          }else{
+            this.$store.commit("changeErrorState");
+          }
         });
+        
     },
 
     // Sửa tài sản
     // CreatedBy MTDUONG(18/06/2021)
     async editAsset(item) {
-      await api()
-        .put(`/assets/${this.item.assetId}`, this.newAsset)
-        .then((res) => {
+      await api().put(`/assets/${this.item.assetId}`, this.newAsset).then((res) => {
+          // Gọi hàm loadData trong Vuex
+          console.log(res)
           this.$store.dispatch("loadData");
           this.successEdit = true;
         })
         .catch((error) => {
+          // Gọi hàm changeErrorState trong Vuex
           this.$store.commit("changeErrorState");
         });
     },

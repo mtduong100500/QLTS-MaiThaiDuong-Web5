@@ -16,16 +16,5 @@ namespace MISA.Core.Services
         {
             _assetRepository = assetRepository;
         }
-
-        protected override bool ValidateCustom(Asset entity)
-        {
-            var isValid = true;
-            // Check mã tài sản đã có hay chưa 
-            if (string.IsNullOrEmpty(entity.AssetCode))
-            {
-                return false;
-            }
-            return true;
-        }
     }
 }

@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace MISA.QLTS.Controllers
 {
+    /// <summary>
+    /// Tài sản API
+    /// CreatedBy MTDUONG (17/06/2021)
+    /// </summary>
     [Route("api/assets")]
     public class AssetController : MISAEntityController<Asset>
     {

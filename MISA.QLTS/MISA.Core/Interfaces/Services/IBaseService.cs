@@ -30,5 +30,6 @@ namespace MISA.Core.Interfaces.Services
         /// <returns>Xóa bản ghi thành công</returns>
         /// CreatedBy MTDUONG (16/06/2021)
         int? Delete(Guid entityId);
+        
     }
 }

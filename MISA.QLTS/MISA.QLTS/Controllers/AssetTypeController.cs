@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace MISA.Infrastruture.Repositories
 {
+    /// <summary>
+    /// Loại tài sản API
+    /// CreatedBy MTDUONG (17/06/2021)
+    /// </summary>
     public class AssetTypeController : MISAEntityController<AssetType>
     {
         IAssetTypeRepository _assetTypeRepository;
