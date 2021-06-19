@@ -16,6 +16,11 @@ namespace MISA.Core.Services
         {
             _baseRepository = baseRepository;
         }
+        /// <summary>
+        /// Thêm dữ liệu đã có validate
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public int? Insert(MISAEntity entity)
         {
             var isValid = ValidateObject(entity);
@@ -44,7 +49,12 @@ namespace MISA.Core.Services
             }
             return _baseRepository.Insert(entity);
         }
-
+        /// <summary>
+        /// Sửa dữ liệu
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
         public int? Update(MISAEntity entity, Guid entityId)
         {
             var isValid = ValidateObject(entity);
@@ -55,6 +65,12 @@ namespace MISA.Core.Services
             return null;
         }
 
+        
+        /// <summary>
+        /// Validate Chung
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns>True: Nếu thỏa mãn, False: nếu không thỏa mãn</returns>
         bool ValidateObject(MISAEntity entity)
         {
             // Xử lý validate chung
@@ -78,12 +94,21 @@ namespace MISA.Core.Services
             }
             return true;
         }
-
+        /// <summary>
+        /// Validate custom
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         protected virtual bool ValidateCustom(MISAEntity entity)
         {
             return true;
         }
 
+        /// <summary>
+        /// Xóa dữ liệu
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
         public int? Delete(Guid entityId)
         {
             return _baseRepository.Delete(entityId);

@@ -156,7 +156,11 @@ namespace MISA.Infrastruture.Repositories
             // Trả về kết quả
             return res;
         }
-
+        /// <summary>
+        /// Kiểm tra trùng mã tài sản
+        /// </summary>
+        /// <param name="assetCode">mã tài sản</param>
+        /// <returns>True: nếu trùng, False: không trùng</returns>
         public bool CheckCodeExist(string assetCode)
         {
             string sqlcommand = $"Proc_CheckCodeExist";
