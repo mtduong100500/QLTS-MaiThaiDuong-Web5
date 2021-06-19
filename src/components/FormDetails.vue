@@ -406,7 +406,6 @@ export default {
   },
   data() {
     return {
-
       // Tắt input mã tài sản khi sửa
       isDisable: false,
 
@@ -467,10 +466,9 @@ export default {
       inputNumberRules: [
         (v) => !!v || "Không được để trống",
         (v) => (v && !isNaN(v)) || "Bạn chỉ được nhập chữ số",
-        
       ],
 
-      error: ""
+      error: "",
     };
   },
 
@@ -507,7 +505,7 @@ export default {
       if (this.status === "edit") {
         this.newAsset.assetCode = this.item.assetCode;
         this.newAsset.assetName = this.item.assetName;
-        this.isDisable = true
+        this.isDisable = true;
       } else if (this.status === "duplicate") {
         this.newAsset.assetCode = "";
         this.newAsset.assetName = "";
@@ -521,13 +519,9 @@ export default {
         ? moment(String(this.newAsset.increaseDate)).format("DD/MM/YYYY")
         : "";
     },
-    
   },
-  watch:{
-
-  },
+  watch: {},
   methods: {
-
     // Đóng thông báo lưu thành công
     // CreatedBy MTDUONG(18/06/2021)
     closeSuccessDialog() {
@@ -563,21 +557,23 @@ export default {
           this.successAdd = true;
         })
         .catch((error) => {
-          if(error.response.request.status == 400){
-            this.error = "Mã tài sản đã tồn tại trong hệ thống"
-          }else{
+          if (error.response.request.status == 400) {
+            this.error = "Mã tài sản đã tồn tại trong hệ thống";
+          } else {
             this.$store.commit("changeErrorState");
           }
         });
-        
     },
 
     // Sửa tài sản
     // CreatedBy MTDUONG(18/06/2021)
     async editAsset(item) {
-      await api().put(`/assets/${this.item.assetId}`, this.newAsset).then((res) => {
+      console.log(this.newAsset)
+      await api()
+        .put(`/assets/${this.item.assetId}`, this.newAsset)
+        .then((res) => {
           // Gọi hàm loadData trong Vuex
-          console.log(res)
+          console.log(res);
           this.$store.dispatch("loadData");
           this.successEdit = true;
         })
@@ -597,15 +593,15 @@ export default {
           this.successAdd = true;
         })
         .catch((error) => {
-           if(error.response.request.status == 400){
-            this.error = "Mã tài sản đã tồn tại trong hệ thống"
-          }else{
+          if (error.response.request.status == 400) {
+            this.error = "Mã tài sản đã tồn tại trong hệ thống";
+          } else {
             this.$store.commit("changeErrorState");
           }
         });
     },
 
-    // Form nếu chưa validate sẽ không submit được 
+    // Form nếu chưa validate sẽ không submit được
     // CreatedBy MTDUONG(18/06/2021)
     submit() {
       if (this.$refs.form.validate()) {
@@ -613,7 +609,7 @@ export default {
           this.addAsset();
         } else if (this.status === "duplicate") {
           this.duplicateAsset(this.item);
-        } else if(this.status === "edit") {
+        } else if (this.status === "edit") {
           this.editAsset(this.item);
         }
       }

@@ -71,7 +71,6 @@
               class="btn-delete btn-hover"
               v-on="on"
               v-bind="attrs"
-              @click="deleteDialog = true"
             >
               <v-img
                 height="15"
@@ -80,7 +79,7 @@
               ></v-img>
             </div>
           </template>
-          <span>Xóa dữ liệu</span>
+          <span>Xóa nhiều dòng</span>
         </v-tooltip>
       </div>
     </div>

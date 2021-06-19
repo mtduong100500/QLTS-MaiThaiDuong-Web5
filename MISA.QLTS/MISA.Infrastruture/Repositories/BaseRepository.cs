@@ -118,43 +118,25 @@ namespace MISA.Infrastruture.Repositories
         /// <returns></returns>
         public int Update(MISAEntity entity, Guid entityId)
         {
-            var sqlCommandValue = "";
-            var condition = "";
             var properties = entity.GetType().GetProperties();
             // Khởi tạo câu lệnh truy vấn
+
             var sqlCommand = $"Proc_Update{className}";
             DynamicParameters dynamicParameters = new DynamicParameters();
 
-            var i = 0;
             foreach (var prop in properties)
             {
                 var propName = prop.Name;
                 var propValue = prop.GetValue(entity);
-                if (i == 0)
+                if(propName == $"{className}Id")
                 {
-                    condition = $"{propName} = @{propName}";
+                    propValue = entityId;
                 }
-                else if (i == properties.Length - 1)
-                {
-                    sqlCommandValue += $"{propName} = @{propName}";
-                }
-                else
-                {
-                    sqlCommandValue += $"{propName} = @{propName},";
-                }
-                i++;
-
-            }
-            foreach (var prop in properties)
-            {
-                var propName = prop.Name;
-                var propValue = prop.GetValue(entity);
                 dynamicParameters.Add($"@{propName}", propValue);
             }
-
+            
             var res = DbConnection.Execute(sqlCommand, param: dynamicParameters, commandType: CommandType.StoredProcedure);
             return res;
-
         }
 
 
