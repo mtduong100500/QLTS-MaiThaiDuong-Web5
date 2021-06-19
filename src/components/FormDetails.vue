@@ -93,7 +93,6 @@
                 v-model="newAsset.department"
                 item-text="departmentCode"
                 item-value="department.departmentName"
-                
                 return-object
               ></v-autocomplete>
             </div>
@@ -124,7 +123,7 @@
                 v-model="newAsset.assetType"
                 item-text="assetTypeCode"
                 item-value="assetType.assetTypeName"
-                 return-object
+                return-object
               ></v-autocomplete>
             </div>
           </v-col>
@@ -276,13 +275,7 @@
           <v-btn color="green darken-1" text @click="closeDialog = false">
             Hủy
           </v-btn>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="$store.commit('changeFormState')"
-          >
-            Đồng ý
-          </v-btn>
+          <v-btn color="green darken-1" text @click="closeForm"> Đồng ý </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -318,11 +311,50 @@
       <v-card>
         <v-card-title class="text-h5"> Thông báo </v-card-title>
         <v-card-text class="text-h6"
-          >Dữ liệu đã được thêm thành công</v-card-text
+          >Dữ liệu đã được lưu thành công</v-card-text
         >
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="this.$store.dispatch('loadData'), successAdd = false">
+          <v-btn
+            color="green darken-1"
+            text
+            @click="
+              successAdd = false;
+              $store.commit('changeLoadingState');
+              closeSuccessDialog();
+            "
+          >
+            Quay lại
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!--
+      Thông báo khi sửa thành công
+      CreatedBy MTDUONG (18/06/2021)
+    -->
+    <v-dialog
+      v-model="successEdit"
+      persistent
+      max-width="350"
+      no-click-animation
+    >
+      <v-card>
+        <v-card-title class="text-h5"> Thông báo </v-card-title>
+        <v-card-text class="text-h6"
+          >Dữ liệu đã được sửa thành công</v-card-text
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="
+              successEdit = false;
+              $store.commit('changeLoadingState');
+              closeForm();
+            "
+          >
             Quay lại
           </v-btn>
         </v-card-actions>
@@ -345,7 +377,11 @@
         >
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="$store.commit('changeErrorState')">
+          <v-btn
+            color="green darken-1"
+            text
+            @click="$store.commit('changeErrorState')"
+          >
             Quay lại
           </v-btn>
         </v-card-actions>
@@ -358,12 +394,13 @@
 import moment from "moment";
 import "../assets/css/formdetails.css";
 import axios from "axios";
+import api from "../service/api";
 
 export default {
   name: "FormDetails",
   props: {
-    state: String,
-    formField: Object,
+    status: String,
+    item: Object,
   },
   data() {
     return {
@@ -371,26 +408,26 @@ export default {
       newAsset: {
         assetName: "",
         assetCode: "",
-        originalPrice: 0,
-        timeUse: 0,
-        wearRate: 0,
+        originalPrice: null,
+        timeUse: null,
+        wearRate: null,
         increaseDate: null,
-        wearValue: 0,
+        wearValue: null,
         assetType: "",
         department: "",
         departmentId: "",
-        assetTypeId: ""
+        assetTypeId: "",
       },
 
       // Model của các input
       // CreatedBy MTDUONG (17/05/2021)
       assetName: "",
       assetCode: "",
-      originalPrice: 0,
-      timeUse: 0,
-      wearRate: 0,
+      originalPrice: null,
+      timeUse: null,
+      wearRate: null,
       increaseDate: null,
-      wearValue: 0,
+      wearValue: null,
       assetType: {},
       department: {},
       // Trạng thái của các thông báo
@@ -399,6 +436,8 @@ export default {
       closeDialog: false,
       successAdd: false,
       errorDialog: false,
+      successEdit: false,
+
       // Select Box loại tài sản
       // CreatedBy MTDUONG (15/05/2021)
 
@@ -415,7 +454,7 @@ export default {
 
       // Validate input text
       // CreatedBy MTDUONG (17/05/2021)
-      inputRules: [(v) => (v && v.length >= 0) || "Không được để trống"],
+      inputRules: [(v) => (v && v.length > 0) || "Không được để trống"],
 
       // Validate input số
       // CreatedBy MTDUONG (17/05/2021)
@@ -425,12 +464,46 @@ export default {
       ],
     };
   },
+  
   // Gọi hàm lấy data trên API
+  // CreatedBy MTDUONG(18/06/2021)
   created() {
     this.getComboDepartmentData();
     this.getComboAssetTypeData();
   },
 
+  // Đổ dữ liệu lên Form khi sửa
+  mounted() {
+    // Đổ dữ liệu của Form EDIT
+    // CreatedBY MTDUONG (19/06/2021)
+    if (this.status != "add") {
+      this.newAsset.increaseDate = this.item.increaseDate;
+      this.newAsset.wearValue = this.item.wearValue.toString();
+      this.newAsset.timeUse = this.item.timeUse.toString();
+      this.newAsset.wearRate = this.item.wearRate.toString();
+      this.newAsset.originalPrice = this.item.originalPrice.toString();
+      this.item.department = {
+        departmentCode: this.item.departmentCode,
+        departmentName: this.item.departmentName,
+        departmentId: this.item.departmentId,
+      };
+      this.newAsset.department = Object.assign({}, this.item.department);
+      this.item.department = {
+        assetTypeCode: this.item.assetTypeCode,
+        assetTypeName: this.item.assetTypeName,
+      };
+      this.newAsset.assetType = Object.assign({}, this.item.department);
+      this.newAsset.departmentId = this.item.departmentId;
+      this.newAsset.assetTypeId = this.item.assetTypeId;
+      if (this.status === "edit") {
+        this.newAsset.assetCode = this.item.assetCode;
+        this.newAsset.assetName = this.item.assetName;
+      } else if (this.status === "duplicate") {
+        this.newAsset.assetCode = "";
+        this.newAsset.assetName = "";
+      }
+    }
+  },
   computed: {
     // Format text hiện trên datepicker
     formatDateWithMomentJS() {
@@ -440,27 +513,87 @@ export default {
     },
   },
   methods: {
-    async addAsset() {
-      
-      this.newAsset.assetTypeId = this.newAsset.assetType.assetTypeId
-      this.newAsset.departmentId = this.newAsset.department.departmentId
-      console.log(this.newAsset)
-      await axios.post("https://localhost:44331/api/assets", this.newAsset)
-      .then((res) => {
-          this.$store.dispatch('loadData')
-          this.successAdd = true
-      })
-      .catch((error) => {
-          this.$store.commit('changeErrorState')
-          console.log(error)
-      });
-    },
-    // Validate Form
-    submit() {
-      if (this.$refs.form.validate()) {
-        this.addAsset();
+
+    // Đóng thông báo lưu thành công
+    // CreatedBy MTDUONG(18/06/2021)
+    closeSuccessDialog() {
+      if (this.status == "add") {
+        this.$store.commit("changeFormState");
+      } else {
+        this.$store.commit("changeDuplicateState");
       }
     },
+
+    // Đóng Form sau khi thực hiện thêm sửa nhân bản
+    // CreatedBy MTDUONG(18/06/2021)
+    closeForm() {
+      if (this.status === "edit") {
+        this.$store.commit("changeEditFormState");
+      } else if (this.status === "add") {
+        this.$store.commit("changeFormState");
+      } else {
+        this.$store.commit("changeDuplicateState");
+      }
+    },
+
+    // Thêm tài sản
+    // CreatedBy MTDUONG (18/06/2021)
+    async addAsset() {
+      this.newAsset.assetTypeId = this.newAsset.assetType.assetTypeId;
+      this.newAsset.departmentId = this.newAsset.department.departmentId;
+      await api()
+        .post("/assets", this.newAsset)
+        .then((res) => {
+          this.$store.dispatch("loadData");
+          this.successAdd = true;
+        })
+        .catch((error) => {
+          this.$store.commit("changeErrorState");
+        });
+    },
+
+    // Sửa tài sản
+    // CreatedBy MTDUONG(18/06/2021)
+    async editAsset(item) {
+      await api()
+        .put(`/assets/${this.item.assetId}`, this.newAsset)
+        .then((res) => {
+          this.$store.dispatch("loadData");
+          this.successEdit = true;
+        })
+        .catch((error) => {
+          this.$store.commit("changeErrorState");
+        });
+    },
+
+    // Nhân bản tài sản
+    // CreatedBy MTDUONG(18/06/2021)
+    async duplicateAsset(item) {
+      await api()
+        .post("/assets", this.newAsset)
+        .then((res) => {
+          this.$store.dispatch("loadData");
+          this.successAdd = true;
+        })
+        .catch((error) => {
+          this.$store.commit("changeErrorState");
+        });
+    },
+
+    // Form nếu chưa validate sẽ không submit được 
+    // CreatedBy MTDUONG(18/06/2021)
+    submit() {
+      if (this.$refs.form.validate()) {
+        if (this.status === "add") {
+          this.addAsset();
+        } else if (this.status === "duplicate") {
+          this.duplicateAsset(this.item);
+        } else if(this.status === "edit") {
+          this.editAsset(this.item);
+        }
+      }
+    },
+
     // Focus vào input đầu
     // CreatedBy MTDUONG (18/06/2021)
     focusFirst() {
@@ -476,19 +609,23 @@ export default {
     // Lấy data đổ vào combobox loại tài sản
     // CreatedBy MTDUONG (18/06/2021)
     async getComboAssetTypeData() {
-      await axios.get("https://localhost:44331/api/AssetTypes").then((res) => {
-        this.assetTypeCombo = res.data;
-      });
+      await api()
+        .get("/AssetTypes")
+        .then((res) => {
+          this.assetTypeCombo = res.data;
+        });
     },
 
     // Lấy data đổ vào combobox phòng ban
     // CreatedBy MTDUONG (18/06/2021)
     async getComboDepartmentData() {
-      await axios.get("https://localhost:44331/api/Departments").then((res) => {
-        this.departmentCombo = res.data;
-      });
+      await api()
+        .get("/Departments")
+        .then((res) => {
+          this.departmentCombo = res.data;
+        });
     },
-    },
+  },
 };
 </script>
 

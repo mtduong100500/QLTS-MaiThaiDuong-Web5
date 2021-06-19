@@ -6,10 +6,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isOpen: false,
-    isEdit: false,
+    isEdited: false,
+    isDuplicated: false,
     error: false,
     assets: [],
-    overlay: true,
+    overlay: false,
     isSuccess: false
   },
   mutations: {
@@ -17,7 +18,10 @@ export default new Vuex.Store({
       state.isOpen = !state.isOpen
     },
     changeEditFormState(state) {
-      state.isEdit = !state.isEdit
+      state.isEdited = !state.isEdited
+    },
+    changeDuplicateState(state) {
+      state.isDuplicated = !state.isDuplicated
     },
     GET_ASSETS(state, assets) {
       state.assets = assets
@@ -28,7 +32,7 @@ export default new Vuex.Store({
     changeErrorState(state){
       state.error = !state.error
     },
-    changeSuccess(state){
+    changeSuccessState(state){
       state.isSuccess = !state.isSuccess
     }
 
@@ -36,7 +40,7 @@ export default new Vuex.Store({
   actions: {
     async loadData({ commit }, state) {
       await api().get("/assets").then(res => {
-        commit('GET_ASSETS', res.data),
+        commit('GET_ASSETS', res.data)
         commit('changeLoadingState')
       }).catch((error) => {
         commit('changeErrorState')

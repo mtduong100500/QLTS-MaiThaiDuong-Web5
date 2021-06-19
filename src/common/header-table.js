@@ -1,5 +1,5 @@
 var headers = [
-    { text: "STT", value: "this.index", width: "40px", sortable: false },
+    { text: "STT", value: "index", width: "40px", sortable: false },
     {
         text: "NGÀY GHI TĂNG",
         value: "increaseDate",
@@ -11,13 +11,11 @@ var headers = [
         text: "MÃ TÀI SẢN",
         value: "assetCode",
         width: "100px",
-        sortable: false,
     },
     {
         text: "TÊN TÀI SẢN",
         value: "assetName",
         width: "600px",
-        sortable: false,
     },
     {
         text: "LOẠI TÀI SẢN",

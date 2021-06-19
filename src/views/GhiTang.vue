@@ -35,7 +35,7 @@
           color="#00abfe"
           small
           class="white--text px-7 py-4 elevation-0"
-          @click="$store.commit('changeFormState')"
+          @click="$store.commit('changeFormState'); status = 'add'"
           >Thêm</v-btn
         >
         <!--
@@ -64,7 +64,7 @@
           Nút xóa nhiều
           CreatedBy MTDUONG (14/06/2021)
         -->
-        
+
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
             <div
@@ -117,79 +117,78 @@
         hide-default-footer
         disable-pagination
         no-data-text="Không có dữ liệu"
-        
+        @contextmenu:row.prevent="show"
       >
-        <template #item="{ item }">
-          <tr @contextmenu.prevent="show">
-            <td>{{ assets.indexOf(item) + 1 }}</td>
-            <td class="text-center">{{ formatDate(item.increaseDate) }}</td>
-            <td>{{ item.assetCode }}</td>
-            <td>{{ item.assetName }}</td>
-            <td>{{ item.assetTypeName }}</td>
-            <td>{{ item.departmentName }}</td>
-            <td class="text-right">{{ formatMoney(item.originalPrice) }}</td>
-            <td>
-              <div class="d-flex align-center">
-                <!--
+        <template v-slot:item.index="{ item }">
+          <span>{{ assets.indexOf(item) + 1}}</span>
+        </template>
+        <template v-slot:item.increaseDate="{ item }">
+          <span>{{ formatDate(item.increaseDate) }}</span>
+        </template>
+        <template v-slot:item.originalPrice="{ item }">
+          <span>{{ formatMoney(item.originalPrice) }}</span>
+        </template>
+        <template v-slot:item.actions="{ item }">
+          <div class="d-flex align-center">
+            <!--
                   Nút chỉnh sửa trên dòng trong bảng
                   CreatedBy MTDUONG (14/06/2021)
                 -->
-                <v-tooltip bottom>
-                  <template #activator="{ on, attrs }">
-                    <v-icon
-                      small
-                      class="mr-2 btn-hover"
-                      v-bind="attrs"
-                      v-on="on"
-                      @click="editItem(item), $store.commit('changeFormState')"
-                    >
-                      mdi-pencil
-                    </v-icon>
-                  </template>
-                  <span>Sửa</span>
-                </v-tooltip>
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-icon
+                  small
+                  class="mr-2 btn-hover"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="editItem(item); status = 'edit'; $store.commit('changeEditFormState')"
+                >
+                  mdi-pencil
+                </v-icon>
+              </template>
+              <span>Sửa</span>
+            </v-tooltip>
 
-                <!--
+            <!--
                   Nút xóa dòng trên bảng
                   CreatedBy MTDUONG (14/06/2021)
                 -->
-                <v-tooltip bottom>
-                  <template #activator="{ on, attrs }">
-                    <v-img
-                      small
-                      src="../assets/icon/trash.svg"
-                      max-height="15"
-                      max-width="15"
-                      class="btn-hover"
-                      v-bind="attrs"
-                      v-on="on"
-                      @click="deleteDialog = true"
-                    ></v-img>
-                  </template>
-                  <span>Xóa</span>
-                </v-tooltip>
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-img
+                  small
+                  src="../assets/icon/trash.svg"
+                  max-height="15"
+                  max-width="15"
+                  class="btn-hover"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="deleteItem(item); (deleteDialog = true)"
+                ></v-img>
+              </template>
+              <span>Xóa</span>
+            </v-tooltip>
 
-                <!--
+            <!--
                   Nút nhân bản trên dòng trong bảng
                   CreatedBy MTDUONG (14/06/2021)
                 -->
 
-                <v-tooltip bottom>
-                  <template #activator="{ on, attrs }">
-                    <v-icon
-                      small
-                      class="ml-2 btn-hover"
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      mdi-history
-                    </v-icon>
-                  </template>
-                  <span>Nhân bản dữ liệu</span>
-                </v-tooltip>
-              </div>
-            </td>
-          </tr>
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-icon
+                  small
+                  class="ml-2 btn-hover"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="duplicate(item); status = 'duplicate'; $store.commit('changeDuplicateState')"
+                >
+                  mdi-history
+                </v-icon>
+              </template>
+              <span>Nhân bản dữ liệu</span>
+            </v-tooltip>
+          </div>
         </template>
       </v-data-table>
     </div>
@@ -222,7 +221,14 @@
           <v-btn color="green darken-1" text @click="deleteDialog = false">
             Hủy
           </v-btn>
-          <v-btn color="green darken-1" text @click="deleteDialog = false">
+          <v-btn
+            color="green darken-1"
+            text
+            @click="
+              reloadTable();
+              changeDelete();
+            "
+          >
             Đồng ý
           </v-btn>
         </v-card-actions>
@@ -233,12 +239,14 @@
       FORM thêm
       CreatedBy MTDUONG (17/06/2021)
       -->
-    <FormDetails v-if="$store.state.isOpen" :edited="false"/>
+    <FormDetails v-if="$store.state.isOpen" :status="status"/>
     <!--
       FORM sửa
       CreatedBy MTDUONG (17/06/2021)
       -->
-    <FormDetails v-if="$store.state.isEdit"/>
+    <FormDetails v-if="$store.state.isEdited" :item="editedAsset" :status="status"/>
+
+    <FormDetails v-if="$store.state.isDuplicated" :item="duplicateAsset" :status="status"/>
   </div>
 </template>
 
@@ -247,18 +255,20 @@ import "../assets/css/ghitang.css";
 import moment from "moment";
 import FormDetails from "../components/FormDetails.vue";
 import headers from "../common/header-table";
-import api from "../service/api"
+import api from "../service/api";
 
 export default {
   name: "taisan",
   components: {
     FormDetails,
   },
-  props:{
-    editedItem: Object
-  },
+
   data() {
+
     return {
+      status: "",
+      duplicateAsset:{},
+      editedAsset:{},
       deleteDialog: false,
       // Chứa các thông tin của table headers
       // CreatedBy MTDUONG (14/06/2021)
@@ -304,33 +314,64 @@ export default {
     };
   },
 
+  // Khởi tạo data
+  // CreatedBy MTDUONG (18/06/2021)
   created() {
-    this.$store.dispatch('loadData')
+    this.$store.dispatch("loadData");
+    this.$store.commit("changeLoadingState");
   },
+
+  // Khởi tạo 2 biến thay đổi trong VUEX
+  // CreatedBy MTDUONG (18/06/2021)
   computed: {
-    assets(){
-      return this.$store.state.assets
+    assets() {
+      return this.$store.state.assets;
     },
-    overlay(){
-      return this.$store.state.overlay
-    }
+    overlay() {
+      return this.$store.state.overlay;
+    },
   },
+
+  // Tính tổng nguyên giá
+  // CreatedBy MTDUONG (18/06/2021)
   mounted() {
-    this.priceSumFunc()
+    this.priceSumFunc();
   },
+
   methods: {
-    edit(){
+    
+    // Thay đổi trạng thái đóng mở của thông báo xóa
+    // CreatedBy MTDUONG (18/06/2021)
+    changeDelete() {
+      this.deleteDialog = !this.deleteDialog;
     },
+
+    // DELETE REQUEST
+    // CreatedBy MTDUONG (18/06/2021)
+    async deleteItem(item) {
+      await api()
+        .delete(`/assets/${item.assetId}`)
+        .then((res) => {
+          this.deleteDialog = true;
+        });
+    },
+
+    editItem(item){
+      this.editedAsset = item
+    },
+
+    duplicate(item){
+      this.duplicateAsset = item
+    },
+
 
     // Load lại dữ liệu
     // CreatedBy MTDUONG (17/06/2021)
     reloadTable() {
-      this.$store.commit('changeLoadingState')
-      this.$store.dispatch('loadData');
-      
+      this.$store.dispatch("loadData");
+      this.$store.commit("changeLoadingState");
     },
 
-    // CreatedBy MTDUONG (17/06/2021)
     // Filter theo tên và mã nhân viên
     // CreatedBy MTDUONG(13/06/2021)
     searchByNameAndCode(value, search, item) {
@@ -345,15 +386,15 @@ export default {
       return this.assets.length;
     },
 
-    // Tính tổng nguyên giá (chưa hoạt động)
+    // Tính tổng nguyên giá
     // CreatedBY MTDUONG (14/06/2021)
     priceSumFunc() {
       var sum = 0;
-      this.assets.filter((data)=>{
+      this.assets.filter((data) => {
         sum += data.originalPrice;
-      })
+      });
 
-      return sum = this.formatMoney(sum);
+      return (sum = this.formatMoney(sum));
     },
 
     // Đổ data lên form khi sửa (Chưa xong )
@@ -361,7 +402,7 @@ export default {
 
     // Chuột phải sẽ hiện context menu
     // CreatedBy MTDUONG (15/06/2021)
-    show(e) {
+    show(e, item) {
       e.preventDefault();
       this.showMenu = false;
       this.x = e.clientX;
@@ -369,7 +410,7 @@ export default {
       this.$nextTick(() => {
         this.showMenu = true;
       });
-      console.log(e)
+      console.log(e, item);
     },
 
     // Sự kiện khi click vào dòng trong context menu
@@ -387,23 +428,21 @@ export default {
         ? money.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.")
         : money;
     },
+
     // Format ngày tháng
     // CreatedBy MTDUONG (15/06/2021)
     formatDate(date) {
-      return date ? moment(String(date)).format("DD/MM/YYYY") : '';
+      return date ? moment(String(date)).format("DD/MM/YYYY") : "";
     },
 
     // Focus input
     // CreatedBy MTDUONG (17/06/2021)
-    focusInput(){
-      this.$refs.search.focus()
-    }
+    focusInput() {
+      this.$refs.search.focus();
+    },
   },
 };
 </script>
 
 <style scoped>
-
-
-
 </style>

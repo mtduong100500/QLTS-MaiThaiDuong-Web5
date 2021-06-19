@@ -133,7 +133,7 @@ namespace MISA.Infrastruture.Repositories
         {
             var sqlCommand = $"Proc_Delete{className}";
             DynamicParameters dynamicParameters = new DynamicParameters();
-            dynamicParameters.Add("@{className}Id", entityId);
+            dynamicParameters.Add($"@{className}Id", entityId);
             var res = DbConnection.Execute(sqlCommand, param: dynamicParameters, commandType: CommandType.StoredProcedure);
 
             // Trả về kết quả
