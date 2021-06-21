@@ -230,7 +230,7 @@
         Tổng nguyên giá: {{ priceSumFunc() }}
       </div>
     </div>
-<!--
+    <!--
       Thông báo khi thêm thành công
       CreatedBy MTDUONG (18/06/2021)
     -->
@@ -256,7 +256,10 @@
     >
       Sửa thành công
     </v-snackbar>
-
+    <!--
+      Thông báo xóa thành công
+      CreatedBy MTDUONG (21/6/2021)
+    -->
     <v-snackbar
       v-model="$store.state.successDelete"
       :timeout="timeout"
@@ -266,6 +269,7 @@
     >
       Xóa thành công
     </v-snackbar>
+
     <!--
       Thông báo xóa 
       CreatedBy MTDUONG (17/06/2021)
@@ -295,6 +299,10 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    
+    <!--
+      THông báo không có dòng nào khi xóa nhiều 
+    -->
 
     <!--
       FORM thêm
@@ -488,10 +496,10 @@ export default {
       for (item in this.selected) {
         if (this.selected.hasOwnProperty(item)) {
           var value = this.selected[item];
-          await api().delete(`/assets/${value}`)
+            await api().delete(`/assets/${value}`)
+            this.$store.commit('changeDeleteNoti')
         }
       }
-      this.deleteDialog = true
     },
 
     // Gán data cho props để truyền lên Form khi sửa
@@ -508,8 +516,10 @@ export default {
 
     // Load lại dữ liệu
     // CreatedBy MTDUONG (17/06/2021)
-    reloadTable() {
-      this.$store.dispatch("loadData");
+    async reloadTable() {
+
+      await this.$store.dispatch("loadData");
+      this.$store.commit('changeLoadingState')
     },
 
     // Filter theo tên và mã nhân viên

@@ -5,16 +5,28 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    // Đóng mỏ form
     isOpen: false,
+    // Form sửa
     isEdited: false,
+    // Form nhân bản
     isDuplicated: false,
+    // Lỗi từ server
     error: false,
+    // data lấy từ api
     assets: [],
+    // Loading screen
     overlay: false,
+    // 
     isSuccess: false,
+    // THêm thành công
     successAdd: false,
+    // Sửa thành công
     successEdit: false,
+    // Xóa thành công
     successDelete: false,
+    // Lỗi khi xóa nhiều nhưng chưa chọn dòng nào
+    multipleError: false,
   },
   mutations: {
     changeAddNoti(state){
@@ -54,7 +66,9 @@ export default new Vuex.Store({
     changeSuccessState(state) {
       state.isSuccess = !state.isSuccess
     },
-
+    deleteMultipleError(state){
+      state.multipleError = !state.multipleError
+    }
     
   },
   actions: {
