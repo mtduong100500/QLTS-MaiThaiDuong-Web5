@@ -74,7 +74,7 @@
               class="btn-delete btn-hover"
               v-on="on"
               v-bind="attrs"
-              @click="multipleDelete"
+              @click="multipleDelete(); deleteDialog = true"
             >
               <v-img
                 height="15"
@@ -289,7 +289,7 @@
             color="green darken-1"
             text
             @click="
-              reloadTable();
+              $store.dispatch('loadData')
               $store.commit('changeDeleteNoti')
               deleteDialog = false
             "
@@ -486,7 +486,7 @@ export default {
       await api()
         .delete(`/assets/${item.assetId}`)
         .then((res) => {
-          this.deleteDialog = true;
+          
         });
     },
 
@@ -496,8 +496,9 @@ export default {
       for (item in this.selected) {
         if (this.selected.hasOwnProperty(item)) {
           var value = this.selected[item];
-            await api().delete(`/assets/${value}`)
-            this.$store.commit('changeDeleteNoti')
+          await api().delete(`/assets/${value}`).then((res => {
+            this.deleteDialog = true;
+          }))
         }
       }
     },
