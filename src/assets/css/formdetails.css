@@ -7,7 +7,7 @@
   .v-text-field--outlined fieldset{
     border-radius: 0 !important;
   }
-  
+
   .v-application .primary--text{
     color:  #01B075 !important;
   }
@@ -108,6 +108,7 @@
 
   .v-btn:not(.v-btn--round).v-size--small{
     min-height: 0 !important;
+    min-width: 0px !important;
     height: 0 !important;
   }
   

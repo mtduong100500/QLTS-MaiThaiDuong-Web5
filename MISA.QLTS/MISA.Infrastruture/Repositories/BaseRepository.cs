@@ -41,7 +41,7 @@ namespace MISA.Infrastruture.Repositories
         /// Lấy tất cả dữ liệu
         ///  CreatedBy MTDUONG (17/06/2021)
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Danh sách tất cả các bản ghi</returns>
         public List<MISAEntity> getAll()
         {
             var sqlCommand = $"Proc_Get{className}";
@@ -53,8 +53,8 @@ namespace MISA.Infrastruture.Repositories
         /// Lây dữ liệu theo ID
         /// CreatedBy MTDUONG (17/06/2021)
         /// </summary>
-        /// <param name="entityId"></param>
-        /// <returns></returns>
+        /// <param name="entityId">Id của đối tượng</param>
+        /// <returns>Bản ghi cần tìm theo ID</returns>
 
         public MISAEntity GetById(Guid entityId)
         {
@@ -70,8 +70,8 @@ namespace MISA.Infrastruture.Repositories
         /// Thêm dữ liệu
         /// CreatedBy MTDUONG (17/06/2021)
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">Đối tượng cần thêm</param>
+        /// <returns>0: thêm thất bại, 1: thêm thành công</returns>
         public int Insert(MISAEntity entity)
         {
             var sqlCommandField = "";
@@ -94,6 +94,7 @@ namespace MISA.Infrastruture.Repositories
                         sqlCommandValue += $"@{propName},";
                     }
             }
+            // Câu truy vấn
             var sqlCommand = $"Proc_Insert{className}";
             foreach (var pro in properties)
             {
@@ -113,9 +114,9 @@ namespace MISA.Infrastruture.Repositories
         /// Sửa dữ liệu
         /// CreatedBy MTDUONG (17/06/2021)
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="entityId"></param>
-        /// <returns></returns>
+        /// <param name="entity">Đối tượng cần sửa</param>
+        /// <param name="entityId">Id của đối tượng cần sửa</param>
+        /// <returns>0: sửa thất bại, 1: sửa thành công</returns>
         public int Update(MISAEntity entity, Guid entityId)
         {
             var properties = entity.GetType().GetProperties();
@@ -144,10 +145,11 @@ namespace MISA.Infrastruture.Repositories
         /// Xóa dữ liệu
         /// CreatedBy MTDUONG (17/06/2021)
         /// </summary>
-        /// <param name="entityId"></param>
-        /// <returns></returns>
+        /// <param name="entityId">Id của đối tượng</param>
+        /// <returns>0: Xóa thất bại, 1: Xóa thành công</returns>
         public int Delete(Guid entityId)
         {
+            // Câu lệnh truy vấn
             var sqlCommand = $"Proc_Delete{className}";
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add($"@{className}Id", entityId);
@@ -166,15 +168,9 @@ namespace MISA.Infrastruture.Repositories
             string sqlcommand = $"Proc_CheckCodeExist";
             DynamicParameters param = new DynamicParameters();
             param.Add("@AssetCode", assetCode);
-            try
-            {
-                var res = DbConnection.QueryFirstOrDefault<bool>(sqlcommand, param: param, commandType: CommandType.StoredProcedure);
-                return res;
-            }
-            catch
-            {
-                return false;
-            }
+            var res = DbConnection.QueryFirstOrDefault<bool>(sqlcommand, param: param, commandType: CommandType.StoredProcedure);
+            return res;
+
         }
         #endregion
     }

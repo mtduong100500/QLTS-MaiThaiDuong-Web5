@@ -19,10 +19,11 @@ namespace MISA.Core.Services
         /// <summary>
         /// Thêm dữ liệu đã có validate
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">Đối tượng cần thêm</param>
+        /// <returns>0: thêm thất bại, 1: thêm thành công</returns>
         public int? Insert(MISAEntity entity)
         {
+            // Validate chung
             var isValid = ValidateObject(entity);
             if (!isValid)
             {
@@ -30,14 +31,17 @@ namespace MISA.Core.Services
             }
             else 
             {
+                // Kiểm tra tất cả các thuộc tính
                 var properties = entity.GetType().GetProperties();
                 var entityCode = "";
 
                 foreach (var prop in properties)
                 {
+                    // Lấy ra property có gán attribute mà MISAEntityCode (Trùng mã)
                     var propertiesCode = prop.GetCustomAttributes(typeof(MISAEntityCode), true);
                     if (propertiesCode.Length > 0)
                     {
+                        // Lấy ra value của property
                         entityCode = (string)prop.GetValue(entity);
                         var res = _baseRepository.CheckCodeExist(entityCode);
                         if (res == true)
@@ -52,9 +56,9 @@ namespace MISA.Core.Services
         /// <summary>
         /// Sửa dữ liệu
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="entityId"></param>
-        /// <returns></returns>
+        /// <param name="entity">Đối tượng cần sửa</param>
+        /// <param name="entityId">Id của đối tượng cần sửa</param>
+        /// <returns>0: Sửa thất bại, 1: Sửa thành công</returns>
         public int? Update(MISAEntity entity, Guid entityId)
         {
             var isValid = ValidateObject(entity);
@@ -97,8 +101,8 @@ namespace MISA.Core.Services
         /// <summary>
         /// Validate custom
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">Đối tượng</param>
+        /// <returns>true: Thỏa mãn điểu kiện, false: không thỏa mã điều kiện</returns>
         protected virtual bool ValidateCustom(MISAEntity entity)
         {
             return true;
@@ -107,8 +111,8 @@ namespace MISA.Core.Services
         /// <summary>
         /// Xóa dữ liệu
         /// </summary>
-        /// <param name="entityId"></param>
-        /// <returns></returns>
+        /// <param name="entityId">Id của đối tượng</param>
+        /// <returns>0: Xóa thất bại, 1: Xóa thành công</returns>
         public int? Delete(Guid entityId)
         {
             return _baseRepository.Delete(entityId);

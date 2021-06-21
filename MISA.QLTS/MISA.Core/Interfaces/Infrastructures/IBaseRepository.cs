@@ -25,21 +25,21 @@ namespace MISA.Core.Interfaces.Infrastructures
         /// <summary>
         /// Thêm dữ liệu
         /// </summary>
-        /// <returns>Thêm thông tin tài sản vào database</returns>
+        /// <returns>0: Thêm thất bại, 1: Thêm thành công</returns>
         /// CreatedBy mtduong(16/06/2021)
         int Insert(MISAEntity entity);
 
         /// <summary>
         /// Sửa dữ liệu
         /// </summary>
-        /// <returns>Sửa thông tin tài sản</returns>
+        /// <returns>0: Sửa thất bại, 1: Sửa thành công</returns>
         /// CreatedBy mtduong(16/06/2021)
         int Update(MISAEntity entity, Guid EntityId);
 
         /// <summary>
         /// Xóa dữ liệu
         /// </summary>
-        /// <returns>Xóa thông tin tài sản</returns>
+        /// <returns>0: Xóa thất bại, 1: Xóa thành công</returns>
         /// CreatedBy mtduong(16/06/2021)
         int Delete(Guid entityId);
         /// <summary>

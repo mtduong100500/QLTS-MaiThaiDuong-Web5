@@ -17,12 +17,12 @@
           Ô input tìm kiếm
           CreatedBy MTDUONG (14/06/2021)
         -->
-        <input
-          type="text"
-          ref="search"
+        <v-text-field
           v-model="search"
           placeholder="Tìm kiếm"
-          class="search-bar search-icon"
+          class="search-bar"
+          outlined
+          autofocus
         />
       </div>
 

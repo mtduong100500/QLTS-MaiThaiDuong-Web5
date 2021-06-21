@@ -11,11 +11,13 @@ var headers = [
         text: "MÃ TÀI SẢN",
         value: "assetCode",
         width: "100px",
+        sortable: false,    
     },
     {
         text: "TÊN TÀI SẢN",
         value: "assetName",
         width: "600px",
+        sortable: false,
     },
     {
         text: "LOẠI TÀI SẢN",

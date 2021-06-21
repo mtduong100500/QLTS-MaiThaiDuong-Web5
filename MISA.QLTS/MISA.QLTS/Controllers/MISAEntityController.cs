@@ -18,7 +18,7 @@ namespace MISA.QLTS.Controllers
         IBaseRepository<MISAEntity> _baseRepository;
         #endregion
         /// <summary>
-        /// Hàm khởi tại
+        /// Hàm khởi tạo
         /// CreatedBy MTDUONG (17/06/2021)
         /// </summary>
         /// <param name="baseService"></param>
@@ -47,7 +47,7 @@ namespace MISA.QLTS.Controllers
         /// <summary>
         /// Lấy dữ liệu theo Id
         /// </summary>
-        /// <param name="entityId"></param>
+        /// <param name="entityId">Id của đối tượng</param>
         /// <returns></returns>
         [HttpGet("{entityId}")]
         public IActionResult Get(Guid entityId)
@@ -60,7 +60,7 @@ namespace MISA.QLTS.Controllers
         /// Thêm dữ liệu
         /// CreatedBy MTDUONG (17/06/2021)
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="entity">Đối tượng cần thêm</param>
         /// <returns></returns>
         [HttpPost]
         public IActionResult Post(MISAEntity entity)
@@ -80,8 +80,8 @@ namespace MISA.QLTS.Controllers
         /// Sửa dữ liệu
         /// CreatedBy MTDUONG (17/06/2021)
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="entityId"></param>
+        /// <param name="entity">Đối tượng cần sửa</param>
+        /// <param name="entityId">Id của đối tượng cần sửa</param>
         /// <returns></returns>
         [HttpPut("{entityId}")]
         public IActionResult Put(MISAEntity entity, Guid entityId)
@@ -102,7 +102,7 @@ namespace MISA.QLTS.Controllers
         /// Xóa dữ liệu
         /// CreatedBy MTDUONG (17/06/2021)
         /// </summary>
-        /// <param name="entityId"></param>
+        /// <param name="entityId">Id của đối tượng cần xóa</param>
         /// <returns></returns>
         [HttpDelete("{entityId}")]
         public IActionResult Delete(Guid entityId)

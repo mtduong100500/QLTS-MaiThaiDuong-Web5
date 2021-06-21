@@ -34,3 +34,5 @@ D:\mtduong\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.csproj.CoreCompi
 D:\mtduong\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.dll
 D:\mtduong\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\ref\MISA.Core.dll
 D:\mtduong\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.pdb
+C:\Users\PC\Desktop\danhgia\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.Resources.Resource.resources
+C:\Users\PC\Desktop\danhgia\final\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.csproj.GenerateResource.cache
