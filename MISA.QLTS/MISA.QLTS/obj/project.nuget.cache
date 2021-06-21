@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pQaXHZA4f489TK3eeO7TmcdbHcJVnvycvQ0qKvh+Z8B4XojkifE0bOXqNPPUpTVIqyA00Q2xjFUp5bv7UOH2aQ==",
+  "dgSpecHash": "2joaVtVvlUeDGz6lBpOYY71r9ldQXhb38qYUH3I5TEyL4TTZc6FNWJqsXqINLjp7NspdBpAuVCSe6aJTLcjOAg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\PC\\Desktop\\danhgia\\final\\MISA.QLTS\\MISA.QLTS\\MISA.QLTS.csproj",
+  "projectFilePath": "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.QLTS\\MISA.QLTS.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",

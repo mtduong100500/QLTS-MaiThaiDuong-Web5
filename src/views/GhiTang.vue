@@ -230,7 +230,42 @@
         Tổng nguyên giá: {{ priceSumFunc() }}
       </div>
     </div>
+<!--
+      Thông báo khi thêm thành công
+      CreatedBy MTDUONG (18/06/2021)
+    -->
+    <v-snackbar
+      v-model="successAdd"
+      :timeout="timeout"
+      color="success"
+      right
+      bottom
+    >
+      {{ notification }}
+    </v-snackbar>
+    <!--
+      Thông báo khi sửa thành công
+      CreatedBy MTDUONG (18/06/2021)
+    -->
+    <v-snackbar
+      v-model="successEdit"
+      :timeout="timeout"
+      color="success"
+      right
+      bottom
+    >
+      {{ notification }}
+    </v-snackbar>
 
+    <v-snackbar
+      v-model="successDelete"
+      :timeout="timeout"
+      color="success"
+      right
+      bottom
+    >
+      {{ notification }}
+    </v-snackbar>
     <!--
       Thông báo xóa 
       CreatedBy MTDUONG (17/06/2021)
@@ -251,7 +286,9 @@
             text
             @click="
               reloadTable();
-              changeDelete();
+              successDelete = true;
+              notification = 'Xóa thành công'
+              deleteDialog = false
             "
           >
             Đồng ý
@@ -301,6 +338,12 @@ export default {
 
   data() {
     return {
+      // Thông báo thành công
+      successAdd: false,
+      successEdit: false,
+      successDelete: false,
+      notification: '',
+      timeout: 2000,
       // Chứa thông tin các dòng được chọn
       // CreatedBy MTDUONG (19/06/2021)
       selected: [],
@@ -433,6 +476,7 @@ export default {
       this.deleteDialog = !this.deleteDialog;
     },
 
+
     // Xóa một bản ghi
     // CreatedBy MTDUONG (18/06/2021)
     async deleteItem(item) {
@@ -469,9 +513,8 @@ export default {
 
     // Load lại dữ liệu
     // CreatedBy MTDUONG (17/06/2021)
-    async reloadTable() {
-      await this.$store.dispatch("loadData");
-      this.$store.commit("changeLoadingState");     
+    reloadTable() {
+      this.$store.dispatch("loadData");
     },
 
     // Filter theo tên và mã nhân viên

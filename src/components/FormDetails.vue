@@ -303,64 +303,28 @@
       Thông báo khi thêm thành công
       CreatedBy MTDUONG (18/06/2021)
     -->
-    <v-dialog
+    <v-snackbar
       v-model="successAdd"
-      persistent
-      max-width="350"
-      no-click-animation
+      :timeout="timeout"
+      color="success"
+      right
+      bottom
     >
-      <v-card>
-        <v-card-title class="text-h5"> Thông báo </v-card-title>
-        <v-card-text class="text-h6"
-          >Dữ liệu đã được lưu thành công</v-card-text
-        >
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="
-              successAdd = false;
-              $store.commit('changeLoadingState');
-              closeSuccessDialog();
-            "
-          >
-            Quay lại
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      {{ notification }}
+    </v-snackbar>
     <!--
       Thông báo khi sửa thành công
       CreatedBy MTDUONG (18/06/2021)
     -->
-    <v-dialog
+    <v-snackbar
       v-model="successEdit"
-      persistent
-      max-width="350"
-      no-click-animation
+      :timeout="timeout"
+      color="success"
+      right
+      bottom
     >
-      <v-card>
-        <v-card-title class="text-h5"> Thông báo </v-card-title>
-        <v-card-text class="text-h6"
-          >Dữ liệu đã được sửa thành công</v-card-text
-        >
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="
-              successEdit = false;
-              $store.commit('changeLoadingState');
-              closeForm();
-            "
-          >
-            Quay lại
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      {{ notification }}
+    </v-snackbar>
     <!--
       Thông báo khi có lỗi 
       CreatedBy MTDUONG (18/06/2021)
@@ -405,7 +369,11 @@ export default {
   },
   data() {
     return {
-
+      // Thông báo thành công
+      successAdd: false,
+      successEdit: false,
+      notification: '',
+      timeout: 2000,
       // Dữ liệu thêm mới
       newAsset: {
         assetName: "",
@@ -436,9 +404,7 @@ export default {
       // CreatedBy MTDUONG (17/05/2021)
       developingDialog: false,
       closeDialog: false,
-      successAdd: false,
       errorDialog: false,
-      successEdit: false,
 
       // Select Box loại tài sản và phòng ban
       // CreatedBy MTDUONG (15/05/2021)
@@ -514,15 +480,6 @@ export default {
     },
   },
   methods: {
-    // Đóng thông báo lưu thành công
-    // CreatedBy MTDUONG(18/06/2021)
-    closeSuccessDialog() {
-      if (this.status == "add") {
-        this.$store.commit("changeFormState");
-      } else {
-        this.$store.commit("changeDuplicateState");
-      }
-    },
 
     // Đóng Form sau khi thực hiện thêm sửa nhân bản
     // CreatedBy MTDUONG(18/06/2021)
@@ -544,13 +501,14 @@ export default {
       await api()
         .post("/assets", this.newAsset)
         .then((res) => {
-          // Gọi hàm loadData trong Vuex
-          this.$store.dispatch("loadData");
           if(res.data.data === 2){
             this.error = res.data.message
-            this.$store.commit('changeLoadingState')
           }else{
+            // Gọi hàm loadData trong Vuex
             this.successAdd = true;
+            this.$store.dispatch("loadData");
+            this.text = "Thêm thành công"
+            this.$store.commit('changeFormState')
           }
         })
         .catch((error) => {
@@ -570,7 +528,6 @@ export default {
             this.error = res.data.message
             this.$store.commit('changeLoadingState')
           }else{
-            this.successAdd = true;
           }
         })
         .catch((error) => {
@@ -590,7 +547,6 @@ export default {
             this.error = res.data.message
             this.$store.commit('changeLoadingState')
           }else{
-            this.successAdd = true;
           }
         })
         .catch((error) => {

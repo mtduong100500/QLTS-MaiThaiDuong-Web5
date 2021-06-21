@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\Desktop\\danhgia\\final\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj",
       "projectName": "MISA.Core",
-      "projectPath": "C:\\Users\\PC\\Desktop\\danhgia\\final\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj",
+      "projectPath": "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj",
       "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\Desktop\\danhgia\\final\\MISA.QLTS\\MISA.Core\\obj\\",
+      "outputPath": "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
