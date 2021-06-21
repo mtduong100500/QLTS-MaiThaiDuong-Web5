@@ -299,32 +299,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <!--
-      Thông báo khi thêm thành công
-      CreatedBy MTDUONG (18/06/2021)
-    -->
-    <v-snackbar
-      v-model="successAdd"
-      :timeout="timeout"
-      color="success"
-      right
-      bottom
-    >
-      {{ notification }}
-    </v-snackbar>
-    <!--
-      Thông báo khi sửa thành công
-      CreatedBy MTDUONG (18/06/2021)
-    -->
-    <v-snackbar
-      v-model="successEdit"
-      :timeout="timeout"
-      color="success"
-      right
-      bottom
-    >
-      {{ notification }}
-    </v-snackbar>
+
     <!--
       Thông báo khi có lỗi 
       CreatedBy MTDUONG (18/06/2021)
@@ -505,9 +480,8 @@ export default {
             this.error = res.data.message
           }else{
             // Gọi hàm loadData trong Vuex
-            this.successAdd = true;
             this.$store.dispatch("loadData");
-            this.text = "Thêm thành công"
+            this.$store.commit('changeAddNoti')
             this.$store.commit('changeFormState')
           }
         })
@@ -523,11 +497,13 @@ export default {
         .put(`/assets/${this.item.assetId}`, this.newAsset)
         .then((res) => {
           // Gọi hàm loadData trong Vuex
-          this.$store.dispatch("loadData");
+          
           if(res.data.data === 2){
             this.error = res.data.message
-            this.$store.commit('changeLoadingState')
           }else{
+            this.$store.dispatch("loadData");
+            this.$store.commit('changeEditNoti')
+            this.$store.commit('changeEditFormState')
           }
         })
         .catch((error) => {
@@ -545,8 +521,10 @@ export default {
           this.$store.dispatch("loadData");
           if(res.data.data === 2){
             this.error = res.data.message
-            this.$store.commit('changeLoadingState')
           }else{
+            this.$store.dispatch("loadData");
+            this.$store.commit('changeAddNoti')
+            this.$store.commit('changeDuplicateState')
           }
         })
         .catch((error) => {

@@ -235,36 +235,36 @@
       CreatedBy MTDUONG (18/06/2021)
     -->
     <v-snackbar
-      v-model="successAdd"
+      v-model="$store.state.successAdd"
       :timeout="timeout"
       color="success"
       right
       bottom
     >
-      {{ notification }}
+      Thêm thành công
     </v-snackbar>
     <!--
       Thông báo khi sửa thành công
       CreatedBy MTDUONG (18/06/2021)
     -->
     <v-snackbar
-      v-model="successEdit"
+      v-model="$store.state.successEdit"
       :timeout="timeout"
       color="success"
       right
       bottom
     >
-      {{ notification }}
+      Sửa thành công
     </v-snackbar>
 
     <v-snackbar
-      v-model="successDelete"
+      v-model="$store.state.successDelete"
       :timeout="timeout"
       color="success"
       right
       bottom
     >
-      {{ notification }}
+      Xóa thành công
     </v-snackbar>
     <!--
       Thông báo xóa 
@@ -286,8 +286,7 @@
             text
             @click="
               reloadTable();
-              successDelete = true;
-              notification = 'Xóa thành công'
+              $store.commit('changeDeleteNoti')
               deleteDialog = false
             "
           >
@@ -339,10 +338,6 @@ export default {
   data() {
     return {
       // Thông báo thành công
-      successAdd: false,
-      successEdit: false,
-      successDelete: false,
-      notification: '',
       timeout: 2000,
       // Chứa thông tin các dòng được chọn
       // CreatedBy MTDUONG (19/06/2021)

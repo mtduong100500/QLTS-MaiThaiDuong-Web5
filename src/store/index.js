@@ -12,9 +12,20 @@ export default new Vuex.Store({
     assets: [],
     overlay: false,
     isSuccess: false,
-
+    successAdd: false,
+    successEdit: false,
+    successDelete: false,
   },
   mutations: {
+    changeAddNoti(state){
+      state.successAdd = !state.successAdd
+    },
+    changeEditNoti(state){
+      state.successEdit = !state.successEdit
+    },
+    changeDeleteNoti(state){
+      state.successDelete = !state.successDelete
+    },
     // Đóng mở form thêm
     changeFormState(state) {
       state.isOpen = !state.isOpen

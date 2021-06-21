@@ -74,34 +74,6 @@ namespace MISA.Core.Services
             {
                 return null;
             }
-            else
-            {
-                // Kiểm tra tất cả các thuộc tính
-                var properties = entity.GetType().GetProperties();
-                var entityCode = "";
-
-                foreach (var prop in properties)
-                {
-                    // Lấy ra property có gán attribute mà MISAEntityCode (Trùng mã)
-                    var propertiesCode = prop.GetCustomAttributes(typeof(MISAEntityCode), true);
-                    if (propertiesCode.Length > 0)
-                    {
-                        // Lấy ra value của property
-                        entityCode = (string)prop.GetValue(entity);
-                        var res = _baseRepository.CheckCodeExist(entityCode);
-                        if (res == true)
-                        {
-                            return new ActionServiceResult()
-                            {
-                                Success = false,
-                                MISAcode = Enumeration.MISAcode.ValidateBusiness,
-                                Message = MISA.Core.Resources.Resource.ExistedCode,
-                                Data = Enumeration.InsertError.DuplicateCode
-                            };
-                        }
-                    }
-                }
-            }
             return _baseRepository.Update(entity, entityId);
         }
 
