@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.Core.Entitites;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,28 +26,28 @@ namespace MISA.Core.Interfaces.Infrastructures
         /// <summary>
         /// Thêm dữ liệu
         /// </summary>
-        /// <returns>0: Thêm thất bại, 1: Thêm thành công</returns>
+        /// <returns>Dòng ảnh hưởng</returns>
         /// CreatedBy mtduong(16/06/2021)
-        int Insert(MISAEntity entity);
+        ActionServiceResult Insert(MISAEntity entity);
 
         /// <summary>
         /// Sửa dữ liệu
         /// </summary>
-        /// <returns>0: Sửa thất bại, 1: Sửa thành công</returns>
+        /// <returns>Dòng ảnh hưởng</returns>
         /// CreatedBy mtduong(16/06/2021)
-        int Update(MISAEntity entity, Guid EntityId);
+        ActionServiceResult Update(MISAEntity entity, Guid EntityId);
 
         /// <summary>
         /// Xóa dữ liệu
         /// </summary>
-        /// <returns>0: Xóa thất bại, 1: Xóa thành công</returns>
+        /// <returns>Dòng ảnh hưởng</returns>
         /// CreatedBy mtduong(16/06/2021)
-        int Delete(Guid entityId);
+        ActionServiceResult Delete(Guid entityId);
         /// <summary>
         /// Hàm kiểm tra mã tài sản đã tồn tại hay chưa
         /// </summary>
         /// <param name="assetCode">Mã tài sản cần check</param>
-        /// <returns>true: đã tồn tại, false: ko tồn tại</returns>
+        /// <returns>True: đã tồn tại, False: chưa tồn tại</returns>
         /// CreatedBy: MTDUONG(16/06/2021)
         public bool CheckCodeExist(string assetCode);
     }

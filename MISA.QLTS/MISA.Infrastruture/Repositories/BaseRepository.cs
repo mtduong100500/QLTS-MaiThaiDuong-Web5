@@ -1,5 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using MISA.Core;
+using MISA.Core.Entitites;
 using MISA.Core.Interfaces.Infrastructures;
 using MySqlConnector;
 using System;
@@ -72,7 +74,7 @@ namespace MISA.Infrastruture.Repositories
         /// </summary>
         /// <param name="entity">Đối tượng cần thêm</param>
         /// <returns>0: thêm thất bại, 1: thêm thành công</returns>
-        public int Insert(MISAEntity entity)
+        public ActionServiceResult Insert(MISAEntity entity)
         {
             var sqlCommandField = "";
             var sqlCommandValue = "";
@@ -107,7 +109,13 @@ namespace MISA.Infrastruture.Repositories
                 dynamicParameters.Add($"@{propName}", propValue);
             }
             var res = DbConnection.Execute(sqlCommand, param: dynamicParameters, commandType: CommandType.StoredProcedure);
-            return res;
+            return new ActionServiceResult()
+            {
+                Success = true,
+                MISAcode = Enumeration.MISAcode.Success,
+                Message = Core.Resources.Resource.SuccessAdd,
+                Data = res
+            };
         }
 
         /// <summary>
@@ -117,7 +125,7 @@ namespace MISA.Infrastruture.Repositories
         /// <param name="entity">Đối tượng cần sửa</param>
         /// <param name="entityId">Id của đối tượng cần sửa</param>
         /// <returns>0: sửa thất bại, 1: sửa thành công</returns>
-        public int Update(MISAEntity entity, Guid entityId)
+        public ActionServiceResult Update(MISAEntity entity, Guid entityId)
         {
             var properties = entity.GetType().GetProperties();
             // Khởi tạo câu lệnh truy vấn
@@ -137,7 +145,13 @@ namespace MISA.Infrastruture.Repositories
             }
             
             var res = DbConnection.Execute(sqlCommand, param: dynamicParameters, commandType: CommandType.StoredProcedure);
-            return res;
+            return new ActionServiceResult()
+            {
+                Success = true,
+                MISAcode = Enumeration.MISAcode.Success,
+                Message = MISA.Core.Resources.Resource.SuccessEdit,
+                Data = res
+            };
         }
 
 
@@ -147,7 +161,7 @@ namespace MISA.Infrastruture.Repositories
         /// </summary>
         /// <param name="entityId">Id của đối tượng</param>
         /// <returns>0: Xóa thất bại, 1: Xóa thành công</returns>
-        public int Delete(Guid entityId)
+        public ActionServiceResult Delete(Guid entityId)
         {
             // Câu lệnh truy vấn
             var sqlCommand = $"Proc_Delete{className}";
@@ -156,7 +170,13 @@ namespace MISA.Infrastruture.Repositories
             var res = DbConnection.Execute(sqlCommand, param: dynamicParameters, commandType: CommandType.StoredProcedure);
 
             // Trả về kết quả
-            return res;
+            return new ActionServiceResult()
+            {
+                Success = true,
+                MISAcode = Enumeration.MISAcode.Success,
+                Message = MISA.Core.Resources.Resource.SuccessDelete,
+                Data = res
+            };
         }
         /// <summary>
         /// Kiểm tra trùng mã tài sản
@@ -170,7 +190,6 @@ namespace MISA.Infrastruture.Repositories
             param.Add("@AssetCode", assetCode);
             var res = DbConnection.QueryFirstOrDefault<bool>(sqlcommand, param: param, commandType: CommandType.StoredProcedure);
             return res;
-
         }
         #endregion
     }

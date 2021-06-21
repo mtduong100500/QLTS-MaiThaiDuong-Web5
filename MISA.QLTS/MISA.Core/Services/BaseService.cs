@@ -1,4 +1,5 @@
-﻿using MISA.Core.Interfaces.Infrastructures;
+﻿using MISA.Core.Entitites;
+using MISA.Core.Interfaces.Infrastructures;
 using MISA.Core.Interfaces.Services;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace MISA.Core.Services
         /// </summary>
         /// <param name="entity">Đối tượng cần thêm</param>
         /// <returns>0: thêm thất bại, 1: thêm thành công</returns>
-        public int? Insert(MISAEntity entity)
+        public virtual ActionServiceResult Insert(MISAEntity entity)
         {
             // Validate chung
             var isValid = ValidateObject(entity);
@@ -46,12 +47,19 @@ namespace MISA.Core.Services
                         var res = _baseRepository.CheckCodeExist(entityCode);
                         if (res == true)
                         {
-                            return null;
+                            return new ActionServiceResult()
+                            {
+                                Success = false,
+                                MISAcode = Enumeration.MISAcode.ValidateBusiness,
+                                Message = MISA.Core.Resources.Resource.ExistedCode,
+                                Data = Enumeration.InsertError.DuplicateCode
+                            };
                         }
                     }
                 }
             }
             return _baseRepository.Insert(entity);
+
         }
         /// <summary>
         /// Sửa dữ liệu
@@ -59,14 +67,42 @@ namespace MISA.Core.Services
         /// <param name="entity">Đối tượng cần sửa</param>
         /// <param name="entityId">Id của đối tượng cần sửa</param>
         /// <returns>0: Sửa thất bại, 1: Sửa thành công</returns>
-        public int? Update(MISAEntity entity, Guid entityId)
+        public ActionServiceResult Update(MISAEntity entity, Guid entityId)
         {
             var isValid = ValidateObject(entity);
-            if (isValid == true)
+            if (!isValid)
             {
-                return _baseRepository.Update(entity, entityId);
+                return null;
             }
-            return null;
+            else
+            {
+                // Kiểm tra tất cả các thuộc tính
+                var properties = entity.GetType().GetProperties();
+                var entityCode = "";
+
+                foreach (var prop in properties)
+                {
+                    // Lấy ra property có gán attribute mà MISAEntityCode (Trùng mã)
+                    var propertiesCode = prop.GetCustomAttributes(typeof(MISAEntityCode), true);
+                    if (propertiesCode.Length > 0)
+                    {
+                        // Lấy ra value của property
+                        entityCode = (string)prop.GetValue(entity);
+                        var res = _baseRepository.CheckCodeExist(entityCode);
+                        if (res == true)
+                        {
+                            return new ActionServiceResult()
+                            {
+                                Success = false,
+                                MISAcode = Enumeration.MISAcode.ValidateBusiness,
+                                Message = MISA.Core.Resources.Resource.ExistedCode,
+                                Data = Enumeration.InsertError.DuplicateCode
+                            };
+                        }
+                    }
+                }
+            }
+            return _baseRepository.Update(entity, entityId);
         }
 
         
@@ -113,7 +149,7 @@ namespace MISA.Core.Services
         /// </summary>
         /// <param name="entityId">Id của đối tượng</param>
         /// <returns>0: Xóa thất bại, 1: Xóa thành công</returns>
-        public int? Delete(Guid entityId)
+        public ActionServiceResult Delete(Guid entityId)
         {
             return _baseRepository.Delete(entityId);
         }

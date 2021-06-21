@@ -546,14 +546,15 @@ export default {
         .then((res) => {
           // Gọi hàm loadData trong Vuex
           this.$store.dispatch("loadData");
-          this.successAdd = true;
+          if(res.data.data === 2){
+            this.error = res.data.message
+            this.$store.commit('changeLoadingState')
+          }else{
+            this.successAdd = true;
+          }
         })
         .catch((error) => {
-          if (error.response.request.status == 400) {
-            this.error = "Mã tài sản đã tồn tại trong hệ thống";
-          } else {
-            this.$store.commit("changeErrorState");
-          }
+          this.$store.commit("changeErrorState");
         });
     },
 
@@ -565,7 +566,12 @@ export default {
         .then((res) => {
           // Gọi hàm loadData trong Vuex
           this.$store.dispatch("loadData");
-          this.successEdit = true;
+          if(res.data.data === 2){
+            this.error = res.data.message
+            this.$store.commit('changeLoadingState')
+          }else{
+            this.successAdd = true;
+          }
         })
         .catch((error) => {
           // Gọi hàm changeErrorState trong Vuex
@@ -580,14 +586,15 @@ export default {
         .post("/assets", this.newAsset)
         .then((res) => {
           this.$store.dispatch("loadData");
-          this.successAdd = true;
+          if(res.data.data === 2){
+            this.error = res.data.message
+            this.$store.commit('changeLoadingState')
+          }else{
+            this.successAdd = true;
+          }
         })
         .catch((error) => {
-          if (error.response.request.status == 400) {
-            this.error = "Mã tài sản đã tồn tại trong hệ thống";
-          } else {
             this.$store.commit("changeErrorState");
-          }
         });
     },
 

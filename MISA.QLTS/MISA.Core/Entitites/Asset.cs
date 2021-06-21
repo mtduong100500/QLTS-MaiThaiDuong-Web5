@@ -20,8 +20,8 @@ namespace MISA.Core.Entitites
         /// <summary>
         /// Mã tài sản
         /// </summary>
-        [MISARequired]
-        [MISAEntityCode]
+        [MISARequired("Mã tài sản không được để trống")]
+        [MISAEntityCode("Mã tài sản đã tồn tại")]
         public string AssetCode { get; set; }
         /// <summary>
         /// Tên tài sản
