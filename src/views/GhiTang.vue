@@ -51,7 +51,7 @@
               class="btn-reload btn-hover"
               v-bind="attrs"
               v-on="on"
-              @click="reloadTable"
+              @click="reloadTable(); $store.commit('changeLoadingState')"
             >
               <v-img
                 max-height="15"
@@ -386,10 +386,9 @@ export default {
     };
   },
 
-  // Khởi tạo data
+  // Khởi tạo loading
   // CreatedBy MTDUONG (18/06/2021)
   created() {
-    this.$store.dispatch("loadData");
     this.$store.commit("changeLoadingState");
   },
 
@@ -404,13 +403,16 @@ export default {
     },
   },
 
-  // Tính tổng nguyên giá
+  // Tính tổng nguyên giá, load data
   // CreatedBy MTDUONG (18/06/2021)
-  mounted() {
+  async mounted() {
+    await this.$store.dispatch("loadData");
     this.priceSumFunc();
+    this.$store.commit("changeLoadingState");
   },
 
   methods: {
+
     // Chọn nhiều dòng
     // CreatedBy MTDUONG (19/06/2021)
     rowClicked(row) {
@@ -467,9 +469,9 @@ export default {
 
     // Load lại dữ liệu
     // CreatedBy MTDUONG (17/06/2021)
-    reloadTable() {
-      this.$store.dispatch("loadData");
-      this.$store.commit("changeLoadingState");
+    async reloadTable() {
+      await this.$store.dispatch("loadData");
+      this.$store.commit("changeLoadingState");     
     },
 
     // Filter theo tên và mã nhân viên

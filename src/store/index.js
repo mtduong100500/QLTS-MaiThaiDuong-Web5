@@ -51,7 +51,6 @@ export default new Vuex.Store({
     async loadData({ commit }, state) {
       await api().get("/assets").then(res => {
         commit('GET_ASSETS', res.data)
-        commit('changeLoadingState')
       }).catch((error) => {
         commit('changeErrorState')
       });
