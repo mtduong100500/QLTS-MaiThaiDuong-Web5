@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Infrastruture\\MISA.Infrastruture.csproj": {}
+    "D:\\mtduong\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Infrastruture\\MISA.Infrastruture.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj": {
+    "D:\\mtduong\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj",
+        "projectUniqueName": "D:\\mtduong\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj",
         "projectName": "MISA.Core",
-        "projectPath": "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj",
-        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\obj\\",
+        "projectPath": "D:\\mtduong\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj",
+        "packagesPath": "C:\\Users\\mtduong\\.nuget\\packages\\",
+        "outputPath": "D:\\mtduong\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mtduong\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -58,17 +61,20 @@
         }
       }
     },
-    "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Infrastruture\\MISA.Infrastruture.csproj": {
+    "D:\\mtduong\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Infrastruture\\MISA.Infrastruture.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Infrastruture\\MISA.Infrastruture.csproj",
+        "projectUniqueName": "D:\\mtduong\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Infrastruture\\MISA.Infrastruture.csproj",
         "projectName": "MISA.Infrastruture",
-        "projectPath": "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Infrastruture\\MISA.Infrastruture.csproj",
-        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Infrastruture\\obj\\",
+        "projectPath": "D:\\mtduong\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Infrastruture\\MISA.Infrastruture.csproj",
+        "packagesPath": "C:\\Users\\mtduong\\.nuget\\packages\\",
+        "outputPath": "D:\\mtduong\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Infrastruture\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mtduong\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -82,8 +88,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj": {
-                "projectPath": "C:\\Users\\PC\\Desktop\\danhgia\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj"
+              "D:\\mtduong\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj": {
+                "projectPath": "D:\\mtduong\\QLTS-MaiThaiDuong-Web5\\MISA.QLTS\\MISA.Core\\MISA.Core.csproj"
               }
             }
           }

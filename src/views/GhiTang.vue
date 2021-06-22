@@ -74,7 +74,7 @@
               class="btn-delete btn-hover"
               v-on="on"
               v-bind="attrs"
-              @click="multipleDelete(); deleteDialog = true"
+              @click="multipleDelete"
             >
               <v-img
                 height="15"
@@ -497,10 +497,11 @@ export default {
         if (this.selected.hasOwnProperty(item)) {
           var value = this.selected[item];
           await api().delete(`/assets/${value}`).then((res => {
-            this.deleteDialog = true;
+            
           }))
         }
       }
+      this.deleteDialog = true;
     },
 
     // Gán data cho props để truyền lên Form khi sửa

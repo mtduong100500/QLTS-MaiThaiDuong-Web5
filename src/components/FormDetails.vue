@@ -344,12 +344,14 @@ export default {
   },
   data() {
     return {
-      // Thông báo thành công
-      successAdd: false,
-      successEdit: false,
-      notification: '',
+      /**
+       * Thông báo thành công trong 2s
+       * CreatedBY MTDUONG (21/06/2021)
+       */
       timeout: 2000,
-      // Dữ liệu thêm mới
+      /**
+       * Dữ liệu thêm mới
+       */
       newAsset: {
         assetName: "",
         assetCode: "",
@@ -364,45 +366,53 @@ export default {
         assetTypeId: "",
       },
 
-      // Model của các input
-      // CreatedBy MTDUONG (17/05/2021)
-      assetName: "",
-      assetCode: "",
-      originalPrice: "",
-      timeUse: "",
-      wearRate: "",
-      increaseDate: null,
-      wearValue: "",
+      /**
+       * Model của các input
+       * CreatedBy MTDUONG (17/05/2021)
+       */
       assetType: {},
       department: {},
-      // Trạng thái của các thông báo
-      // CreatedBy MTDUONG (17/05/2021)
+      
+      /**
+       * Trạng thái của các thông báo
+       * CreatedBy MTDUONG (17/05/2021)
+       */
       developingDialog: false,
       closeDialog: false,
       errorDialog: false,
 
-      // Select Box loại tài sản và phòng ban
-      // CreatedBy MTDUONG (15/05/2021)
+      /**
+       * Select Box loại tài sản và phòng ban
+       * CreatedBy MTDUONG (15/05/2021)
+       */
       departmentCombo: [],
       assetTypeCombo: [],
     
-      // Datepicker
-      // CreatedBy MTDUONG (15/05/2021)
+      /**
+       * Datepicker
+       * CreatedBy MTDUONG (15/05/2021)
+       */
       menu2: false,
 
-      // Validate input text
-      // CreatedBy MTDUONG (17/05/2021)
+      /**
+       *  Validate input text
+       *  CreatedBy MTDUONG (17/05/2021)
+       */
       inputRules: [(v) => (v && v.length > 0) || "Không được để trống"],
 
-      // Validate input số
-      // CreatedBy MTDUONG (17/05/2021)
+      /**
+       * Validate input số
+       * CreatedBy MTDUONG (17/05/2021)
+       */
       inputNumberRules: [
         (v) => !!v || "Không được để trống",
         (v) => (v && !isNaN(v)) || "Bạn chỉ được nhập chữ số",
       ],
 
-      // THông báo khi có lỗi từ server
-      // CreatedBy MTDUONG (19/06/2021)
+      /**
+       * THông báo khi có lỗi từ server
+       * CreatedBy MTDUONG (19/06/2021)
+       */
       error: "",
     };
   },
@@ -416,8 +426,10 @@ export default {
 
   // Đổ dữ liệu lên Form khi sửa
   mounted() {
-    // Đổ dữ liệu của Form EDIT
-    // CreatedBY MTDUONG (19/06/2021)
+    /**
+     * Đổ dữ liệu của Form EDIT
+     * CreatedBY MTDUONG (19/06/2021)
+     */
     if (this.status != "add") {
       this.newAsset.increaseDate = this.item.increaseDate;
       this.newAsset.wearValue = this.item.wearValue.toString();
@@ -456,8 +468,10 @@ export default {
   },
   methods: {
 
-    // Đóng Form sau khi thực hiện thêm sửa nhân bản
-    // CreatedBy MTDUONG(18/06/2021)
+    /**
+     * Đóng Form sau khi thực hiện thêm sửa nhân bản
+     * CreatedBy MTDUONG(18/06/2021)
+     */
     closeForm() {
       if (this.status === "edit") {
         this.$store.commit("changeEditFormState");
@@ -468,8 +482,10 @@ export default {
       }
     },
 
-    // Thêm tài sản
-    // CreatedBy MTDUONG (18/06/2021)
+    /**
+     * Thêm tài sản
+     * CreatedBy MTDUONG (18/06/2021)
+     */
     async addAsset() {
       this.newAsset.assetTypeId = this.newAsset.assetType.assetTypeId;
       this.newAsset.departmentId = this.newAsset.department.departmentId;
@@ -490,8 +506,10 @@ export default {
         });
     },
 
-    // Sửa tài sản
-    // CreatedBy MTDUONG(18/06/2021)
+    /**
+      Sửa tài sản
+      CreatedBy MTDUONG(18/06/2021)
+      */ 
     async editAsset(item) {
       await api()
         .put(`/assets/${this.item.assetId}`, this.newAsset)
@@ -512,8 +530,10 @@ export default {
         });
     },
 
-    // Nhân bản tài sản
-    // CreatedBy MTDUONG(18/06/2021)
+     /**
+      Nhân bản tài sản
+      CreatedBy MTDUONG(18/06/2021)
+      */
     async duplicateAsset(item) {
       await api()
         .post("/assets", this.newAsset)
@@ -532,8 +552,10 @@ export default {
         });
     },
 
-    // Form nếu chưa validate sẽ không submit được
-    // CreatedBy MTDUONG(18/06/2021)
+    /**
+     Form nếu chưa validate sẽ không submit được
+     CreatedBy MTDUONG(18/06/2021)
+    */ 
     submit() {
       if (this.$refs.form.validate()) {
         if (this.status === "add") {
@@ -546,20 +568,26 @@ export default {
       }
     },
 
-    // Focus vào input đầu
-    // CreatedBy MTDUONG (18/06/2021)
+     /**
+        Focus vào input đầu
+        CreatedBy MTDUONG (18/06/2021)
+      */
     focusFirst() {
       this.$refs.firstInput.focus();
     },
 
-    // Focus vào input cuối
-    // CreatedBy MTDUONG (18/06/2021)
+     /**
+      Focus vào input cuối
+      CreatedBy MTDUONG (18/06/2021)
+      */
     focusLast() {
       this.$refs.lastInput.focus();
     },
 
-    // Lấy data đổ vào combobox loại tài sản
-    // CreatedBy MTDUONG (18/06/2021)
+    /**
+      Lấy data đổ vào combobox loại tài sản
+      CreatedBy MTDUONG (18/06/2021)
+     */
     async getComboAssetTypeData() {
       await api()
         .get("/AssetTypes")
@@ -568,8 +596,10 @@ export default {
         });
     },
 
-    // Lấy data đổ vào combobox phòng ban
-    // CreatedBy MTDUONG (18/06/2021)
+    /**
+    * Lấy data đổ vào combobox phòng ban
+    * CreatedBy MTDUONG (18/06/2021)
+    */
     async getComboDepartmentData() {
       await api()
         .get("/Departments")

@@ -50,3 +50,17 @@ C:\Users\PC\Desktop\danhgia\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug
 C:\Users\PC\Desktop\danhgia\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.dll
 C:\Users\PC\Desktop\danhgia\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\ref\MISA.Core.dll
 C:\Users\PC\Desktop\danhgia\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.pdb
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\bin\Debug\net5.0\MISA.Core.deps.json
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\bin\Debug\net5.0\MISA.Core.dll
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\bin\Debug\net5.0\ref\MISA.Core.dll
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\bin\Debug\net5.0\MISA.Core.pdb
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.csprojAssemblyReference.cache
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.Resources.Resource.resources
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.csproj.GenerateResource.cache
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.AssemblyInfoInputs.cache
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.AssemblyInfo.cs
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.csproj.CoreCompileInputs.cache
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.dll
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\ref\MISA.Core.dll
+D:\mtduong\QLTS-MaiThaiDuong-Web5\MISA.QLTS\MISA.Core\obj\Debug\net5.0\MISA.Core.pdb
