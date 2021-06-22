@@ -35,7 +35,7 @@
                 max-height="15"
                 v-on="on"
                 v-bind="attrs"
-                class="btn-hover ml-2 mr-4"
+                class="btn-hover ml-2 mr-1"
                 @click="closeDialog = true"
               ></v-img>
             </template>
