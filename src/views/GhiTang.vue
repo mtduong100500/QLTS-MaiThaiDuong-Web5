@@ -237,7 +237,7 @@
     <v-snackbar
       v-model="$store.state.successAdd"
       :timeout="timeout"
-      color="success"
+      color="#011239"
       right
       bottom
     >
@@ -250,7 +250,7 @@
     <v-snackbar
       v-model="$store.state.successEdit"
       :timeout="timeout"
-      color="success"
+      color="#011239"
       right
       bottom
     >
@@ -263,7 +263,7 @@
     <v-snackbar
       v-model="$store.state.successDelete"
       :timeout="timeout"
-      color="success"
+      color="#011239"
       right
       bottom
     >
