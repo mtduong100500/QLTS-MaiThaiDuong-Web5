@@ -16,7 +16,7 @@
           <v-tooltip bottom>
             <template #activator="{ on, attrs }">
               <v-img
-                src="../assets/icon/help.svg"
+                src="../../assets/icon/help.svg"
                 max-width="15"
                 max-height="15"
                 v-on="on"
@@ -30,7 +30,7 @@
           <v-tooltip bottom>
             <template #activator="{ on, attrs }">
               <v-img
-                src="../assets/icon/cancel.svg"
+                src="../../assets/icon/cancel.svg"
                 max-width="15"
                 max-height="15"
                 v-on="on"
@@ -165,7 +165,7 @@
                       <img
                         max-width="24"
                         max-height="24"
-                        src="../assets/icon/calendar-60.svg"
+                        src="../../assets/icon/calendar-60.svg"
                       />
                     </template>
                   </v-text-field>
@@ -332,9 +332,9 @@
 
 <script>
 import moment from "moment";
-import "../assets/css/formdetails.css";
+import "../../assets/css/formdetails.css";
 import axios from "axios";
-import api from "../service/api";
+import api from "../../service/api";
 
 export default {
   name: "FormDetails",
@@ -452,6 +452,7 @@ export default {
       if (this.status === "edit") {
         this.newAsset.assetCode = this.item.assetCode;
         this.newAsset.assetName = this.item.assetName;
+        //this.newAsset.originalPrice = this.item.originalPrice.toString());
       } else if (this.status === "duplicate") {
         this.newAsset.assetCode = "";
         this.newAsset.assetName = "";
@@ -468,6 +469,15 @@ export default {
   },
   methods: {
 
+     // Format tiền
+    // CreatedBy MTDUONG (15/06/2021)
+    formatMoney(money) {
+      return money === null
+        ? "0"
+        : !isNaN(money)
+        ? money.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.")
+        : money;
+    },
     /**
      * Đóng Form sau khi thực hiện thêm sửa nhân bản
      * CreatedBy MTDUONG(18/06/2021)

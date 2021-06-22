@@ -15,7 +15,7 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <div class="help-ico icon-hover" v-bind="attrs" v-on="on" @click="developingDialog = true">
-            <v-img src="../assets/icon/help.svg"> </v-img>
+            <v-img src="../../assets/icon/help.svg"> </v-img>
           </div>
         </template>
         <span>Trợ giúp</span>
@@ -32,14 +32,14 @@
               offset-x="8"
               offset-y="20"
             >
-              <v-img src="../assets/icon/bell.svg"></v-img>
+              <v-img src="../../assets/icon/bell.svg"></v-img>
             </v-badge>
           </div>
         </template>
         <span>Thông báo</span>
       </v-tooltip>
       <v-img
-        src="../assets/icon/Divider.svg"
+        src="../../assets/icon/Divider.svg"
         max-height="20"
         class="divider"
 
@@ -53,7 +53,7 @@
       </div>
       <v-img
         width="6"
-        src="../assets/icon/i_arrow_up_small.svg"
+        src="../../assets/icon/i_arrow_up_small.svg"
         class="icon-hover down-icon"
       ></v-img>
     </div>
@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import '../assets/css/header.css'
+import '../../assets/css/header.css'
 export default {
   
   name: "Header",

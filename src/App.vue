@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import Sidebar from "./components/Sidebar";
-import Header from "./components/Header";
+import Sidebar from "./components/layout/Sidebar.vue";
+import Header from "./components/layout/Header";
 export default {
   data() {
     return {

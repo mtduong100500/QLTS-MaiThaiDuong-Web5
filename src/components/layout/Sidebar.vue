@@ -17,7 +17,7 @@
       <v-list-item style="padding-left: 17px">
         <v-img
           @click.stop="mini = !mini"
-          src="../assets/icon/logo-qlts.svg"
+          src="../../assets/icon/logo-qlts.svg"
           max-height="25"
           max-width="25"
         />
@@ -27,7 +27,7 @@
         >
         <v-list-item-icon @click.stop="mini = !mini" style="padding-left: 10px">
           <v-img
-            src="../assets/icon/hamburger-menu.svg"
+            src="../../assets/icon/hamburger-menu.svg"
             max-height="16"
             max-width="16"
           />
@@ -44,7 +44,7 @@
         @click="$store.commit('changeDevelopingState')"
       >
         <v-img
-          src="../assets/icon/computer-line.svg"
+          src="../../assets/icon/computer-line.svg"
           max-height="18"
           max-width="18"
           style="margin: 0 4px"
@@ -74,7 +74,7 @@
             v-bind="attrs"
           >
             <v-img
-              src="../assets/icon/community-line.svg"
+              src="../../assets/icon/community-line.svg"
               max-height="18"
               max-width="18"
               style="margin: 0 4px"
@@ -114,7 +114,7 @@
         @click="$store.commit('changeDevelopingState')"
       >
         <v-img
-          src="../assets/icon/paint-brush-line.svg"
+          src="../../assets/icon/paint-brush-line.svg"
           max-height="18"
           max-width="18"
           style="margin: 0 4px"
@@ -145,7 +145,7 @@
         @click="$store.commit('changeDevelopingState')"
       >
         <v-img
-          src="../assets/icon/common.svg"
+          src="../../assets/icon/common.svg"
           max-height="18"
           max-width="18"
           style="margin: 0 4px"
@@ -173,7 +173,7 @@
         -->
       <v-list-item class="main-navbar">
         <v-img
-          src="../assets/icon/search-eye-line.svg"
+          src="../../assets/icon/search-eye-line.svg"
           max-height="18"
           max-width="18"
           style="margin: 0 4px"
@@ -192,7 +192,7 @@
         @click="$store.commit('changeDevelopingState')"
       >
         <v-img
-          src="../assets/icon/settings.svg"
+          src="../../assets/icon/settings.svg"
           max-height="18"
           max-width="18"
           style="margin: 0 4px"
@@ -212,7 +212,7 @@
         @click="$store.commit('changeDevelopingState')"
       >
         <v-img
-          src="../assets/icon/pie-chart-line.svg"
+          src="../../assets/icon/pie-chart-line.svg"
           max-height="18"
           max-width="18"
           style="margin: 0 4px"
@@ -226,7 +226,7 @@
 </template>
 
 <script>
-import "../assets/css/sidebar.css";
+import "../../assets/css/sidebar.css";
 export default {
   data() {
     return {

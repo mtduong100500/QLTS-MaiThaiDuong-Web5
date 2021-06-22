@@ -333,7 +333,7 @@
 <script>
 import "../assets/css/ghitang.css";
 import moment from "moment";
-import FormDetails from "../components/FormDetails.vue";
+import FormDetails from "../components/form/FormDetails.vue";
 import headers from "../common/header-table";
 import api from "../service/api";
 
@@ -527,8 +527,8 @@ export default {
     // Filter theo tên và mã nhân viên
     // CreatedBy MTDUONG(13/06/2021)
     searchByNameAndCode(value, search, item) {
-      let inName = RegExp(search, "i").test(item.assetName);
-      let inCode = RegExp(search, "i").test(item.assetCode);
+      let inName = RegExp(search).test(item.assetName);
+      let inCode = RegExp(search).test(item.assetCode);
       return inName || inCode;
     },
 
